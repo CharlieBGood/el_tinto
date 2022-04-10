@@ -1,5 +1,8 @@
 FROM python:3.9
-ENV PYTHONUNBUFFERED 1
+LABEL maintainer='eltinto.xyz'
+
+# Prints python outputs directly to the console
+ENV PYTHONUNBUFFERED 1 
 
 # Allows docker to cache installed dependencies between builds
 COPY ./requirements.txt requirements.txt

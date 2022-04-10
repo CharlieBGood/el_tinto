@@ -9,19 +9,22 @@ load_dotenv() # Only for local development
 
 ssm = boto3.client(
     'ssm', 
-    region_name='us-east-1', 
-    #aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-    #aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY")
+    region_name='us-east-1',
 )
 
 check_timeout = os.getenv("POSTGRES_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("POSTGRES_CHECK_INTERVAL", 1)
 interval_unit = "second" if check_interval == 1 else "seconds"
+
 config = {
-    "dbname": ssm.get_parameter(Name='POSTGRES_DB', WithDecryption=True)['Parameter']['Value'],
-    "user": ssm.get_parameter(Name='POSTGRES_USER', WithDecryption=True)['Parameter']['Value'],
-    "password": ssm.get_parameter(Name='POSTGRES_PASSWORD', WithDecryption=True)['Parameter']['Value'],
-    "host": ssm.get_parameter(Name='DATABASE_URL', WithDecryption=True)['Parameter']['Value']
+    "dbname": os.getenv("POSTGRES_DB", 
+                        ssm.get_parameter(Name='POSTGRES_DB', WithDecryption=True)['Parameter']['Value']),
+    "user": os.getenv("POSTGRES_USER", 
+                      ssm.get_parameter(Name='POSTGRES_USER', WithDecryption=True)['Parameter']['Value']),
+    "password": os.getenv("POSTGRES_PASSWORD", 
+                          ssm.get_parameter(Name='POSTGRES_PASSWORD', WithDecryption=True)['Parameter']['Value']),
+    "host": os.getenv("DATABASE_URL", 
+                      ssm.get_parameter(Name='DATABASE_URL', WithDecryption=True)['Parameter']['Value'])
 }
 
 start_time = time()
@@ -33,7 +36,7 @@ def pg_isready(host, user, password, dbname):
     while time() - start_time < check_timeout:
         try:
             conn = psycopg2.connect(**vars())
-            logger.info("Postgres is ready! ✨ 💅")
+            logger.info("Postgres is ready! ✨ ✅✨")
             conn.close()
             return True
         except psycopg2.OperationalError as err:

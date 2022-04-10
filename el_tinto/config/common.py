@@ -1,10 +1,17 @@
 import os
+import boto3
 from os.path import join
 from distutils.util import strtobool
-import dj_database_url
 from configurations import Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from dotenv import load_dotenv
 
+ssm = boto3.client(
+    'ssm', 
+    region_name='us-east-1',
+)
+
+load_dotenv()
 
 class Common(Configuration):
 
@@ -49,13 +56,20 @@ class Common(Configuration):
     ADMINS = (
         ('Author', 'carlosbueno1196@gmail.com'),
     )
-
+    print(ssm)
     # Postgres
     DATABASES = {
-        'default': dj_database_url.config(
-            default='postgres://postgres:@postgres:5432/postgres',
-            conn_max_age=int(os.getenv('POSTGRES_CONN_MAX_AGE', 600))
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': os.getenv("DATABASE_URL", 
+                    None),
+            'NAME': os.getenv("POSTGRES_DB", 
+                    None),
+            'USER': os.getenv("POSTGRES_USER", 
+                    None),
+            'PASSWORD': os.getenv("POSTGRES_PASSWORD", 
+                        None),
+        }
     }
 
     # General

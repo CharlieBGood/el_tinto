@@ -1,7 +1,9 @@
 version: '3'
 services:
   postgres:
-    image: postgres:11.6
+    image: postgres:13.6-alpine
+    environment:
+      POSTGRES_PASSWORD: local
   django:
     restart: always
     environment:

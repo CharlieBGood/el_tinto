@@ -30,6 +30,7 @@ jobs:
     
     steps:
       - name: Moving build to artifacts directory
-        run: sh ./deploy.sh
+        run: chmod +x ./deploy.sh
+        shell: bash
         env:
           DJANGO_CONFIGURATION: Production

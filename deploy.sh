@@ -1,6 +1,5 @@
 #!/bin/sh 
 sudo pip3 install -r requirements.txt
-DJANGO_CONFIGURATION=Production
 python3 manage.py makemigrations
 python3 manage.py migrate
 python3 manage.py collectstatic

@@ -25,3 +25,5 @@ jobs:
 
       - name: Moving build to artifacts directory
         run: sh ./deploy.sh
+        env:
+          DJANGO_CONFIGURATION: Production

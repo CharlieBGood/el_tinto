@@ -1,5 +1,4 @@
-#!/bin/sh     
-sudo git pull origin master
+#!/bin/sh 
 sudo pip3 install -r requirements.txt
 DJANGO_CONFIGURATION=Production
 python3 manage.py makemigrations

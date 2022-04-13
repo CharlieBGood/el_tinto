@@ -24,4 +24,4 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
 
       - name: Moving build to artifacts directory
-      run: ./deploy.sh
+        run: ./deploy.sh

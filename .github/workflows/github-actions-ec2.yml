@@ -22,15 +22,3 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
-
-  django-update:
-    name: Make migrations and restart server
-    needs: deploy
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Moving build to artifacts directory
-        run: chmod +x ./deploy.sh
-        shell: bash
-        env:
-          DJANGO_CONFIGURATION: Production

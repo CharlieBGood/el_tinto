@@ -2,29 +2,19 @@ import os
 import logging
 from time import time, sleep
 import psycopg2
-import boto3
 from dotenv import load_dotenv # Only for local development
 
 load_dotenv() # Only for local development
-
-ssm = boto3.client(
-    'ssm', 
-    region_name='us-east-1',
-)
 
 check_timeout = os.getenv("POSTGRES_CHECK_TIMEOUT", 30)
 check_interval = os.getenv("POSTGRES_CHECK_INTERVAL", 1)
 interval_unit = "second" if check_interval == 1 else "seconds"
 
 config = {
-    "dbname": os.getenv("POSTGRES_DB", 
-                        ssm.get_parameter(Name='POSTGRES_DB', WithDecryption=True)['Parameter']['Value']),
-    "user": os.getenv("POSTGRES_USER", 
-                      ssm.get_parameter(Name='POSTGRES_USER', WithDecryption=True)['Parameter']['Value']),
-    "password": os.getenv("POSTGRES_PASSWORD", 
-                          ssm.get_parameter(Name='POSTGRES_PASSWORD', WithDecryption=True)['Parameter']['Value']),
-    "host": os.getenv("DATABASE_URL", 
-                      ssm.get_parameter(Name='DATABASE_URL', WithDecryption=True)['Parameter']['Value'])
+    "dbname": os.getenv("POSTGRES_DB", "postgres"),
+    "user": os.getenv("POSTGRES_USER", "postgres"),
+    "password": os.getenv("POSTGRES_PASSWORD", "local"),
+    "host": os.getenv("DATABASE_URL", "postgres")
 }
 
 start_time = time()

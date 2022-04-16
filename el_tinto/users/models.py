@@ -1,17 +1,29 @@
-import uuid
 from django.db import models
 from django.conf import settings
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class User(AbstractUser):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
+    email = models.EmailField(
+        'email address',
+        unique=True,
+        error_messages={
+            'unique': 'A user with that email already exists.'
+        }
+    )
+    
+    phone_number = PhoneNumberField(blank=True)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return self.username
+        return self.email
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

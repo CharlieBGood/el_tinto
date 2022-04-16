@@ -35,3 +35,9 @@ coverage==6.3.2
 django-storages==1.12.3
 boto3==1.21.31
 
+# Email
+django-ses==3.0.1
+
+# Phonenumber field
+django-phonenumber-field==6.1.0
+phonenumbers==8.12.46 

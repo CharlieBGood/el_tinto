@@ -1,15 +1,10 @@
 import os
-import boto3
 from os.path import join
 from distutils.util import strtobool
 from configurations import Configuration
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
 
-ssm = boto3.client(
-    'ssm', 
-    region_name='us-east-1',
-)
 
 load_dotenv()
 
@@ -31,6 +26,7 @@ class Common(Configuration):
 
         # Your apps
         'el_tinto.users',
+        'el_tinto.mails'
 
     )
 
@@ -56,19 +52,18 @@ class Common(Configuration):
     ADMINS = (
         ('Author', 'carlosbueno1196@gmail.com'),
     )
-    print(ssm)
     # Postgres
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'HOST': os.getenv("DATABASE_URL", 
-                    None),
+                    'postgres'),
             'NAME': os.getenv("POSTGRES_DB", 
-                    None),
+                    'postgres'),
             'USER': os.getenv("POSTGRES_USER", 
-                    None),
+                    'postgres'),
             'PASSWORD': os.getenv("POSTGRES_PASSWORD", 
-                        None),
+                        'local'),
         }
     }
 

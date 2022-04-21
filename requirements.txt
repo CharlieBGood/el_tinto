@@ -41,3 +41,6 @@ django-ses==3.0.1
 # Phonenumber field
 django-phonenumber-field==6.1.0
 phonenumbers==8.12.46 
+
+# Debugging
+sentry-sdk==1.5.10

@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 
 class Mail(models.Model):
@@ -6,6 +7,8 @@ class Mail(models.Model):
     html = models.TextField()
     subject = models.CharField(max_length=256, default='')
     type = models.CharField(max_length=50)
+    test_email = models.EmailField(default='', blank=True)
+    
     created_by = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     

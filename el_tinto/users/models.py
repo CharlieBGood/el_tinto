@@ -9,6 +9,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
     
+    # TODO add new filter per engagement
+    
     email = models.EmailField(
         'email address',
         unique=True,

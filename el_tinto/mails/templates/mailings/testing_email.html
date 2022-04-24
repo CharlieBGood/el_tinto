@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Invitation</title>
+  <title>El Tinto</title>
   <style>
     body {
       font-family: Arial;
@@ -22,7 +22,7 @@
     a {
       color: #348286;
     }
-    button {
+    span {
       background-color: #5044e4; 
       border-radius: 12px; 
       height: 45px;
@@ -35,60 +35,67 @@
 </head>
 
 <body>
-  <div style="background-color: #FFFFFF; padding: 20px 26%; display: flex; flex-direction: column;">
-    <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" style="margin: 0 auto; display: block;"/>
-    <div style="background-color: #5044e4; height: 60px; display: table; margin: 20px 0;">
-      <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
-        Historias importantes para gente ocupada
-      </h2>
-    </div>
-    <div style="padding: 0 5%; margin: 10px 0 20px 0;">
-      <p>
-        Un correo diario con lo más relevante del momento en Colombia, curado con los medios 
-        más rigurosos e independientes.
-      </p>
-      <p>
-        ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ 
-        <a href="https://www.eltinto.xyz/faq" target="_blank">haciendo click aquí</a>.
-      </p>
-    </div>
-    <hr style="width: 100%; border-top: 1px solid #eaeaea;">
-    <p style="text-align:center; margin: 40px 0; color: #696969; font-size: 18px">{{date}}</p>
-    <hr style="width: 100%; border-top: 1px solid #eaeaea;">
-      {{html}}
-    <h2 style="text-align:center;">
-      ¿Te reenviaron este correo?
-    </h2>
-    <p style="text-align:center;">
-      Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
-    </p>
-    <button 
-      type="button" 
-      style="width: 50%; margin: 20px auto 60px auto;"
-      onclick="alert('Hello world!')"
-    >
-      Suscribete
-    </button> 
-    <div style="background-color: #5044e4; padding: 0 5%;">
-      <hr style="width: 90%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 
-        los derechos reservados.
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
-        ¿No quieres recibir más estos correos?
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
-        Te puedes desuscribir de esta lista aquí.
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o 
-        quisieras que incluyamos algo nuevo?
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a 
-        <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a> 
-        o responde a este correo y te daremos respuesta tan pronto como podamos
-      </p>
-      <hr style="width: 90%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-    </div>
+  <div style="background-color: #FFFFFF; padding: 20px 26%;">
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" style="margin: 0 auto; display: block;"/>
+            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
+              <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
+                Historias importantes para gente ocupada
+              </h2>
+            </div>
+            <div style="padding: 0 5%; margin: 10px 0 20px 0;">
+              <p>
+                Un correo diario con lo más relevante del momento en Colombia, curado con los medios 
+                más rigurosos e independientes.
+              </p>
+              <p>
+                ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ 
+                <a href="https://www.eltinto.xyz/faq" target="_blank">haciendo click aquí</a>.
+              </p>
+            </div>
+            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
+            <p style="text-align:center; margin: 40px 0; color: #696969; font-size: 18px">{{date}}</p>
+            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
+              {{html}}
+            <h2 style="text-align:center;">
+              ¿Te reenviaron este correo?
+            </h2>
+            <p style="text-align:center;">
+              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
+            </p>
+            <a href="https://eltinto.xyz" target="_blank" style="color: #FFFFFF; text-align: center; text-decoration: none;">
+              <span 
+              style="display: flex; align-items: center; justify-content: center; width: 30%; margin: 40px auto 100px auto;">
+                Suscribete
+              </span>
+            </a>
+            <div style="background-color: #5044e4; padding: 5px 5%;">
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 
+                los derechos reservados.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                ¿No quieres recibir más estos correos?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                Te puedes desuscribir de esta lista aquí.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o 
+                quisieras que incluyamos algo nuevo?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a 
+                <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a> 
+                o responde a este correo y te daremos respuesta tan pronto como podamos
+              </p>
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </body>
 

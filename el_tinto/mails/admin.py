@@ -16,7 +16,7 @@ def send_daily_email(modeladmin, request, queryset):
             mail.subject, 
             'testing_email.html', 
             {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%M/%Y")}, 
-            user.email,
+            [user.email],
         )
     
 @admin.action(description='Test send daily email')
@@ -26,7 +26,7 @@ def test_send_daily_email(modeladmin, request, queryset):
         mail.subject, 
         'testing_email.html', 
         {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%M/%Y")}, 
-        mail.test_email,
+        [mail.test_email],
     )
 
 @admin.register(Mail)

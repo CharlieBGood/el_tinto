@@ -45,6 +45,7 @@ class Common(Configuration):
     ROOT_URLCONF = 'el_tinto.urls'
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     WSGI_APPLICATION = 'el_tinto.wsgi.application'
+    DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
     # Email
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

@@ -4,6 +4,11 @@ from django.db import models
 class Mail(models.Model):
     """Mail class."""
     
+    #TODO add SQL field for personalized queries
+    
+    #TODO add programmed emails 
+    #TODO Send email for new user
+    
     # Type constants
     DAILY = 'Daily'
     TEST = 'Test'

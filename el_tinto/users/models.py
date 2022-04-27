@@ -9,7 +9,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
     
-    # TODO add new filter per engagement
+    # TODO add new filter per engagement. 
+    # TODO add date from last opened email
     
     email = models.EmailField(
         'email address',

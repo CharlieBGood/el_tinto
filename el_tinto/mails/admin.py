@@ -31,7 +31,7 @@ def test_send_daily_email(modeladmin, request, queryset):
         [mail.test_email],
     )
     
-@admin.action(description='Test send daily email')
+@admin.action(description='Send daily emails to founders')
 def send_daily_email_to_founders(modeladmin, request, queryset):
     mail = queryset.first()
     send_email(

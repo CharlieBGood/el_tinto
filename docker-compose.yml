@@ -19,6 +19,8 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+  redis:
+    image: redis:5.0.7
   documentation:
     restart: always
     build: ./

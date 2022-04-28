@@ -1,6 +1,18 @@
+from datetime import datetime
+
 from django.core.mail import EmailMessage
 from django.template import loader
+from django.utils.safestring import mark_safe
 
+
+def send_several_emails(mail, users):
+    for user in users:
+        send_email(
+            mail.subject, 
+            'testing_email.html', 
+            {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
+            [user.email],
+        )
 
 def send_email(subject, html_file, mail_data, emails, reply_to=None):
     """Send email from template."""

@@ -1,25 +1,20 @@
+from sched import scheduler
 from django.contrib import admin
 from .models import Mail
 from el_tinto.users.models import User
-from el_tinto.utils.send_mail import send_email
+from el_tinto.utils.send_mail import send_email, send_several_emails
+from el_tinto.utils.scheduler import get_scheduler
 from django.utils.safestring import mark_safe
 from datetime import datetime
-
-#TODO extra query filter. All users, admins 
-
 
 @admin.action(description='Send daily email')
 def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
-    #TODO send different emails per user and send to everybody
-    # TODO send email only to active users
-    for user in User.objects.filter(active=True):
-        send_email(
-            mail.subject, 
-            'testing_email.html', 
-            {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%M/%Y")}, 
-            [user.email],
-        )
+    users = User.objects.filter(is_active=True)
+    scheduler = get_scheduler()
+    
+    scheduler.add_job(send_several_emails, trigger='date', run_date=mail.dispatch_date, args=[mail, users])
+    scheduler.start()
     
 @admin.action(description='Test send daily email')
 def test_send_daily_email(modeladmin, request, queryset):
@@ -27,7 +22,7 @@ def test_send_daily_email(modeladmin, request, queryset):
     send_email(
         mail.subject, 
         'testing_email.html', 
-        {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%M/%Y")}, 
+        {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
         [mail.test_email],
     )
     
@@ -37,7 +32,7 @@ def send_daily_email_to_founders(modeladmin, request, queryset):
     send_email(
         mail.subject, 
         'testing_email.html', 
-        {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%M/%Y")}, 
+        {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
         ['carlosbueno1196@gmail.com', 'a.lozada.c10@gmail.com'],
     )
 
@@ -51,3 +46,5 @@ class MailsAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.created_by = request.user
         super(MailsAdmin, self).save_model(request, obj, form, change)
+
+

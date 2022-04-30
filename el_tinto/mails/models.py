@@ -49,11 +49,12 @@ class Mail(models.Model):
         on_delete=models.SET_NULL,
         related_name='sended_emails',
         null=True,
-        blank=True
+        blank=True,
+        editable = False
     )
     created_at = models.DateTimeField(auto_now_add=True)
     dispatch_date = models.DateTimeField(null=True, blank=False)
-    programmed = models.BooleanField(default=False)
+    programmed = models.BooleanField(default=False, editable = False)
     
     '''recipients = models.ManyToManyField(
         'users.User',

@@ -15,6 +15,8 @@ def send_daily_email(modeladmin, request, queryset):
     
     scheduler.add_job(send_several_emails, trigger='date', run_date=mail.dispatch_date, args=[mail, users])
     scheduler.start()
+    mail.programmed = True
+    mail.save()
     
 @admin.action(description='Test send daily email')
 def test_send_daily_email(modeladmin, request, queryset):
@@ -40,7 +42,7 @@ def send_daily_email_to_founders(modeladmin, request, queryset):
 class MailsAdmin(admin.ModelAdmin):
     """"Mail Admin."""
     
-    list_display = ['type', 'created_at', 'created_by']
+    list_display = ['type', 'subject', 'created_at', 'created_by', 'programmed']
     actions = [send_daily_email, test_send_daily_email, send_daily_email_to_founders]
     
     def save_model(self, request, obj, form, change):

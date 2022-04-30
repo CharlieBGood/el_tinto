@@ -53,6 +53,7 @@ class Mail(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     dispatch_date = models.DateTimeField(null=True, blank=False)
+    programmed = models.BooleanField(default=False)
     
     '''recipients = models.ManyToManyField(
         'users.User',

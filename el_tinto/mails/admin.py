@@ -11,13 +11,12 @@ def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
     users = User.objects.filter(is_active=True, is_staff=True)
     scheduler = get_scheduler()
-    
     scheduler.add_job(
         send_several_emails, 
         trigger='date', 
         run_date=mail.dispatch_date, 
         args=[mail, users],
-        id=mail.id
+        id=str(mail.id)
     )
     scheduler.start()
     mail.programmed = True

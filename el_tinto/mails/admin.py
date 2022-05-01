@@ -9,7 +9,7 @@ from datetime import datetime
 @admin.action(description='Send daily email')
 def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
-    users = User.objects.filter(is_active=True, is_staff=True)
+    users = User.objects.filter(is_active=True)
     scheduler = get_scheduler()
     scheduler.add_job(
         send_several_emails, 

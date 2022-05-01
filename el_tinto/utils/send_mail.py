@@ -31,4 +31,4 @@ def send_email(subject, html_file, mail_data, emails, reply_to=None):
             subject, html, 'El Tinto <info@eltinto.xyz>', emails
         )
     message_user.content_subtype = 'html'
-    message_user.send(fail_silently=True)
+    message_user.send(fail_silently=False)

@@ -26,7 +26,8 @@ class Common(Configuration):
 
         # Your apps
         'el_tinto.users',
-        'el_tinto.mails'
+        'el_tinto.mails',
+        'el_tinto.web_page'
 
     )
 

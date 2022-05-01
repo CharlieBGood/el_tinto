@@ -1,4 +1,6 @@
+from operator import mod
 from pyexpat import model
+from statistics import mode
 from django.db import models
 
 class Mail(models.Model):
@@ -6,7 +8,6 @@ class Mail(models.Model):
     
     #TODO add SQL field for personalized queries
     
-    #TODO add programmed emails 
     #TODO Send email for new user
     
     # Type constants
@@ -56,12 +57,13 @@ class Mail(models.Model):
     dispatch_date = models.DateTimeField(null=True, blank=False)
     programmed = models.BooleanField(default=False, editable = False)
     
-    '''recipients = models.ManyToManyField(
+    recipients = models.ManyToManyField(
         'users.User',
         related_name='received_emails',
         through="mails.SendedEmails", 
+        through_fields=('mail', 'user'),
         blank=True
-    )'''
+    )
     
     class Meta:
         verbose_name = "Mail"
@@ -69,3 +71,11 @@ class Mail(models.Model):
 
     def __str__(self):
         return self.type
+
+
+class SendedEmails(models.Model):
+    
+    mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    opened_date = models.DateField(default=None, null=True)
+    

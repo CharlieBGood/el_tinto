@@ -20,11 +20,6 @@ class Local(Common):
     ]
 
     # Mail
-    #EMAIL_HOST = 'localhost'
-    #EMAIL_PORT = 1025
-    #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    EMAIL_HOST = 'smtp.googlemail.com'
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = os.getenv('GMAIL_USER_MAIL')
-    EMAIL_HOST_PASSWORD = os.getenv('GMAIL_USER_MAIL_PASSWORD')
-    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'localhost'
+    EMAIL_PORT = 1025
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

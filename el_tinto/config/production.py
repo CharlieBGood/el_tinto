@@ -35,12 +35,7 @@ class Production(Common):
     }
     
     # Mail
-    #EMAIL_BACKEND = 'django_ses.SESBackend'
-    EMAIL_HOST = 'smtp.googlemail.com'
-    EMAIL_PORT = 587
-    EMAIL_HOST_USER = os.getenv('GMAIL_USER_MAIL')
-    EMAIL_HOST_PASSWORD = os.getenv('GMAIL_USER_MAIL_PASSWORD')
-    EMAIL_USE_TLS = True
+    EMAIL_BACKEND = 'django_ses.SESBackend'
     
     
     sentry_sdk.init(

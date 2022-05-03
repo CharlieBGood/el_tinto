@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 from django.core.mail import EmailMessage
@@ -6,15 +7,22 @@ from django.utils.safestring import mark_safe
 
 
 def send_several_emails(mail, users):
-    for user in users:
-        send_email(
-            mail.subject, 
-            'testing_email.html', 
-            {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
-            [user.email],
-        )
-        mail.recipients.add(user)
-        mail.save()
+    
+    n = 13
+    users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)] 
+    
+    for users_list in users_chunked_list:
+        for user in users_list:
+            send_email(
+                mail.subject, 
+                'testing_email.html', 
+                {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
+                [user.email],
+            )
+            mail.recipients.add(user)
+            mail.save()
+        
+        time.sleep(1)
 
 def send_email(subject, html_file, mail_data, emails, reply_to=None):
     """Send email from template."""

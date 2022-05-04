@@ -33,10 +33,12 @@ def send_email(subject, html_file, mail_data, emails, reply_to=None):
     if reply_to:
         message_user = EmailMessage(
             subject, html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ]
+            headers={'X-SES-CONFIGURATION-SET': 'test', 'X-SES-MESSAGE-TAGS': 'Email=Null'}
         )
     else:
         message_user = EmailMessage(
-            subject, html, 'El Tinto <info@eltinto.xyz>', emails
+            subject, html, 'El Tinto <info@eltinto.xyz>', emails,
+            headers={'X-SES-CONFIGURATION-SET': 'test', 'X-SES-MESSAGE-TAGS': 'Email=Null'}
         )
     message_user.content_subtype = 'html'
     message_user.send(fail_silently=False)

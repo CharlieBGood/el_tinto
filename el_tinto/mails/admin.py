@@ -1,3 +1,4 @@
+import email
 from django.contrib import admin, messages
 from django.utils import timezone
 from .models import Mail
@@ -47,6 +48,9 @@ def test_send_daily_email(modeladmin, request, queryset):
         {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
         [mail.test_email],
     )
+    user = User.objects.get(email=mail.test_email)
+    mail.recipients.add(user)
+    mail.save()
 
 @admin.register(Mail)
 class MailsAdmin(admin.ModelAdmin):

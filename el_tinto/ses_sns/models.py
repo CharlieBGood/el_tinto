@@ -67,6 +67,7 @@ class SNSNotification(models.Model):
                                 mail=mail,
                             )
                             sended_email.opened_date = local_datetime
+                            sended_email.save()
                             
                         except SendedEmails.DoesNotExist:
                             pass

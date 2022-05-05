@@ -4,8 +4,8 @@ from collections import namedtuple
 from datetime import datetime
 
 from django.db import models
+from django.utils import timezone
 
-from el_tinto.utils.datetime import convert_ut_to_local_datetime
 from el_tinto.mails.models import Mail, SendedEmails
 from el_tinto.users.models import User
 
@@ -46,10 +46,6 @@ class SNSNotification(models.Model):
                 if event_type == 'Open':
                     mail_data = message.get('mail')
                     
-                    timestamp = mail_data.get('timestamp')
-                    utc_open_date = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-                    local_datetime = convert_ut_to_local_datetime(utc_open_date)
-                    
                     for header in mail_data['headers']:
                         if header['name'] == 'EMAIL-ID':
                             email_id = header['value']
@@ -58,7 +54,7 @@ class SNSNotification(models.Model):
                         if header['name'] == 'To':
                             user_email = header['value']
                     
-                    if email_type == Mail.DAILY or Mail.TEST:
+                    if email_type == Mail.DAILY or email_type == Mail.TEST:
                         user = User.objects.get(email=user_email)
                         mail = Mail.objects.get(id=int(email_id))
                         try:
@@ -66,7 +62,7 @@ class SNSNotification(models.Model):
                                 user=user,
                                 mail=mail,
                             )
-                            sended_email.opened_date = local_datetime
+                            sended_email.opened_date = datetime.now(timezone.utc)
                             sended_email.save()
                             
                         except SendedEmails.DoesNotExist:

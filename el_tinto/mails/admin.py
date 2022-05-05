@@ -42,7 +42,7 @@ def cancel_send_daily_email(modeladmin, request, queryset):
 def test_send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
     send_email(
-        mail.subject, 
+        mail, 
         'testing_email.html', 
         {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
         [mail.test_email],

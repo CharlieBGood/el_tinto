@@ -61,11 +61,16 @@ class SNSNotification(models.Model):
                     if email_type == Mail.DAILY:
                         user = User.objects.get(email=user_email)
                         mail = Mail.objects.get(id=int(email_id))
-                        SendedEmails.objects.create(
-                            user=user,
-                            mail=mail,
-                            opened_date=loca_datetime
-                        )
+                        try:
+                            sended_email = SendedEmails.objects.get(
+                                user=user,
+                                mail=mail,
+                                opened_date=loca_datetime
+                            )
+                            sended_email.opened_date = loca_datetime
+                            
+                        except SendedEmails.DoesNotExist:
+                            pass
                     
                 else:
                     raise ValueError("Wrong type of notification")

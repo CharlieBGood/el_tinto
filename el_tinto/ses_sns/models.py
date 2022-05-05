@@ -62,7 +62,7 @@ class SNSNotification(models.Model):
                                 user=user,
                                 mail=mail,
                             )
-                            sended_email.opened_date = datetime.now(timezone.utc)
+                            sended_email.opened_date = datetime.now()
                             sended_email.save()
                             
                         except SendedEmails.DoesNotExist:

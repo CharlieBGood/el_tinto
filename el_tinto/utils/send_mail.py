@@ -36,6 +36,7 @@ def send_email(mail, html_file, mail_data, emails, reply_to=None):
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),
+                'EMAIL-TYPE': mail.type
             }
         )
     else:
@@ -44,6 +45,7 @@ def send_email(mail, html_file, mail_data, emails, reply_to=None):
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),
+                'EMAIL-TYPE': mail.type
             }
         )
     message_user.content_subtype = 'html'

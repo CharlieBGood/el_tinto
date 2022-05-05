@@ -1,10 +1,13 @@
 import json
 import logging
 from collections import namedtuple
+from datetime import datetime
 
 from django.db import models
 
-from el_tinto.utils.ses_sns import get_permanent_bounced_emails_from_bounce_obj, get_emails_from_complaint_obj
+from el_tinto.utils.datetime import convert_ut_to_local_datetime
+from el_tinto.mails.models import Mail, SendedEmails
+from el_tinto.users.models import User
 
 logger = logging.getLogger(__name__)
 
@@ -34,17 +37,36 @@ class SNSNotification(models.Model):
         return str(self.pk)
 
     def process(self):
-        """Attempt to see if this notification is any of use (Bounce or complaint).
-        If so - try to find emails and send to GSL in platform via celery task"""
+        """Attempt to see if this notification is any of use (Open).
+        If so - creates SendedEmails instance for open rate tracking."""
         try:
             if self.data.get('Type') == "Notification":
                 message = json.loads(self.data['Message'])
                 event_type = message.get('eventType')
                 if event_type == 'Open':
-                    bounce_obj = message.get('bounce', {})
-                    bounced_recipients = get_permanent_bounced_emails_from_bounce_obj(bounce_obj)
-                    for email in bounced_recipients:
-                        print(email)
+                    mail_data = message.get('mail')
+                    
+                    timestamp = mail_data.get('timestamp')
+                    utc_open_date = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+                    loca_datetime = convert_ut_to_local_datetime(utc_open_date)
+                    
+                    for header in mail_data['headers']:
+                        if header['name'] == 'EMAIL-ID':
+                            email_id = header['value']
+                        if header['name'] == 'EMAIL-TYPE':
+                            email_type = header['value']
+                        if header['name'] == 'To':
+                            user_email = header['value']
+                    
+                    if email_type == Mail.DAILY:
+                        user = User.objects.get(email=user_email)
+                        mail = Mail.objects.get(id=int(email_id))
+                        SendedEmails.objects.create(
+                            user=user,
+                            mail=mail,
+                            opened_date=loca_datetime
+                        )
+                    
                 else:
                     raise ValueError("Wrong type of notification")
             else:

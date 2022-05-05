@@ -77,5 +77,5 @@ class SendedEmails(models.Model):
     
     mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    opened_date = models.DateField(default=None, null=True)
+    opened_date = models.DateTimeField(default=None, null=True)
     

@@ -46,9 +46,9 @@ class SNSNotification(models.Model):
                 if event_type == 'Open':
                     mail_data = message.get('mail')
                     
-                    timestamp = mail_data.get('timestamp')
-                    utc_open_date = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-                    loca_datetime = convert_utc_to_local_datetime(utc_open_date)
+                    #timestamp = mail_data.get('timestamp')
+                    #utc_open_date = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
+                    #loca_datetime = convert_utc_to_local_datetime(utc_open_date)
                     
                     for header in mail_data['headers']:
                         if header['name'] == 'EMAIL-ID':
@@ -58,7 +58,7 @@ class SNSNotification(models.Model):
                         if header['name'] == 'To':
                             user_email = header['value']
                     
-                    if email_type == Mail.DAILY or email_type == Mail.TEST:
+                    if email_type == Mail.DAILY:
                         user = User.objects.get(email=user_email)
                         mail = Mail.objects.get(id=int(email_id))
                         try:
@@ -66,7 +66,7 @@ class SNSNotification(models.Model):
                                 user=user,
                                 mail=mail,
                             )
-                            sended_email.opened_date = loca_datetime
+                            sended_email.opened_date = datetime.now()
                             sended_email.save()
                             
                         except SendedEmails.DoesNotExist:

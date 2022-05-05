@@ -18,5 +18,6 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', index, name='index'),
+    path('sns/', include('el_tinto.ses_sns.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

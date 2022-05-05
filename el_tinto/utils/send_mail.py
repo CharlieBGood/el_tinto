@@ -14,7 +14,7 @@ def send_several_emails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
             send_email(
-                mail.subject, 
+                mail, 
                 'testing_email.html', 
                 {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
                 [user.email],
@@ -24,7 +24,7 @@ def send_several_emails(mail, users):
         
         time.sleep(1)
 
-def send_email(subject, html_file, mail_data, emails, reply_to=None):
+def send_email(mail, html_file, mail_data, emails, reply_to=None):
     """Send email from template."""
     template = loader.get_template(
         f'../templates/mailings/{html_file}'
@@ -32,13 +32,19 @@ def send_email(subject, html_file, mail_data, emails, reply_to=None):
     html = template.render(mail_data)
     if reply_to:
         message_user = EmailMessage(
-            subject, html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
-            headers={'X-SES-CONFIGURATION-SET': 'Engagement'}
+            mail.subject, html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
+            headers={
+                'X-SES-CONFIGURATION-SET': 'Engagement',
+                'EMAIL-ID': str(mail.id),
+            }
         )
     else:
         message_user = EmailMessage(
-            subject, html, 'El Tinto <info@eltinto.xyz>', emails,
-            headers={'X-SES-CONFIGURATION-SET': 'Engagement'}
+            mail.subject, html, 'El Tinto <info@eltinto.xyz>', emails,
+            headers={
+                'X-SES-CONFIGURATION-SET': 'Engagement',
+                'EMAIL-ID': str(mail.id),
+            }
         )
     message_user.content_subtype = 'html'
     message_user.send(fail_silently=False)

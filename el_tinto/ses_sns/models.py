@@ -39,16 +39,11 @@ class SNSNotification(models.Model):
         try:
             if self.data.get('Type') == "Notification":
                 message = json.loads(self.data['Message'])
-                event_type = message.get('notificationType')
-                if event_type == 'Bounce':
+                event_type = message.get('eventType')
+                if event_type == 'Open':
                     bounce_obj = message.get('bounce', {})
                     bounced_recipients = get_permanent_bounced_emails_from_bounce_obj(bounce_obj)
                     for email in bounced_recipients:
-                        print(email)
-                elif event_type == 'Complaint':
-                    complaint_obj = message.get('complaint', {})
-                    complaint_emails = get_emails_from_complaint_obj(complaint_obj)
-                    for email in complaint_emails:
                         print(email)
                 else:
                     raise ValueError("Wrong type of notification")

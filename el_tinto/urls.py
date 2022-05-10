@@ -6,7 +6,7 @@ from django.views.generic.base import RedirectView
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from .users.views import UserViewSet, UserCreateViewSet
-from .web_page.views import index
+from .web_page.views import index, faqs
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -18,6 +18,7 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', index, name='index'),
+    path('faq/', faqs, name='faqs'),
     path('sns/', include('el_tinto.ses_sns.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -16,7 +16,11 @@ def send_several_emails(mail, users):
             send_email(
                 mail, 
                 'testing_email.html', 
-                {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
+                {
+                    'html': mark_safe(mail.html), 
+                    'date': datetime.today().strftime("%d/%m/%Y"),
+                    'name': user.first_name
+                }, 
                 [user.email],
             )
             mail.recipients.add(user)

@@ -41,10 +41,20 @@ def cancel_send_daily_email(modeladmin, request, queryset):
 @admin.action(description='Test send daily email')
 def test_send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
+    
+    try:
+        user = User.objects.get(email=mail.test_email)
+    except User.DoesNotExist:
+        user = None
+        
     send_email(
         mail, 
         'testing_email.html', 
-        {'html': mark_safe(mail.html), 'date': datetime.today().strftime("%d/%m/%Y")}, 
+        {
+            'html': mark_safe(mail.html), 
+            'date': datetime.today().strftime("%d/%m/%Y"),
+            'name': user.name if user else ''
+        }, 
         [mail.test_email],
     )
 

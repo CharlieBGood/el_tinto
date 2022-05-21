@@ -20,6 +20,11 @@ class Local(Common):
     ]
 
     # Mail
-    EMAIL_HOST = 'localhost'
-    EMAIL_PORT = 1025
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    #EMAIL_HOST = 'localhost'
+    #EMAIL_PORT = 1025
+    #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+    AWS_ACCESS_KEY_ID = os.getenv('DJANGO_AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('DJANGO_AWS_SECRET_ACCESS_KEY')
+    # Mail
+    EMAIL_BACKEND = 'django_ses.SESBackend'

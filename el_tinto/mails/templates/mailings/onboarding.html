@@ -56,36 +56,44 @@
             </div>
             <div style="padding: 0 5%; margin: 10px 0 20px 0;">
               <p>
-                Un correo diario con lo más relevante del momento en Colombia, curado con los medios 
-                más rigurosos e independientes.
-              </p>
-              <p>
-                ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ 
-                <a href="https://www.eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
+                  {% if name %}
+                  <strong>Hola {{ name }}, ¡Gracias por suscribirte a El Tinto!</strong>
+                  {% else %}
+                  <strong>¡Gracias por suscribirte a El Tinto!</strong>
+                  {% endif %}
+                  <br>
+                  <br>
+                  <br>
+                  Todos los días recibirás un correo a las 6 a.m. que te ayudará a entender las historias 
+                  más importantes del momento en Colombia. Es breve, y tiene fuentes diversas y rigurosas, 
+                  para que no te pierdas en el océano de información que puede ser internet. 
+                  <br>
+                  <br>
+                  <br>
+                  Para asegurarte de recibir El Tinto, por favor haz lo siguiente:
+                  <br>
+                  <br>
+                  <br>
+                  1) Entra desde un computador esta única vez.
+                  <br>
+                  <br>
+                  2) Si este correo no te llegó a la bandeja principal (y sí a "Promociones", "Correo no 
+                  deseado" o "Spam") nos debes agregar a tus contactos. Para hacerlo, puedes seguir 
+                  <a href='https://www.eltinto.xyz/faq/'>este tutorial.</a>
+                  <br>
+                  <br>
+                  3) Escríbenos a <a href='mailto:info@eltinto.xyz'>info@eltinto.xyz</a> 
+                  si tienes cualquier duda, sugerencia o saludo.
+                  <br>
+                  <br>
+                  <br>
+                  De nuevo, gracias por suscribirte y esperamos que disfrutes El Tinto cada mañana.
+                  <br>
+                  <br>
+                  <br>
+                  <strong>El Tinto</strong>
               </p>
             </div>
-            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
-            <p style="text-align:center; margin: 40px 0; color: #696969; font-size: 18px">{{date}}</p>
-            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
-            <h3 style="text-align:justify">
-              {% if name %}
-              Buenos días {{ name }}, este es El Tinto de hoy.
-              {% else %}
-              Buenos días, este es El Tinto de hoy.
-              {% endif %}
-            </h3>
-              {{html}}
-            <h2 style="text-align:center;">
-              ¿Te reenviaron este correo?
-            </h2>
-            <p style="text-align:center;">
-              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
-            </p>
-            <a href="https://eltinto.xyz" target="_blank" style="color: #FFFFFF; text-decoration: none;">
-              <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 100px auto;">
-                <p style="text-align: center">Suscribirse</p>
-              </div>
-            </a>
             <div style="background-color: #5044e4; padding: 5px 5%;">
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 

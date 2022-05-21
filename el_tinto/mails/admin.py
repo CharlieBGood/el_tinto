@@ -52,7 +52,8 @@ def test_send_daily_email(modeladmin, request, queryset):
         'testing_email.html', 
         {
             'html': mark_safe(mail.html), 
-            'date': datetime.today().strftime("%d/%m/%Y")
+            'date': datetime.today().strftime("%d/%m/%Y"),
+            'name': user.first_name if user else ''
         }, 
         [mail.test_email],
     )

@@ -18,7 +18,8 @@ def send_several_emails(mail, users):
                 'testing_email.html', 
                 {
                     'html': mark_safe(mail.html), 
-                    'date': datetime.today().strftime("%d/%m/%Y")
+                    'date': datetime.today().strftime("%d/%m/%Y"),
+                    'name': user.first_name
                 }, 
                 [user.email],
             )

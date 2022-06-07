@@ -67,7 +67,11 @@
             <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #d2f8d2; border-radius: 12px;">
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-11">
-                        <h3 style="color: #4D934D; text-align: justify;">¡Suscrit@!</h3>
+                        {% if name %}
+                            <h3 style="color: #4D934D; text-align: justify;">Felicidades {{name}}, ahora estás ¡suscrit@! 🥳​🥳​🥳​</h3>
+                        {% else %}
+                            <h3 style="color: #4D934D; text-align: justify;">Felicidades, ahora estás ¡suscrit@! 🥳​🥳​🥳​</h3>
+                        {% endif %}
                     </div>
                     <div class="col-12 col-md-11">
                         <p class="strong-text" style="color: #4D934D; font-size: 18px; text-align: justify;">
@@ -75,9 +79,8 @@
                             historias más importantes de Colombia.
                             <br />
                             <br />
-                            Pronto recibirás un correo de bienvenida. Si no te llega a la
-                            bandeja principal, búscanos en correo no de deseado y 
-                            <a href='https://www.eltinto.xyz/faq/'>¡sacanos de ahí!</a>
+                            Pronto recibirás un correo de bienvenida. Si no está en tu bandeja principal, 
+                            búscanos en correo no de deseado y sácanos de ahí siguiendo 👉🏻​<a href='https://www.eltinto.xyz/faq/'>estas instrucciones</a>👈🏻​
                         </p>
                     </div>
                 </div>

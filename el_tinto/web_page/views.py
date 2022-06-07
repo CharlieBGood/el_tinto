@@ -27,7 +27,7 @@ def index(request):
             return render(
                 request,
                 'home.html',
-                context={'valid': True}
+                context={'valid': True, 'name': user.first_name}
             )
         else:
             return render(

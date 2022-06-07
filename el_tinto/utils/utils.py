@@ -1,14 +1,19 @@
 import re
 
-def replace_words_in_sentence(sentence, user):
+def replace_words_in_sentence(sentence, user=None):
     """Replace all the words from sentence that match the replace structure with user info."""
 
     matches = re.findall('\{[a-zA-Z_]+\}', sentence)
     
-    for match in matches:
-        sentence = replace_word(sentence, match, user)
+    if user:
     
-    return re.sub(' +', ' ', sentence)
+        for match in matches:
+            sentence = replace_word(sentence, match, user)
+        
+        return re.sub(' +', ' ', sentence)
+    
+    else:
+        return sentence
 
 
 def replace_word(sentence, word, model):

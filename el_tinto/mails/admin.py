@@ -56,6 +56,7 @@ def test_send_daily_email(modeladmin, request, queryset):
             'name': user.first_name if user else ''
         }, 
         [mail.test_email],
+        user=user
     )
 
 @admin.register(Mail)

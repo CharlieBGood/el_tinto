@@ -5,6 +5,8 @@ from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.safestring import mark_safe
 
+from el_tinto.utils.utils import replace_words_in_sentence
+
 
 def send_several_emails(mail, users):
     
@@ -22,13 +24,14 @@ def send_several_emails(mail, users):
                     'name': user.first_name
                 }, 
                 [user.email],
+                user=user
             )
             mail.recipients.add(user)
             mail.save()
         
         time.sleep(1)
 
-def send_email(mail, html_file, mail_data, emails, reply_to=None):
+def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     """Send email from template."""
     template = loader.get_template(
         f'../templates/mailings/{html_file}'
@@ -36,7 +39,7 @@ def send_email(mail, html_file, mail_data, emails, reply_to=None):
     html = template.render(mail_data)
     if reply_to:
         message_user = EmailMessage(
-            mail.subject, html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
+            replace_words_in_sentence(mail.subject), html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),
@@ -45,7 +48,7 @@ def send_email(mail, html_file, mail_data, emails, reply_to=None):
         )
     else:
         message_user = EmailMessage(
-            mail.subject, html, 'El Tinto <info@eltinto.xyz>', emails,
+            replace_words_in_sentence(mail.subject), html, 'El Tinto <info@eltinto.xyz>', emails,
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),

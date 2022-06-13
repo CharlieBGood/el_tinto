@@ -49,11 +49,12 @@ def test_send_daily_email(modeladmin, request, queryset):
         
     send_email(
         mail, 
-        'testing_email.html', 
+        'daily_email.html', 
         {
             'html': mark_safe(mail.html), 
             'date': datetime.today().strftime("%d/%m/%Y"),
-            'name': user.first_name if user else ''
+            'name': user.first_name if user else '',
+            'email': user.email
         }, 
         [mail.test_email],
         user=user

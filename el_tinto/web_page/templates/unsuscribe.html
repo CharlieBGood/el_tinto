@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}El Tinto{% endblock %}
+
+{% block content %}
+<div class="col-md-7 col-11">
+    <div class="row justify-content-center py-5">
+        <img 
+            src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" 
+            style="margin: 0 auto; width: 35%; min-width: 235px;"
+        />
+    </div>
+    <div class="row">
+        <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #5044e4; border-radius: 12px;">
+            <div class="row text-color justify-content-center">
+                <div class="col-12 col-md-11">
+                    <h2 class="strong-text dynamic-align">Historias importantes para gente ocupada</h2>
+                </div>
+            </div>
+            <div class="row text-center justify-content-center" style="padding: 10px 0">
+                <div class="col-md-10 col-12">
+                    <p class="dynamic-align subtext">
+                        Vemos que este tinto se enfrío o nos pasamos de amargos 😔.
+                        <br>
+                        Estamos 
+                        muy tristes de verte partir y esperamos mejorar para que un futuro podamos acompañarte 
+                        nuevamente todas las mañanas más calienticos, más cargaditos y con mejor sabor.
+                    </p>
+                </div>
+            </div>
+                <div class="container" style="padding: 20px 0">
+                    <form method="POST" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-8 pb-5">
+                                <div class="input-group has-validation">
+                                    <input 
+                                        type="email" class="form-control" id="email" name="email" 
+                                        style="padding: 12px" placeholder="tu@correo.com" 
+                                        value={{user.email}} required readonly
+                                    >
+                                    <div class="invalid-feedback text-color">
+                                        Por favor ingrese un correo válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-color strong-text justify-content-center" style="font-size: 20px">
+                            <div class="col-12 col-md-8">
+                                <p>Cuéntanos por qué nos enfriamos</p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="boring" name="boring">
+                                    <label class="form-check-label" for="boring">
+                                        El contenido está muy aburrido
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="invasive" name="invasive">
+                                    <label class="form-check-label" for="invasive">
+                                        Los correos son demasiado invasivos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="variety" name="variety">
+                                    <label class="form-check-label" for="variety">
+                                        No hay suficiente variedad de temas
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="not_used" name="not_used">
+                                    <label class="form-check-label" for="not_used">
+                                        Ya no uso este correo
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="other_email" name="other_email">
+                                    <label class="form-check-label" for="other_email">
+                                        Ya los sigo en otro correo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-color strong-text justify-content-center" 
+                            style="font-size: 20px; margin: 40px 0 0 0"
+                        >
+                            <div class="col-12 col-md-8">
+                                <p>¿Alguna recomendación para mejorar nuestro sabor?</p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <textarea 
+                                    class="form-control" 
+                                    id="recomendation" name="recomendation"
+                                    rows="3" style="padding: 12px"
+                                    style='text-align: left;'
+                                >
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="row text-center justify-content-center" style="padding: 10px 0; margin: 20px 0 0 0">
+                            <div class="col-md-10 col-12">
+                                <p class="dynamic-align subtext">
+                                    Recuerda que siempre que sientas que todo va muy rápido y el corre corre del día a día  
+                                    no te permite estar informado de las noticias más importantes con las fuentes más confiables, 
+                                    siempre puedes suscribirte de nuevo. ¡Te estaremos esperando!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-8">
+                                <button 
+                                    type="submit" class="btn button mt-4 text-color strong-text shadow-sm" 
+                                    style="padding: 12px"
+                                >
+                                    Desuscribirme 🥺
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+      'use strict'
+  
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+  
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+          }
+  
+          form.classList.add('was-validated')
+          }, false)
+      })
+  })()
+
+  window.onload = function() {
+    var error = "{{ error }}";
+    if (error){
+        Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
+    }
+  };
+</script>
+{% endblock %}

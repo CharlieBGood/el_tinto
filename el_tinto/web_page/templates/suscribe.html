@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}El Tinto{% endblock %}
+
+{% block content %}
+<div class="col-md-7 col-11">
+    <div class="row justify-content-center py-5">
+        <img 
+            src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" 
+            style="margin: 0 auto; width: 35%; min-width: 235px;"
+        />
+    </div>
+    <div class="row">
+        {% if not valid %}
+            <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #5044e4; border-radius: 12px;">
+                <div class="row text-color justify-content-center">
+                    <div class="col-12 col-md-11">
+                        <h2 class="strong-text dynamic-align">Historias importantes para gente ocupada</h2>
+                    </div>
+                </div>
+                <div class="row text-center justify-content-center" style="padding: 10px 0">
+                    <div class="col-md-10 col-12">
+                        <p class="dynamic-align subtext">
+                            Un correo diario con lo más relevante del momento en Colombia, 
+                            curado con los medios más rigurosos e independientes.
+                        </p>
+                    </div>
+                </div>
+                    <div class="container" style="padding: 20px 0">
+                        <form method="POST" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8 pb-5">
+                                    <div class="input-group has-validation">
+                                        <input type="email" class="form-control" id="email" name="email" style="padding: 12px" placeholder="tu@correo.com" required>
+                                        <div class="invalid-feedback text-color">
+                                            Por favor ingrese un correo válido
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-color strong-text justify-content-center" style="font-size: 20px">
+                                <div class="col-12 col-md-8">
+                                    <p>¡Ayúdanos a llegar a tu correo!</p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-md-4 col-12">
+                                    <input class="form-control" id="first_name" name="first_name" style="padding: 12px" placeholder="Nombre (Opcional)">
+                                </div>
+                                <div class="col-md-4 col-12 mt-md-0 mt-2">
+                                    <input class="form-control" id="last_name" name="last_name" style="padding: 12px" placeholder="Apellido (Opcional)">
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-8">
+                                    <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Suscríbeme</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #d2f8d2; border-radius: 12px;">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-11">
+                        {% if name %}
+                            <h3 style="color: #4D934D; text-align: justify;">Felicidades {{name}}, ahora estás ¡suscrit@! 🥳​🥳​🥳​</h3>
+                        {% else %}
+                            <h3 style="color: #4D934D; text-align: justify;">Felicidades, ahora estás ¡suscrit@! 🥳​🥳​🥳​</h3>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-md-11">
+                        <p class="strong-text" style="color: #4D934D; font-size: 18px; text-align: justify;">
+                            Desde mañana disfruta El Tinto todos los días con las
+                            historias más importantes de Colombia.
+                            <br />
+                            <br />
+                            Pronto recibirás un correo de bienvenida. Si no está en tu bandeja principal, 
+                            búscanos en correo no de deseado y sácanos de ahí siguiendo 👉🏻​<a href='https://www.eltinto.xyz/faq/'>estas instrucciones</a>👈🏻​
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+      'use strict'
+  
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+  
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+          }
+  
+          form.classList.add('was-validated')
+          }, false)
+      })
+  })()
+
+  window.onload = function() {
+    var error = "{{ error }}";
+    if (error){
+        Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
+    }
+  };
+</script>
+{% endblock %}

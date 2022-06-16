@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 @require_http_methods(["GET"])
 def index(request):
     mails = Mail.objects.filter(type=Mail.DAILY)
-    mail = mails.order_by('created_at')[0]
+    mail = mails.order_by('-created_at')[0]
     
     return render(
         request,

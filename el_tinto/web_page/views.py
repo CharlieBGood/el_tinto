@@ -15,7 +15,11 @@ def index(request):
     return render(
         request,
         'home.html',
-        context={'html': mark_safe(mail.html), 'date': mail.dispatch_date.date().strftime("%d/%m/%Y")}
+        context={
+            'html': mark_safe(mail.html), 
+            'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+            'el_tinto': True
+        }
     ) 
     
 @require_http_methods(["GET"])

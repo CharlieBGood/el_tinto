@@ -135,3 +135,15 @@ def faqs(request):
         'faqs.html',
         context={"faqs_active": True}
     )
+
+def error_404_view(request, exception):
+   
+    # we add the path to the the 404.html file
+    # here. The name of our HTML file is 404.html
+    return render(request, '404.html')
+
+def error_500_view(request):
+   
+    # we add the path to the the 500.html file
+    # here. The name of our HTML file is 404.html
+    return render(request, '500.html')

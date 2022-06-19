@@ -1,0 +1,48 @@
+{% extends "errors_base.html" %}
+
+{% block title %}El Tinto{% endblock %}
+
+{% block style %}
+
+<style>
+    a div {
+        background-color: #5044e4; 
+        border-radius: 12px; 
+        height: 45px;
+        color: #FFFFFF;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-7 col-11">
+    <div class="row justify-content-center py-5">
+        <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" 
+            style="margin: 0 auto; width: 35%; min-width: 235px;"
+        />
+    </div>
+    <div class="row justify-content-center py-5">
+        <h3 style="text-align: center">
+            <strong>Creemos que confundiste El Tinto con la aromática 😅</strong>
+            <br> 
+            <br> 
+            No te preocupes, nos pasa a todos. Para que te recargues de vuelta con nuestro sabor y te acabes de despertar hoy 
+            síguenos leyendo de nuevo aquí
+            <br>
+            <br>
+            👇🏻
+        </h3>
+        <a href="https://eltinto.xyz/el_tinto/" style="color: #FFFFFF; text-decoration: none;">
+            <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 100px auto;">
+              <p style="text-align: center; margin: 1rem !important">Suscribirse</p>
+            </div>
+          </a>
+    </div>
+</div>
+
+{% endblock %}

@@ -5,7 +5,8 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from .users.views import UserViewSet, UserCreateViewSet
-from .web_page.views import index, faqs, suscribe, who_are_we, unsuscribe
+from .web_page.views import index, faqs, suscribe, who_are_we, unsuscribe, error_404_view
+from django.conf.urls import handler404, handler500
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -24,3 +25,6 @@ urlpatterns = [
     path('sns/', include('el_tinto.ses_sns.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'el_tinto.web_page.views.error_404_view'
+handler500 = 'el_tinto.web_page.views.error_500_view'

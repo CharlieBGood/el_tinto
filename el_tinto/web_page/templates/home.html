@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load social_share %}
+
 {% block title %}El Tinto{% endblock %}
 
 {% block style %}
@@ -78,8 +80,26 @@
                 </strong>
             </h3>
               {{html}}
+            <h3 style="text-align: center; margin-top: 60px;">
+              <strong>¿Te gustó nuestro sabor y quieres compartirlo en tus redes?</strong>
+            </h3>
+            <table style="width: 40%; margin: 60px auto 0 auto;">
+              <tbody>
+                <tr>
+                  <td>
+                    {% post_to_facebook social_media_date '<i class="fab fa-facebook fa-2xl" style="color: #4267B2"></i>' %}
+                  </td>
+                  <td>
+                    {% post_to_twitter suggested_tweet social_media_date '<i class="fab fa-twitter fa-2xl" style="color: #1DA1F2"></i>' %}
+                  </td>
+                  <td>
+                    {% post_to_whatsapp social_media_date '<i class="fab fa-whatsapp fa-2xl" style="color: #25D366"></i>' %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <h2 style="text-align:center; margin: 60px 0 0 0">
-              <strong>Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
+              <strong>También te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
             </h2>
             <a href="https://eltinto.xyz/suscribirse/" style="color: #FFFFFF; text-decoration: none;">
               <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 100px auto;">

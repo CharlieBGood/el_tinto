@@ -56,6 +56,8 @@ class Mail(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     dispatch_date = models.DateTimeField(null=True, blank=False)
     programmed = models.BooleanField(default=False, editable = False)
+
+    tweet = models.CharField(max_length=280, default='', blank=True)
     
     recipients = models.ManyToManyField(
         'users.User',

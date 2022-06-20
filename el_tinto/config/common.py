@@ -22,7 +22,9 @@ class Common(Configuration):
         # Third party apps
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
-        'django_filters',            # for filtering rest endpoints
+        'django_filters',            # Filtering rest endpoints
+        'django_social_share',       # Social media sharing
+        'fontawesomefree',           # Icons
 
         # Your apps
         'el_tinto.users',

@@ -1,4 +1,4 @@
-from curses.ascii import US
+import datetime
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
@@ -6,21 +6,49 @@ from el_tinto.utils.send_mail import send_email
 from el_tinto.web_page.forms import UserForm, UnsuscribeForm
 from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
+from django.http import Http404
 
 @require_http_methods(["GET"])
 def index(request):
-    mails = Mail.objects.filter(type=Mail.DAILY)
-    mail = mails.order_by('-created_at')[0]
-    
-    return render(
-        request,
-        'home.html',
-        context={
-            'html': mark_safe(mail.html), 
-            'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
-            'el_tinto': True
-        }
-    ) 
+
+    date = request.GET.get('date', None)
+
+    if date:
+        date_obj = datetime.datetime.strptime(date, '%d-%m-%Y')
+        mails = Mail.objects.filter(type=Mail.DAILY, dispatch_date__date=date_obj)
+
+        if mails:
+            mail = mails.order_by('-created_at')[0]
+
+            return render(
+                request,
+                'home.html',
+                context={
+                    'html': mark_safe(mail.html), 
+                    'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                    'social_media_date': '?date='+mail.dispatch_date.date().strftime("%d-%m-%Y"),
+                    'suggested_tweet': mail.tweet,
+                    'el_tinto': True
+                }
+            ) 
+        else:
+            raise Http404()
+
+    else:
+        mails = Mail.objects.filter(type=Mail.DAILY)
+        mail = mails.order_by('-created_at')[0]
+        
+        return render(
+            request,
+            'home.html',
+            context={
+                'html': mark_safe(mail.html), 
+                'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                'social_media_date': '?date='+mail.dispatch_date.date().strftime("%d-%m-%Y"),
+                'suggested_tweet': mail.tweet,
+                'el_tinto': True
+            }
+        ) 
     
 @require_http_methods(["GET"])
 def who_are_we(request):

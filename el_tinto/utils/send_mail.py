@@ -22,6 +22,7 @@ def send_several_emails(mail, users):
                     'html': mark_safe(mail.html), 
                     'date': datetime.today().strftime("%d/%m/%Y"),
                     'name': user.first_name,
+                    'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                     'email': user.email
                 }, 
                 [user.email],

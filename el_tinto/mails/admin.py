@@ -54,6 +54,7 @@ def test_send_daily_email(modeladmin, request, queryset):
             'html': mark_safe(mail.html), 
             'date': datetime.today().strftime("%d/%m/%Y"),
             'name': user.first_name if user else '',
+            'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email
         }, 
         [mail.test_email],

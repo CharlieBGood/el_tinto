@@ -25,7 +25,7 @@ def send_several_emails(mail, users):
                 mail, 
                 html_version,
                 {
-                    'html': mark_safe(replace_words_in_sentence(mail.subject, user=user)),
+                    'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
                     'date': datetime.today().strftime("%d/%m/%Y"),
                     'name': user.first_name,
                     'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),

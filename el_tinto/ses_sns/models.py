@@ -5,9 +5,9 @@ from datetime import datetime
 
 from django.db import models
 
-from el_tinto.mails.models import Mail, SendedEmails
+from el_tinto.mails.models import Mail, SentEmails, SentEmailsInteractions
 from el_tinto.users.models import User
-from el_tinto.utils.datetime import convert_utc_to_local_datetime
+from el_tinto.utils.utils import get_email_headers
 
 logger = logging.getLogger(__name__)
 
@@ -37,41 +37,49 @@ class SNSNotification(models.Model):
         return str(self.pk)
 
     def process(self):
-        """Attempt to see if this notification is any of use (Open).
-        If so - creates SendedEmails instance for open rate tracking."""
+        """Attempt to see if this notification is any of use (Open, Click).
+        If so - creates SentEmails instance for open rate tracking."""
         try:
             if self.data.get('Type') == "Notification":
                 message = json.loads(self.data['Message'])
                 event_type = message.get('eventType')
-                if event_type == 'Open':
+                if event_type in ['Open', 'Click']:
                     mail_data = message.get('mail')
+
+                    headers = get_email_headers(mail_data['headers'])
                     
-                    #timestamp = mail_data.get('timestamp')
-                    #utc_open_date = datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%fZ')
-                    #loca_datetime = convert_utc_to_local_datetime(utc_open_date)
-                    
-                    for header in mail_data['headers']:
-                        if header['name'] == 'EMAIL-ID':
-                            email_id = header['value']
-                        if header['name'] == 'EMAIL-TYPE':
-                            email_type = header['value']
-                        if header['name'] == 'To':
-                            user_email = header['value']
-                    
-                    if email_type == Mail.DAILY:
-                        user = User.objects.get(email=user_email)
-                        mail = Mail.objects.get(id=int(email_id))
-                        try:
-                            sended_email = SendedEmails.objects.get(
-                                user=user,
-                                mail=mail,
-                            )
-                            sended_email.opened_date = datetime.now()
-                            sended_email.save()
-                            
-                        except SendedEmails.DoesNotExist:
-                            pass
-                    
+                    if headers.get('email_type') in [Mail.DAILY, Mail.PROMOTION]:
+                        user = User.objects.get(email=headers.get('user_email'))
+                        mail = Mail.objects.get(id=headers.get('email_id'))
+
+                        if event_type == 'Open':
+                            try:
+                                sent_email = SentEmails.objects.get(
+                                    user=user,
+                                    mail=mail,
+                                )
+                                sent_email.opened_date = datetime.now()
+                                sent_email.save()
+
+                            except SentEmails.DoesNotExist:
+                                pass
+
+                        elif event_type == 'Click':
+                            click_data = message.get('click')
+                            try:
+                                SentEmailsInteractions.objects.get(
+                                    user=user,
+                                    mail=mail,
+                                    link=click_data('link')
+                                )
+
+                            except SentEmailsInteractions.DoesNotExist:
+                                SentEmailsInteractions.objects.create(
+                                    user=user,
+                                    mail=mail,
+                                    link=click_data('link')
+                                )
+
                 else:
                     raise ValueError("Wrong type of notification")
             else:

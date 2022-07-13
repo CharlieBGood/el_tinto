@@ -5,25 +5,32 @@ from django.core.mail import EmailMessage
 from django.template import loader
 from django.utils.safestring import mark_safe
 
+from el_tinto.mails.models import Mail
 from el_tinto.utils.utils import replace_words_in_sentence
 
 
 def send_several_emails(mail, users):
     
     n = 13
-    users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)] 
+    users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
+
+    html_version = 'daily_email.html'
+
+    if mail.version == Mail.DEFUALT_TESTING:
+        html_version = 'default.html'
     
     for users_list in users_chunked_list:
         for user in users_list:
             send_email(
                 mail, 
-                'daily_email.html', 
+                html_version,
                 {
-                    'html': mark_safe(mail.html), 
+                    'html': mark_safe(replace_words_in_sentence(mail.subject, user=user)),
                     'date': datetime.today().strftime("%d/%m/%Y"),
                     'name': user.first_name,
                     'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
-                    'email': user.email
+                    'email': user.email,
+                    'tweet': mail.tweet
                 }, 
                 [user.email],
                 user=user

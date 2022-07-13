@@ -26,4 +26,18 @@ def replace_word(sentence, word, model):
     model_attribute = getattr(model, attribute)
     
     return sentence.replace(word, model_attribute)
-    
+
+def get_email_headers(headers):
+    """Get email headers as dict"""
+
+    email_headers = {}
+
+    for header in headers:
+        if header['name'] == 'EMAIL-ID':
+            email_headers['email_id'] = int(header['value'])
+        if header['name'] == 'EMAIL-TYPE':
+            email_headers['email_type'] = header['value']
+        if header['name'] == 'To':
+            email_headers['user_email'] = header['value']
+
+    return email_headers

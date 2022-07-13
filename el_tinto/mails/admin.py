@@ -1,9 +1,10 @@
 from django.contrib import admin, messages
 from django.utils import timezone
-from .models import Mail
+from .models import Mail, SentEmailsInteractions
 from el_tinto.users.models import User
 from el_tinto.utils.send_mail import send_email, send_several_emails
 from el_tinto.utils.scheduler import get_scheduler
+from el_tinto.utils.utils import replace_words_in_sentence
 from django.utils.safestring import mark_safe
 from datetime import datetime, timedelta
 
@@ -46,16 +47,22 @@ def test_send_daily_email(modeladmin, request, queryset):
         user = User.objects.get(email=mail.test_email)
     except User.DoesNotExist:
         user = None
+
+    html_version = 'daily_email.html'
+
+    if mail.version == Mail.DEFUALT_TESTING:
+        html_version = 'default.html'
         
     send_email(
         mail, 
-        'daily_email.html', 
+        html_version,
         {
-            'html': mark_safe(mail.html), 
+            'html': mark_safe(replace_words_in_sentence(mail.subject, user=user)),
             'date': datetime.today().strftime("%d/%m/%Y"),
             'name': user.first_name if user else '',
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
-            'email': user.email
+            'email': user.email,
+            'tweet': mail.tweet
         }, 
         [mail.test_email],
         user=user
@@ -73,3 +80,6 @@ class MailsAdmin(admin.ModelAdmin):
         super(MailsAdmin, self).save_model(request, obj, form, change)
 
 
+@admin.register(SentEmailsInteractions)
+class SentEMailsInteractionAdmin(admin.ModelAdmin):
+    """"Mail Admin."""

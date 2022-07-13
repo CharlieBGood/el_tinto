@@ -24,12 +24,12 @@ class Mail(models.Model):
     # Version constants
     A = 'A'
     B = 'B'
-    C = 'C'
+    DEFUALT_TESTING = 'DEFAULT'
     
     VERSION_OPTIONS = [
         (A, 'A'),
         (B, 'B'),
-        (C, 'C')
+        (DEFUALT_TESTING, 'Testeo en blanco')
     ]
     
     html = models.TextField()
@@ -48,7 +48,7 @@ class Mail(models.Model):
     created_by = models.ForeignKey(
         'users.User',
         on_delete=models.SET_NULL,
-        related_name='sended_emails',
+        related_name='sent_emails',
         null=True,
         blank=True,
         editable = False
@@ -62,7 +62,7 @@ class Mail(models.Model):
     recipients = models.ManyToManyField(
         'users.User',
         related_name='received_emails',
-        through="mails.SendedEmails", 
+        through="mails.SentEmails",
         through_fields=('mail', 'user'),
         blank=True
     )
@@ -75,9 +75,34 @@ class Mail(models.Model):
         return self.type
 
 
-class SendedEmails(models.Model):
+class SentEmails(models.Model):
     
     mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     opened_date = models.DateTimeField(default=None, null=True)
-    
+
+
+class SentEmailsInteractions(models.Model):
+
+    TWITTER = 'TW'
+    FACEBOOK = 'FB'
+    WHATSAPP = 'WP'
+    WEB_PAGE = 'WBP'
+    OTHER = 'OT'
+
+    INTERACTION_TYPE = [
+        (TWITTER, 'Twitter'),
+        (FACEBOOK, 'Facebook'),
+        (WHATSAPP, 'Whatsapp'),
+        (WEB_PAGE, 'Web page'),
+        (OTHER, 'Other')
+    ]
+
+    class Meta:
+        db_table = 'clicks_tracking'
+
+    mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    type = models.CharField(max_length=3, choices=INTERACTION_TYPE, default='')
+    link = models.TextField()
+    click_date = models.DateTimeField(auto_now_add=True)

@@ -70,7 +70,7 @@ class SNSNotification(models.Model):
                                 SentEmailsInteractions.objects.get(
                                     user=user,
                                     mail=mail,
-                                    type=click_data['linkTags']['type'],
+                                    type=click_data['linkTags']['type'][0],
 
                                 )
 
@@ -79,7 +79,7 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                     link=click_data.get('link'),
-                                    type=click_data['linkTags']['type']
+                                    type=click_data['linkTags']['type'][0]
                                 )
 
                 else:

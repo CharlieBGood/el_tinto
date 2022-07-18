@@ -70,14 +70,16 @@ class SNSNotification(models.Model):
                                 SentEmailsInteractions.objects.get(
                                     user=user,
                                     mail=mail,
-                                    link=click_data.get('link')
+                                    type=click_data['linkTags']['type'],
+
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:
                                 SentEmailsInteractions.objects.create(
                                     user=user,
                                     mail=mail,
-                                    link=click_data.get('link')
+                                    link=click_data.get('link'),
+                                    type=click_data['linkTags']['type']
                                 )
 
                 else:

@@ -7,7 +7,7 @@ from django.db import models
 
 from el_tinto.mails.models import Mail, SentEmails, SentEmailsInteractions
 from el_tinto.users.models import User
-from el_tinto.utils.utils import get_email_headers
+from el_tinto.utils.utils import get_email_headers, EVENT_TYPE_CLICK, EVENT_TYPE_OPEN, EVENT_TYPES
 
 logger = logging.getLogger(__name__)
 
@@ -43,7 +43,7 @@ class SNSNotification(models.Model):
             if self.data.get('Type') == "Notification":
                 message = json.loads(self.data['Message'])
                 event_type = message.get('eventType')
-                if event_type in ['Open', 'Click']:
+                if event_type in EVENT_TYPES:
                     mail_data = message.get('mail')
 
                     headers = get_email_headers(mail_data['headers'])
@@ -52,7 +52,7 @@ class SNSNotification(models.Model):
                         user = User.objects.get(email=headers.get('user_email'))
                         mail = Mail.objects.get(id=headers.get('email_id'))
 
-                        if event_type == 'Open':
+                        if event_type == EVENT_TYPE_OPEN:
                             try:
                                 sent_email = SentEmails.objects.get(
                                     user=user,
@@ -64,20 +64,20 @@ class SNSNotification(models.Model):
                             except SentEmails.DoesNotExist:
                                 pass
 
-                        elif event_type == 'Click':
+                        elif event_type == EVENT_TYPE_CLICK:
                             click_data = message.get('click')
                             try:
                                 SentEmailsInteractions.objects.get(
                                     user=user,
                                     mail=mail,
-                                    link=click_data('link')
+                                    link=click_data.get('link')
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:
                                 SentEmailsInteractions.objects.create(
                                     user=user,
                                     mail=mail,
-                                    link=click_data('link')
+                                    link=click_data.get('link')
                                 )
 
                 else:

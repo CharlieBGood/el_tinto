@@ -41,3 +41,11 @@ def get_email_headers(headers):
             email_headers['user_email'] = header['value']
 
     return email_headers
+
+
+# Constants
+
+EVENT_TYPE_CLICK = 'Click'
+EVENT_TYPE_OPEN = 'Open'
+
+EVENT_TYPES = [EVENT_TYPE_CLICK, EVENT_TYPE_OPEN]

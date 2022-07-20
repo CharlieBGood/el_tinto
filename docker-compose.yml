@@ -21,11 +21,11 @@ services:
       - postgres
   redis:
     image: redis:5.0.7
-  documentation:
-    restart: always
-    build: ./
-    command: "mkdocs serve"
-    volumes:
-      - ./:/code
-    ports:
-      - "8001:8001"
+#  documentation:
+#    restart: always
+#    build: ./
+#    command: "mkdocs serve"
+#    volumes:
+#      - ./:/code
+#    ports:
+#      - "8001:8001"

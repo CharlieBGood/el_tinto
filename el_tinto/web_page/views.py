@@ -27,7 +27,7 @@ def index(request):
                     'html': mark_safe(mail.html), 
                     'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
                     'social_media_date': '?date='+mail.dispatch_date.date().strftime("%d-%m-%Y"),
-                    'suggested_tweet': mail.tweet,
+                    'tweet': mail.tweet,
                     'el_tinto': True
                 }
             ) 
@@ -45,7 +45,7 @@ def index(request):
                 'html': mark_safe(mail.html), 
                 'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
                 'social_media_date': '?date='+mail.dispatch_date.date().strftime("%d-%m-%Y"),
-                'suggested_tweet': mail.tweet,
+                'tweet': mail.tweet,
                 'el_tinto': True
             }
         ) 

@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load social_share %}
-
 {% block title %}El Tinto{% endblock %}
 
 {% block style %}
@@ -81,23 +79,46 @@
             </h3>
               {{html}}
             <h3 style="text-align: center; margin-top: 60px;">
-              <strong>¿Te gustó nuestro sabor y quieres compartirlo en tus redes?</strong>
+              <strong>¿Te gustó nuestro sabor y quieres compartirlo?</strong>
             </h3>
-            <table style="width: 40%; margin: 60px auto 0 auto;">
-              <tbody>
-                <tr>
-                  <td>
-                    {% post_to_facebook suggested_tweet social_media_date '<i class="fab fa-facebook fa-2xl" style="color: #4267B2"></i>' %}
-                  </td>
-                  <td>
-                    {% post_to_twitter suggested_tweet social_media_date '<i class="fab fa-twitter fa-2xl" style="color: #1DA1F2"></i>' %}
-                  </td>
-                  <td>
-                    {% post_to_whatsapp suggested_tweet social_media_date '<i class="fab fa-whatsapp fa-2xl" style="color: #087404"></i>' %}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <table style="width: 40%; margin: 30px auto 60px auto;">
+                <tbody>
+                  <tr>
+                    <td>
+                      <a
+                        ses:tags="type:FB"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://eltinto.xyz/el_tinto/?date={{social_media_date}}" class="" target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/facebook_icon.png"
+                          style="width: 40px; height: auto; margin: 0 auto; display: block;"
+                        >
+                      </a>
+                    </td>
+                    <td>
+                      <a
+                        ses:tags="type:TW"
+                        href="https://twitter.com/intent/tweet?text={{tweet}} https://eltinto.xyz/el_tinto/?date={{social_media_date}}" class="" target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/twitter_icon.png"
+                          style="width: 40px; height: auto; margin: 0 auto; display: block;"
+                        >
+                      </a>
+                    </td>
+                    <td>
+                      <a
+                        ses:tags="type:WP"
+                        href="https://api.whatsapp.com/send?text={{tweet}} https://eltinto.xyz/el_tinto/?date={{social_media_date}}" class="" target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/whatsapp_icon.png"
+                          style="width: 40px; height: auto; margin: 0 auto; display: block;"
+                        >
+                      </a>
+                  </tr>
+                </tbody>
+              </table>
             <h2 style="text-align:center; margin: 60px 0 0 0">
               <strong>También te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
             </h2>

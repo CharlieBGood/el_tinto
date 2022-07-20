@@ -51,13 +51,13 @@ class Mail(models.Model):
         related_name='sent_emails',
         null=True,
         blank=True,
-        editable = False
+        editable=False
     )
     created_at = models.DateTimeField(auto_now_add=True)
     dispatch_date = models.DateTimeField(null=True, blank=False)
     programmed = models.BooleanField(default=False, editable = False)
 
-    tweet = models.CharField(max_length=280, default='', blank=True)
+    tweet = models.CharField(max_length=229, default='', help_text='229 characters max')
     
     recipients = models.ManyToManyField(
         'users.User',

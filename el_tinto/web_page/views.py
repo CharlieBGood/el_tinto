@@ -44,7 +44,7 @@ def index(request):
             context={
                 'html': mark_safe(mail.html), 
                 'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
-                'social_media_date': '?date='+mail.dispatch_date.date().strftime("%d-%m-%Y"),
+                'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                 'tweet': mail.tweet,
                 'el_tinto': True
             }

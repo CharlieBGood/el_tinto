@@ -72,7 +72,7 @@ class Mail(models.Model):
         verbose_name_plural = "Mails"
 
     def __str__(self):
-        return self.type
+        return f'{self.type} - {self.created_at.date}'
 
 
 class SentEmails(models.Model):

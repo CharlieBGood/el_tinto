@@ -57,7 +57,7 @@ class Mail(models.Model):
     dispatch_date = models.DateTimeField(null=True, blank=False)
     programmed = models.BooleanField(default=False, editable = False)
 
-    tweet = models.CharField(max_length=229, default='', help_text='229 characters max')
+    tweet = models.CharField(max_length=255, default='', help_text='255 characters max')
     
     recipients = models.ManyToManyField(
         'users.User',

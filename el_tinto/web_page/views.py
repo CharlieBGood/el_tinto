@@ -61,7 +61,7 @@ def who_are_we(request):
 @require_http_methods(["GET", "POST"])
 def suscribe(request):
     if request.method == 'POST':
-        form=UserForm(request.POST)
+        form = UserForm(request.POST)
         form.is_valid()
         try:
             user = User.objects.get(email=form.cleaned_data['email'])

@@ -5,7 +5,7 @@ from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
 from .users.views import UserViewSet, UserCreateViewSet
-from .web_page.views import index, faqs, suscribe, who_are_we, unsuscribe, error_404_view
+from .web_page.views import index, faqs, suscribe, who_are_we, unsuscribe
 from django.conf.urls import handler404, handler500
 
 router = DefaultRouter()
@@ -20,7 +20,7 @@ urlpatterns = [
     path('', who_are_we, name='index'),
     path('suscribirse/', suscribe, name='suscribe'),
     path('desuscribirse/', unsuscribe, name='unsuscribe'),
-    path('el_tinto/', index, name='who_are_we'),
+    path('el-tinto/', index, name='el_tinto'),
     path('faq/', faqs, name='faqs'),
     path('sns/', include('el_tinto.ses_sns.urls')),
 

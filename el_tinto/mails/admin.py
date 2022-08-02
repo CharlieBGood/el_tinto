@@ -62,7 +62,7 @@ def test_send_daily_email(modeladmin, request, queryset):
             'name': user.first_name if user else '',
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,
-            'tweet': mail.tweet
+            'tweet': mail.tweet.replace(' ', '%20')
         }, 
         [mail.test_email],
         user=user

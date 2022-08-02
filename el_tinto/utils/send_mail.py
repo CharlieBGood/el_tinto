@@ -30,7 +30,7 @@ def send_several_emails(mail, users):
                     'name': user.first_name,
                     'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                     'email': user.email,
-                    'tweet': mail.tweet
+                    'tweet': mail.tweet.replace(' ', '%20')
                 }, 
                 [user.email],
                 user=user

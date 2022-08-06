@@ -1,4 +1,5 @@
 import datetime
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
@@ -48,7 +49,17 @@ def index(request):
                 'tweet': mail.tweet,
                 'el_tinto': True
             }
-        ) 
+        )
+
+@require_http_methods(["GET"])
+def old_index(request):
+    date = request.GET.get('date', None)
+
+    if date:
+        return redirect(f"{reverse('el_tinto')}?date={date}")
+
+    else:
+        return redirect('el_tinto')
     
 @require_http_methods(["GET"])
 def who_are_we(request):

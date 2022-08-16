@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
 from el_tinto.utils.send_mail import send_email
+from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP
 from el_tinto.web_page.forms import UserForm, UnsuscribeForm
 from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
@@ -137,7 +138,7 @@ def unsuscribe(request):
                     unsuscribe_instance.variety = form.cleaned_data['variety']
                     unsuscribe_instance.not_used = form.cleaned_data['not_used']
                     unsuscribe_instance.other_email = form.cleaned_data['other_email']
-                    unsuscribe_instance.recomendation = form.cleaned_data['recomendation']
+                    unsuscribe_instance.recommendation = form.cleaned_data['recommendation']
                     unsuscribe_instance.save()
                 else:
                     unsuscribe_instance = form.save(commit=False)
@@ -175,8 +176,80 @@ def faqs(request):
         context={"faqs_active": True}
     )
 
+@require_http_methods(["GET", "POST"])
+def customize(request):
+    if request.method == 'POST':
+
+        try:
+            user = User.objects.get(email=request.POST.get('email'))
+        except User.DoesNotExist:
+            return render(
+                request,
+                'customize.html',
+                context={'error': 'El correo ingresado no pertenece a ningún usuario en nuestra base de datos'}
+            )
+
+        mail = Mail(subject='Cambios en días de envío')
+
+        new_preferred_days_numbers = []
+
+        for day in request.POST.keys():
+            if DAY_OF_THE_WEEK_MAP.get(day):
+                new_preferred_days_numbers.append(day)
+
+        new_preferred_days = [DAY_OF_THE_WEEK_MAP.get(day) for day in new_preferred_days_numbers]
+
+        last_day = ''
+
+        if len(new_preferred_days) > 1:
+            last_day = ' y ' + new_preferred_days.pop()
+
+        context = {
+            'name': user.first_name,
+            'email': user.email,
+            'days': ', '.join(new_preferred_days) + last_day,
+            'numeric_days': ','.join(new_preferred_days_numbers)
+        }
+
+        send_email(
+            mail, 'change_preferred_days.html', context, [user.email],
+        )
+
+        return render(
+            request,
+            'customize.html',
+            context={'valid': True, 'name': user.first_name}
+        )
+
+    else:
+        return render(
+            request,
+            'customize.html'
+        )
+
+@require_http_methods(["GET"])
+def customize_days(request):
+    email = request.GET.get('email')
+    days = request.GET.get('days').split(',')
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return redirect('index')
+
+    new_preferred_days = []
+
+    for day in days:
+        if DAY_OF_THE_WEEK_MAP.get(day):
+            new_preferred_days.append(day)
+
+    user.preferred_email_days = new_preferred_days
+    user.save()
+
+    return redirect('index')
+
+
 def error_404_view(request, exception):
-   
     # we add the path to the the 404.html file
     # here. The name of our HTML file is 404.html
     return render(request, '404.html')

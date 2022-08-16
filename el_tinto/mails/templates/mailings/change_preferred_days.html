@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Tinto</title>
+  <style>
+    body {
+      font-family: Arial;
+    }
+    h1 {
+      font-size: 46px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    a {
+      color: #348286;
+    }
+    a div {
+      background-color: #5044e4;
+      border-radius: 12px;
+      height: 45px;
+      color: #FFFFFF;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    .main {
+      padding: 20px 0;
+    }
+    @media only screen and (min-width: 768px) {
+      .main {
+        padding: 20px 26%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" style="margin: 0 auto; display: block;"/>
+            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
+              <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
+                Historias importantes para gente ocupada
+              </h2>
+            </div>
+                <div style="padding: 0 5%; margin: 10px 0 20px 0;">
+                    <p>
+                      {% if name %}
+                      <strong>Hola {{ name }},</strong>
+                      {% else %}
+                      Hola,
+                      {% endif %}
+                      <br>
+                      <br>
+                      <br>
+                      Acabas de realizar una solicitud para actualizar la frecuencia en la que quieres recibir El Tinto.
+                      Ahora podrás disfrutar de nuestro sabor y mantenerte al día con las noticias
+                      más importantes del país en los días {{ days }}.
+                      <br>
+                      <br>
+                      <br>
+                      Si fuiste tú quién realizó esta solicitud y quieres confirmarla, por favor da click en el siguiente link
+                      <br>
+                      <br>
+                      <br>
+                    </p>
+                    <a ses:no-track href="https://eltinto.xyz/personalizar/dias/?email={{ email }}&days={{ numeric_days }}" target="_blank" style="color: #FFFFFF; text-decoration: none;">
+                      <div style="border-radius: 12px; background-color: #5044e4; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">
+                        <p style="text-align: center;">Actualizar</p>
+                      </div>
+                    </a>
+                </div>
+            <div style="background-color: #5044e4; padding: 5px 5%;">
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
+                los derechos reservados.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                ¿No quieres recibir más estos correos?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                Te puedes desuscribir de esta lista <a ses:no-track href="https://www.eltinto.xyz/desuscribirse/?email={{email}}" target="_blank">aquí</a>.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
+                quisieras que incluyeramos algo nuevo?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
+                <a ses:no-track href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+                o responde a este correo y te daremos respuesta antes de que se te enfríe el tintico.
+              </p>
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

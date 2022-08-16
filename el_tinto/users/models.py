@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import UserManager as BaseUserManager
 from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 from django.db.models.signals import post_save
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -50,6 +51,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=25, blank=True, default='')
     last_name = models.CharField(max_length=25, blank=True, default='')
     username = None
+    preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -58,8 +60,8 @@ class User(AbstractUser):
         return self.email
 
 
-#@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-#def create_auth_token(sender, instance=None, created=False, **kwargs):
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+# def create_auth_token(sender, instance=None, created=False, **kwargs):
 #    if created:
 #        Token.objects.create(user=instance)
 
@@ -71,7 +73,7 @@ class Unsuscribe(models.Model):
     variety = models.BooleanField(default=False)
     not_used = models.BooleanField(default=False)
     other_email = models.BooleanField(default=False)
-    recomendation = models.TextField(default='', blank=True)
+    recommendation = models.TextField(default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
     

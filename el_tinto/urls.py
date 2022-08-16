@@ -20,7 +20,7 @@ urlpatterns = [
     path('el_tinto/', old_index, name='el_tinto_old'),
     path('faq/', faqs, name='faqs'),
     path('personalizar/', customize, name='customize'),
-    path('personalizar/dias/', customize_days, name='customize'),
+    path('personalizar/dias/', customize_days, name='customize_days'),
     path('sns/', include('el_tinto.ses_sns.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

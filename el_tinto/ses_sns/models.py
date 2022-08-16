@@ -1,9 +1,9 @@
 import json
 import logging
 from collections import namedtuple
-from datetime import datetime
 
 from django.db import models
+from django.utils import timezone
 
 from el_tinto.mails.models import Mail, SentEmails, SentEmailsInteractions
 from el_tinto.users.models import User
@@ -58,7 +58,7 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                 )
-                                sent_email.opened_date = datetime.now()
+                                sent_email.opened_date = timezone.now()
                                 sent_email.save()
 
                             except SentEmails.DoesNotExist:

@@ -6,14 +6,14 @@ from el_tinto.utils.send_mail import send_email, send_several_emails
 from el_tinto.utils.scheduler import get_scheduler
 from el_tinto.utils.utils import replace_words_in_sentence
 from django.utils.safestring import mark_safe
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 @admin.action(description='Send daily email')
 def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
     users = User.objects.filter(is_active=True)
     
-    if mail.dispatch_date > datetime.now(timezone.utc) + timedelta(minutes=5):
+    if mail.dispatch_date > timezone.now() + timedelta(minutes=5):
         scheduler = get_scheduler()
         scheduler.add_job(
             send_several_emails, 
@@ -58,7 +58,7 @@ def test_send_daily_email(modeladmin, request, queryset):
         html_version,
         {
             'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-            'date': datetime.today().strftime("%d/%m/%Y"),
+            'date': timezone.now().date().strftime("%d/%m/%Y"),
             'name': user.first_name if user else '',
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,

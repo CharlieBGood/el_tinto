@@ -10,6 +10,7 @@ from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
 from django.http import Http404
 
+
 @require_http_methods(["GET"])
 def index(request):
 
@@ -52,6 +53,7 @@ def index(request):
             }
         )
 
+
 @require_http_methods(["GET"])
 def old_index(request):
     date = request.GET.get('date', None)
@@ -61,7 +63,8 @@ def old_index(request):
 
     else:
         return redirect('el_tinto')
-    
+
+
 @require_http_methods(["GET"])
 def who_are_we(request):
     return render(
@@ -69,6 +72,7 @@ def who_are_we(request):
         'who_are_we.html',
         context={'who_are_we_active': True}
     ) 
+
 
 @require_http_methods(["GET", "POST"])
 def suscribe(request):
@@ -123,11 +127,12 @@ def suscribe(request):
             'suscribe.html',
             context={'suscribe_active': True}
         )
-        
+
+
 @require_http_methods(["GET", "POST"])
 def unsuscribe(request):
     if request.method == 'POST':
-        form=UnsuscribeForm(request.POST)
+        form = UnsuscribeForm(request.POST)
         if form.is_valid():
             try:
                 user = User.objects.get(email=form.cleaned_data.pop('email'))
@@ -167,7 +172,8 @@ def unsuscribe(request):
                 pass
         
         return redirect('index')
-        
+
+
 @require_http_methods(["GET"])
 def faqs(request):
     return render(
@@ -175,6 +181,7 @@ def faqs(request):
         'faqs.html',
         context={"faqs_active": True}
     )
+
 
 @require_http_methods(["GET", "POST"])
 def customize(request):
@@ -227,6 +234,7 @@ def customize(request):
             'customize.html'
         )
 
+
 @require_http_methods(["GET"])
 def customize_days(request):
     email = request.GET.get('email')
@@ -253,6 +261,7 @@ def error_404_view(request, exception):
     # we add the path to the the 404.html file
     # here. The name of our HTML file is 404.html
     return render(request, '404.html')
+
 
 def error_500_view(request):
    

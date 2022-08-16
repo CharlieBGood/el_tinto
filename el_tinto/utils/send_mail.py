@@ -1,8 +1,8 @@
 import time
-from datetime import datetime
 
 from django.core.mail import EmailMessage
 from django.template import loader
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from el_tinto.mails.models import Mail
@@ -21,22 +21,28 @@ def send_several_emails(mail, users):
     
     for users_list in users_chunked_list:
         for user in users_list:
-            send_email(
-                mail, 
-                html_version,
-                {
-                    'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-                    'date': datetime.today().strftime("%d/%m/%Y"),
-                    'name': user.first_name,
-                    'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
-                    'email': user.email,
-                    'tweet': mail.tweet.replace(' ', '%20')
-                }, 
-                [user.email],
-                user=user
-            )
-            mail.recipients.add(user)
-            mail.save()
+
+            week_day = timezone.now().date().weekday()
+
+            send_today = True if user.preferred_email_days and week_day in user.preferred_email_days else False
+
+            if not user.preferred_email_days or send_today:
+                send_email(
+                    mail,
+                    html_version,
+                    {
+                        'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
+                        'date': timezone.now().date().strftime("%d/%m/%Y"),
+                        'name': user.first_name,
+                        'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
+                        'email': user.email,
+                        'tweet': mail.tweet.replace(' ', '%20')
+                    },
+                    [user.email],
+                    user=user
+                )
+                mail.recipients.add(user)
+                mail.save()
         
         time.sleep(1)
 

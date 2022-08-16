@@ -4,7 +4,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0006_merge_20220616_0919'),
+        ('users', '0004_unsuscribe'),
     ]
 
     operations = [

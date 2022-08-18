@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
 from el_tinto.utils.send_mail import send_email
-from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP
+from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP, get_string_days
 from el_tinto.web_page.forms import UserForm, UnsuscribeForm
 from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
@@ -185,16 +185,15 @@ def faqs(request):
 
 @require_http_methods(["GET", "POST"])
 def customize(request):
-    if request.method == 'POST':
 
-        try:
-            user = User.objects.get(email=request.POST.get('email'))
-        except User.DoesNotExist:
-            return render(
-                request,
-                'customize.html',
-                context={'error': 'El correo ingresado no pertenece a ningún usuario en nuestra base de datos'}
-            )
+    email = request.GET.get('email')
+
+    try:
+        user = User.objects.get(email=email)
+    except User.DoesNotExist:
+        return redirect('index')
+
+    if request.method == 'POST':
 
         mail = Mail(subject='Cambios en días de envío')
 
@@ -204,17 +203,12 @@ def customize(request):
             if DAY_OF_THE_WEEK_MAP.get(day):
                 new_preferred_days_numbers.append(day)
 
-        new_preferred_days = [DAY_OF_THE_WEEK_MAP.get(day) for day in new_preferred_days_numbers]
-
-        last_day = ''
-
-        if len(new_preferred_days) > 1:
-            last_day = ' y ' + new_preferred_days.pop()
+        string_days = get_string_days(new_preferred_days_numbers)
 
         context = {
             'name': user.first_name,
             'email': user.email,
-            'days': ', '.join(new_preferred_days) + last_day,
+            'days': string_days,
             'numeric_days': ','.join(new_preferred_days_numbers)
         }
 
@@ -231,7 +225,8 @@ def customize(request):
     else:
         return render(
             request,
-            'customize.html'
+            'customize.html',
+            context={'email': email, 'name': user.first_name}
         )
 
 
@@ -254,7 +249,11 @@ def customize_days(request):
     user.preferred_email_days = new_preferred_days
     user.save()
 
-    return redirect('index')
+    return render(
+        request,
+        'finish_customization.html',
+        context={'email': email}
+    )
 
 
 def error_404_view(request, exception):

@@ -1,11 +1,20 @@
 {% extends "base.html" %}
 
 {% block meta_tags %}
-    <meta property="og:title" content="El Tinto - Suscribirse" />
-    <meta property="og:url" content="https://eltinto.xyz/suscribirse/" />
+    <meta property="og:title" content="El Tinto - Personalizar" />
+    <meta property="og:url" content="https://eltinto.xyz/personalizar/" />
 {% endblock %}
 
 {% block title %}El Tinto - Suscribirse{% endblock %}
+
+{% block style %}
+    <style>
+        .form-check-input:checked {
+            background-color: #4D934D;
+            border-color: #4D934D;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 <div class="col-md-7 col-11">
@@ -13,6 +22,7 @@
         <img
             src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png"
             style="margin: 0 auto; width: 35%; min-width: 235px;"
+            alt="El Tinto"
         />
     </div>
     <div class="row">
@@ -25,6 +35,11 @@
                 </div>
                 <div class="row text-center justify-content-center" style="padding: 10px 0">
                     <div class="col-md-8 col-12">
+                        {% if name %}
+                            <p class="subtext" style="text-align: justify; margin-top: 40px">Hola {{ name }},</p>
+                        {% else %}
+                            <p class="subtext" style="text-align: justify; margin-top: 40px">Hola,</p>
+                        {% endif %}
                         <p class="subtext" style="text-align: justify">
                             Si un Tinto diario te está dando un poco de gastritis, siempre puedes ajustar la frecuencia
                             en la que te lo tomas. Más seguidito para que el sabor no se te vaya de la boca, o solo un
@@ -33,12 +48,21 @@
                     </div>
                 </div>
                     <div class="container" style="padding: 20px 0">
-                        <form method="POST" class="needs-validation" novalidate>
+                        <form method="POST" class="needs-validation">
                         {% csrf_token %}
-                            <div class="row justify-content-center">
+                            <div class="row justify-content-center" style="display: none">
                                 <div class="col-12 col-md-8 pb-5">
                                     <div class="input-group has-validation">
-                                        <input type="email" class="form-control" id="email" name="email" style="padding: 12px" placeholder="tu@correo.com" required>
+                                        <input
+                                            type="email"
+                                            class="form-control"
+                                            value={{ email }}
+                                            id="email"
+                                            name="email"
+                                            style="padding: 12px"
+                                            placeholder="tu@correo.com"
+                                            required
+                                        >
                                         <div class="invalid-feedback text-color">
                                             Por favor ingrese un correo válido
                                         </div>
@@ -84,7 +108,7 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-12 col-md-8">
-                                    <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Actualizar</button>
+                                    <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Solicitar actualización</button>
                                 </div>
                             </div>
                         </form>
@@ -92,23 +116,19 @@
                 </div>
             </div>
         {% else %}
-            <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #d2f8d2; border-radius: 12px;">
+            <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0">
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-11">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/email_icon.jpeg"
+                        style="width: 100px; display: block; margin: 0 auto">
                         {% if name %}
-                            <h3 style="color: #4D934D; text-align: justify;">Hola {{name}},</h3>
+                            <h3 style="text-align: center">¡{{name}} revisa tu correo!</h3>
                         {% else %}
-                            <h3 style="color: #4D934D; text-align: justify;">Hola,</h3>
+                            <h3 style="text-align: center">¡Revisa tu correo!</h3>
                         {% endif %}
-                    </div>
-                    <div class="col-12 col-md-11">
-                        <p class="strong-text" style="color: #4D934D; font-size: 18px; text-align: justify;">
-                            Acabas de personalizar los días en los que quieres recibir tu Tinto.
-                            <br />
-                            <br />
+                        <p style="text-align: center">
                             Pronto recibirás un correo de confirmación para asegurarnos de que seas solamente tú quien
-                            define qué tanta azúcar le quiere echar.
-                            Si no está en tu bandeja principal, búscanos en correo no de deseado y sácanos de ahí siguiendo 👉🏻​<a href='https://www.eltinto.xyz/faq/'>estas instrucciones</a>👈🏻​
+                            define qué tan seguido nos tomas.
                         </p>
                     </div>
                 </div>
@@ -122,8 +142,8 @@
 <script>
 
     function checkAtLeastOneDay(){
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
         if (!checkedOne){
             Swal.fire({
             title: 'Error!',
@@ -140,24 +160,22 @@
       'use strict'
 
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.querySelectorAll('.needs-validation')
+      const forms = document.querySelectorAll('.needs-validation')
 
       // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
       .forEach(function (form) {
           form.addEventListener('submit', function (event) {
-          if (!form.checkValidity() && !checkAtLeastOneDay()) {
+          if (!checkAtLeastOneDay()) {
               event.preventDefault()
               event.stopPropagation()
           }
-
-          form.classList.add('was-validated')
           }, false)
       })
   })()
 
   window.onload = function() {
-    var error = "{{ error }}";
+    const error = "{{ error }}";
     if (error){
         Swal.fire({
             title: 'Error!',

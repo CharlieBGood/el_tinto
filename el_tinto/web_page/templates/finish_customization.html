@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block meta_tags %}
+    <meta property="og:title" content="El Tinto - Confirmar personalización" />
+    <meta property="og:url" content="https://eltinto.xyz/personalizar/" />
+{% endblock %}
+
+{% block title %}El Tinto - Confirmar personalización{% endblock %}
+
+{% block content %}
+<div class="col-md-7 col-11">
+    <div class="row justify-content-center py-5">
+        <img
+            src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png"
+            style="margin: 0 auto; width: 35%; min-width: 235px;"
+            alt="El Tinto"
+        />
+    </div>
+    <div class="row">
+        <div class="col-12 px-4 px-md-0 py-md-5 pt-5 pb-0" style="background-color: #d2f8d2; border-radius: 12px;">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-11">
+                {% if name %}
+                    <h3 style="color: #4D934D; text-align: justify;">Hola {{name}},</h3>
+                {% else %}
+                    <h3 style="color: #4D934D; text-align: justify;">Hola,</h3>
+                {% endif %}
+            </div>
+            <div class="col-12 col-md-11">
+                <h3 class="strong-text" style="color: #4D934D; font-size: 18px; text-align: justify;">
+                    ¡Acabas de personalizar los días en los que quieres recibir tu Tinto!
+                </h3>
+                <p style="color: #4D934D; font-size: 18px; text-align: justify;">
+                    Recuerda que puedes cambiar la frecuencia siempre que quieras siguiendo el link en nuestro correo 😁
+                </p>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+
+

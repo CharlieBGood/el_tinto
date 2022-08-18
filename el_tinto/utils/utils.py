@@ -1,7 +1,8 @@
 import re
 
+
 def replace_words_in_sentence(sentence, user=None):
-    """Replace all the words from sentence that match the replace structure with user info."""
+    """Replace all the words from sentence that match the replacement structure with user info."""
     if user:
         matches = re.findall('\{[a-zA-Z_]+\}', sentence)
     
@@ -26,6 +27,7 @@ def replace_word(sentence, word, model):
     model_attribute = getattr(model, attribute)
     
     return sentence.replace(word, model_attribute)
+
 
 def replace_social_media_buttons(html):
     """Replace social media buttons in html"""
@@ -53,6 +55,7 @@ def replace_social_media_buttons(html):
 
     html.replace("__social_media_buttons__", social_media_buttons_html)
 
+
 def get_email_headers(headers):
     """Get email headers as dict"""
 
@@ -67,6 +70,32 @@ def get_email_headers(headers):
             email_headers['user_email'] = header['value']
 
     return email_headers
+
+
+def get_string_days(numeric_days):
+    """Get the string value of the days based on its numeric representation"""
+
+    if numeric_days == ['0', '1', '2', '3', '4']:
+        string_days = 'entre semana'
+
+    elif numeric_days == ['5', '6']:
+        string_days = 'los fines de semana'
+
+    elif numeric_days == ['0', '1', '2', '3', '4', '5', '6']:
+        string_days = 'todos los días'
+
+    else:
+
+        new_preferred_days = [DAY_OF_THE_WEEK_MAP.get(day) for day in numeric_days]
+
+        last_day = ''
+
+        if len(new_preferred_days) > 1:
+            last_day = ' y ' + new_preferred_days.pop()
+
+        string_days = 'en los días ' + ', '.join(new_preferred_days) + last_day
+
+    return string_days
 
 
 # Constants

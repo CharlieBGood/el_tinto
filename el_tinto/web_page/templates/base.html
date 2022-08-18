@@ -66,6 +66,9 @@
         .navbar-toggler {
             border: 0;
         }
+        .navbar-brand {
+            padding-top: 0;
+        }
         .navbar-toggler:focus {
             box-shadow: 0 0 0 .15rem #5044e4;
         }
@@ -127,7 +130,7 @@
   <body>
     <nav class="navbar navbar-light navbar-expand-sm navbar-padding shadow-sm py-1 bg-white rounded">
         <div class="container-fluid">
-            <a class="navbar-brand ml-5 strong-text a-nav" href="/" style="font-family: Segoe UI Bold">
+            <a class="navbar-brand ml-5 strong-text a-nav" href="/" style="font-family: Segoe UI Bold; font-weight: 900;">
                 <img src="https://el-tinto-utils.s3.amazonaws.com/logo.png" width="36" height="24" class="d-inline-block" style="vertical-align: 0">
                 El Tinto
             </a>
@@ -135,7 +138,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav me-auto mb-lg-0">
                     <li class="nav-item">
                         {% if suscribe_active %}
                         <a class="nav-link active" aria-current="page" href="/suscribirse/">¡Suscríbete!</a>

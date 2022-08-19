@@ -64,12 +64,24 @@
                       <br>
                       <br>
                       <br>
+                      {% if display_type == 'str' %}
                       Acabas de realizar una solicitud para actualizar la frecuencia en la que quieres recibir El Tinto.
                       Ahora podrás disfrutar de nuestro sabor y mantenerte al día con las noticias
                       más importantes del país <strong>{{ days }}</strong>.
                       <br>
                       <br>
                       <br>
+                      {% elif display_type == 'list' %}
+                      Acabas de realizar una solicitud para actualizar la frecuencia en la que quieres recibir El Tinto.
+                      Ahora podrás disfrutar de nuestro sabor y mantenerte al día con las noticias
+                      más importantes del país los días:
+                      <ul>
+                        {% for day in days %}
+                            <li><strong>{{ day }}</strong></li>
+                        {% endfor %}
+                      </ul>
+                      <br>
+                      {% endif %}
                       Si fuiste tú quién realizó esta solicitud y quieres confirmarla, por favor da click en el siguiente link
                       <br>
                       <br>

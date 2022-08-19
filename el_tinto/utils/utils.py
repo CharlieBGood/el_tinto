@@ -75,6 +75,8 @@ def get_email_headers(headers):
 def get_string_days(numeric_days):
     """Get the string value of the days based on its numeric representation"""
 
+    display_type = 'str'
+
     if numeric_days == ['0', '1', '2', '3', '4']:
         string_days = 'entre semana'
 
@@ -86,16 +88,11 @@ def get_string_days(numeric_days):
 
     else:
 
-        new_preferred_days = [DAY_OF_THE_WEEK_MAP.get(day) for day in numeric_days]
+        string_days = [DAY_OF_THE_WEEK_MAP.get(day) for day in numeric_days]
 
-        last_day = ''
+        display_type = 'list'
 
-        if len(new_preferred_days) > 1:
-            last_day = ' y ' + new_preferred_days.pop()
-
-        string_days = 'en los días ' + ', '.join(new_preferred_days) + last_day
-
-    return string_days
+    return string_days, display_type
 
 
 # Constants

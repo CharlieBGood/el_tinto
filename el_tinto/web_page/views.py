@@ -203,12 +203,13 @@ def customize(request):
             if DAY_OF_THE_WEEK_MAP.get(day):
                 new_preferred_days_numbers.append(day)
 
-        string_days = get_string_days(new_preferred_days_numbers)
+        string_days, display_type = get_string_days(new_preferred_days_numbers)
 
         context = {
             'name': user.first_name,
             'email': user.email,
             'days': string_days,
+            'display_type': display_type,
             'numeric_days': ','.join(new_preferred_days_numbers)
         }
 

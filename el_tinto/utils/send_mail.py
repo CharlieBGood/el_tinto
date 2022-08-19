@@ -54,7 +54,7 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     html = template.render(mail_data)
     if reply_to:
         message_user = EmailMessage(
-            replace_words_in_sentence(mail.subject, user=user), html, 'El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
+            replace_words_in_sentence(mail.subject, user=user), html, '☕ El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),
@@ -63,7 +63,7 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
         )
     else:
         message_user = EmailMessage(
-            replace_words_in_sentence(mail.subject, user=user), html, 'El Tinto <info@eltinto.xyz>', emails,
+            replace_words_in_sentence(mail.subject, user=user), html, '☕ El Tinto <info@eltinto.xyz>', emails,
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),

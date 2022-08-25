@@ -55,10 +55,6 @@ def test_send_daily_email(modeladmin, request, queryset):
 
     elif user.preferred_email_days and len(user.preferred_email_days) < 7:
         html_version = 'daily_email_with_days.html'
-
-    # Define preferred sending days
-    numeric_days = [str(day) for day in user.preferred_email_days]
-    string_days, display_type = get_string_days(numeric_days)
         
     send_email(
         mail, 
@@ -70,8 +66,6 @@ def test_send_daily_email(modeladmin, request, queryset):
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,
             'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
-            'days': string_days,
-            'display_type': display_type,
         }, 
         [mail.test_email],
         user=user

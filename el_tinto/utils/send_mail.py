@@ -26,10 +26,6 @@ def send_several_emails(mail, users):
 
             send_today = True if user.preferred_email_days and week_day in user.preferred_email_days else False
 
-            # Define preferred sending days
-            numeric_days = [str(day) for day in user.preferred_email_days]
-            string_days, display_type = get_string_days(numeric_days)
-
             if not user.preferred_email_days or send_today:
                 send_email(
                     mail,
@@ -40,9 +36,7 @@ def send_several_emails(mail, users):
                         'name': user.first_name,
                         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                         'email': user.email,
-                        'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
-                        'days': string_days,
-                        'display_type': display_type,
+                        'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22")
                     },
                     [user.email],
                     user=user

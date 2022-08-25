@@ -66,24 +66,9 @@
             </div>
             <hr style="width: 100%; border-top: 1px solid #eaeaea;">
             <div style="padding: 0 5%; margin: 40px 0;">
-              {% if display_type == 'str' %}
-                <p>
-                  Recuerda que ahora recibes las historias más importantes del país <strong>{{ days }}</strong>.
-                </p>
-              {% elif display_type == 'list' %}
-                <p>
-                  Recuerda que ahora recibes las historias más importantes del país los días:
-                  <ul>
-                    {% for day in days %}
-                        <li><strong>{{ day }}</strong></li>
-                    {% endfor %}
-                  </ul>
-                </p>
-                <br>
-              {% endif %}
               <p>
-                Pero si extrañas nuestro sabor en tus mañanas o sientes que no te despiertas con toda la energía que te
-                  da un buen Tinto, siempre puedes personalizar tus días
+                  Recuerda que si extrañas nuestro sabor diario en tus mañanas o sientes que
+                  no te despiertas con toda la energía que te da un buen Tinto, siempre puedes personalizar tus días
                 <a ses:no-track href="https://www.eltinto.xyz/personalizar/?email={{ email }}" target="_blank">haciendo click aquí</a>.
               </p>
             </div>

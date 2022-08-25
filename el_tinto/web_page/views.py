@@ -257,7 +257,7 @@ def customize_days(request):
     return render(
         request,
         'finish_customization.html',
-        context={'email': email}
+        context={'email': email, 'name': user.first_name}
     )
 
 

@@ -15,11 +15,11 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', who_are_we, name='index'),
     path('suscribirse/', suscribe, name='suscribe'),
-    path('desuscribirse/', unsuscribe, name='unsuscribe'),
+    path('desuscribirse/adios/', unsuscribe, name='unsuscribe'),
     path('el-tinto/', index, name='el_tinto'),
     path('el_tinto/', old_index, name='el_tinto_old'),
     path('faq/', faqs, name='faqs'),
-    path('personalizar/', customize, name='customize'),
+    path('desuscribirse/personalizar/', customize, name='customize'),
     path('personalizar/dias/', customize_days, name='customize_days'),
     path('sns/', include('el_tinto.ses_sns.urls')),
 

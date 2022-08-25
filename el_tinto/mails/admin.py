@@ -4,7 +4,7 @@ from .models import Mail, SentEmailsInteractions
 from el_tinto.users.models import User
 from el_tinto.utils.send_mail import send_email, send_several_emails
 from el_tinto.utils.scheduler import get_scheduler
-from el_tinto.utils.utils import replace_words_in_sentence
+from el_tinto.utils.utils import replace_words_in_sentence, get_string_days
 from django.utils.safestring import mark_safe
 from datetime import timedelta
 
@@ -52,6 +52,13 @@ def test_send_daily_email(modeladmin, request, queryset):
 
     if mail.version == Mail.DEFUALT_TESTING:
         html_version = 'default.html'
+
+    elif user.preferred_email_days and len(user.preferred_email_days) < 7:
+        html_version = 'daily_email_with_days.html'
+
+    # Define preferred sending days
+    numeric_days = [str(day) for day in user.preferred_email_days]
+    string_days, display_type = get_string_days(numeric_days)
         
     send_email(
         mail, 
@@ -62,7 +69,9 @@ def test_send_daily_email(modeladmin, request, queryset):
             'name': user.first_name if user else '',
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,
-            'tweet': mail.tweet.replace(' ', '%20')
+            'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
+            'days': string_days,
+            'display_type': display_type,
         }, 
         [mail.test_email],
         user=user

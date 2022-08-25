@@ -71,7 +71,6 @@ def get_email_headers(headers):
 
     return email_headers
 
-
 def get_string_days(numeric_days):
     """Get the string value of the days based on its numeric representation"""
 

@@ -23,8 +23,8 @@
       color: #348286;
     }
     a div {
-      background-color: #5044e4; 
-      border-radius: 12px; 
+      background-color: #5044e4;
+      border-radius: 12px;
       height: 45px;
       color: #FFFFFF;
       font-size: 18px;
@@ -56,11 +56,34 @@
             </div>
             <div style="padding: 0 5%; margin: 10px 0 20px 0;">
               <p>
-                Un correo diario con lo más relevante del momento en Colombia, curado con los medios 
+                Un correo diario con lo más relevante del momento en Colombia, curado con los medios
                 más rigurosos e independientes.
               </p>
               <p>
-                ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ 
+                ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ
+                <a ses:no-track href="https://www.eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
+              </p>
+            </div>
+            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
+            <div style="padding: 0 5%; margin: 40px 0;">
+              {% if display_type == 'str' %}
+                <p>
+                  Recuerda que ahora recibes las historias más importantes del país <strong>{{ days }}</strong>.
+                </p>
+              {% elif display_type == 'list' %}
+                <p>
+                  Recuerda que ahora recibes las historias más importantes del país los días:
+                  <ul>
+                    {% for day in days %}
+                        <li><strong>{{ day }}</strong></li>
+                    {% endfor %}
+                  </ul>
+                </p>
+                <br>
+              {% endif %}
+              <p>
+                Pero si extrañas nuestro sabor en tus mañanas o sientes que no te despiertas con toda la energía que te
+                  da un buen Tinto, siempre puedes personalizar tus días
                 <a ses:no-track href="https://www.eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
               </p>
             </div>
@@ -149,7 +172,7 @@
             </a>
             <div style="background-color: #5044e4; padding: 5px 5%;">
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
                 los derechos reservados.
               </p>
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
@@ -157,18 +180,14 @@
               </p>
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
                 Te puedes desuscribir de esta lista
-                  <a
-                    ses:no-track href="https://www.eltinto.xyz/desuscribirse/personalizar/?email={{email}}"
-                    target="_blank"
-                    style="color: #FFFFFF"
-                  >
+                  <a ses:no-track href="https://www.eltinto.xyz/desuscribirse/personalizar/?email={{email}}" target="_blank">
                       aquí
                   </a>.
               </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
                 quisieras que incluyeramos algo nuevo?
               </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
                 <a ses:no-track href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
                 o responde a este correo y te daremos respuesta antes de que se te enfríe el tintico.
               </p>

@@ -41,9 +41,11 @@
                             <p class="subtext" style="text-align: justify; margin-top: 40px">Hola {{ email }},</p>
                         {% endif %}
                         <p class="subtext" style="text-align: justify">
-                            Antes de irte, personaliza la frecuencia con la que te informas de las historias más importantes.
-                            <br>
-                            <br>
+                            {% if unsuscribe %}
+                                Antes de irte, personaliza la frecuencia con la que te informas de las historias más importantes.
+                                <br>
+                                <br>
+                            {% endif %}
                             Recibe El Tinto <span style="color: #FFFFFF"><strong>los días que tú prefieras</strong></span>.
                             Acá entre nos, yo no dejaría ir los Tinticos domingueros 😉
                         </p>
@@ -109,12 +111,18 @@
                                 </div>
                             </div>
                             <div class="row justify-content-center">
-                                <div class="col-12 col-md-4">
-                                    <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Solicitar actualización</button>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <a href="{% url 'unsuscribe' %}?email={{ email }}" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Desuscribirme 🥺</a>
-                                </div>
+                                {% if unsuscribe %}
+                                    <div class="col-12 col-md-4">
+                                        <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Solicitar actualización</button>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <a href="?email={{ email }}" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Desuscribirme 🥺</a>
+                                    </div>
+                                {% else %}
+                                    <div class="col-12 col-md-8">
+                                        <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Solicitar actualización</button>
+                                    </div>
+                                {% endif %}
                             </div>
                         </form>
                     </div>

@@ -1,5 +1,5 @@
 import datetime
-from django.urls import reverse
+from django.urls import reverse, resolve
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
@@ -227,7 +227,11 @@ def customize(request):
         return render(
             request,
             'customize.html',
-            context={'email': email, 'name': user.first_name}
+            context={
+                'email': email,
+                'name': user.first_name,
+                'unsuscribe': True if resolve(request.path_info).url_name == 'unsuscribe_customize' else False
+            }
         )
 
 

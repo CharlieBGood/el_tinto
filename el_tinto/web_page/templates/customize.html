@@ -116,7 +116,7 @@
                                         <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Solicitar actualización</button>
                                     </div>
                                     <div class="col-12 col-md-4">
-                                        <a href="?email={{ email }}" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Desuscribirme 🥺</a>
+                                        <a href="{% url 'unsuscribe' %}?email={{ email }}" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">Desuscribirme 🥺</a>
                                     </div>
                                 {% else %}
                                     <div class="col-12 col-md-8">

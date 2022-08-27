@@ -53,7 +53,7 @@ def test_send_daily_email(modeladmin, request, queryset):
     if mail.version == Mail.DEFUALT_TESTING:
         html_version = 'default.html'
 
-    elif user.preferred_email_days and len(user.preferred_email_days) < 7:
+    elif 0 < len(user.preferred_email_days) < 7:
         html_version = 'daily_email_with_days.html'
         
     send_email(

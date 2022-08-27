@@ -19,7 +19,7 @@ def send_several_emails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
 
-            if user.preferred_email_days and len(user.preferred_email_days) < 7:
+            if 0 < len(user.preferred_email_days) < 7:
                 html_version = 'daily_email_with_days.html'
 
             week_day = timezone.now().date().weekday()

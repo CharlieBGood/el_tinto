@@ -29,4 +29,5 @@ jobs:
           host: ${{ secrets.HOST_DNS_DEV }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
           script: sh deploy.sh

@@ -1,4 +1,3 @@
-import os
 import time
 
 from django.core.mail import EmailMessage
@@ -52,15 +51,10 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     template = loader.get_template(
         f'../templates/mailings/{html_file}'
     )
-    sending_email_address = (
-        '☕ El Tinto <info@eltinto.xyz>'
-        if os.environ.setdefault("DJANGO_CONFIGURATION", "Production")
-        else 'carlos@eltinto.xyz'
-    )
     html = template.render(mail_data)
     if reply_to:
         message_user = EmailMessage(
-            replace_words_in_sentence(mail.subject, user=user), html, sending_email_address, emails, reply_to=[reply_to, ],
+            replace_words_in_sentence(mail.subject, user=user), html, '☕ El Tinto <info@eltinto.xyz>', emails, reply_to=[reply_to, ],
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),
@@ -69,7 +63,7 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
         )
     else:
         message_user = EmailMessage(
-            replace_words_in_sentence(mail.subject, user=user), html, sending_email_address, emails,
+            replace_words_in_sentence(mail.subject, user=user), html, '☕ El Tinto <info@eltinto.xyz>', emails,
             headers={
                 'X-SES-CONFIGURATION-SET': 'Engagement',
                 'EMAIL-ID': str(mail.id),

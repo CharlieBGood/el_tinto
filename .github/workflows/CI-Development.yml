@@ -30,4 +30,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          script: sh deploy.sh
+          script: sudo systemctl restart gunicorn

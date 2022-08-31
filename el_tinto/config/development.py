@@ -4,7 +4,7 @@ import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 
 
-class Production(Common):
+class Development(Common):
     INSTALLED_APPS = Common.INSTALLED_APPS
     SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
     # Site

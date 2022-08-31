@@ -1,4 +1,4 @@
-name: Push-to-EC2
+name: CI-Production
 
 # Trigger deployment only on push to master branch
 on:

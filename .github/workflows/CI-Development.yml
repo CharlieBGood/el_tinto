@@ -4,7 +4,8 @@ name: CI-Development
 on:
   push:
     branches:
-      - develop
+      - 'develop'
+      - !master
 
 jobs:
   deploy:

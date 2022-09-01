@@ -61,7 +61,7 @@
               </p>
               <p>
                 ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ
-                <a ses:no-track href="https://www.eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
+                <a ses:no-track href="https://www.{{ env }}eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
               </p>
             </div>
             <hr style="width: 100%; border-top: 1px solid #eaeaea;">
@@ -69,7 +69,7 @@
               <p>
                   Recuerda que si extrañas nuestro sabor diario en tus mañanas o sientes que
                   no te despiertas con toda la energía que te da un buen Tinto, siempre puedes personalizar tus días
-                <a ses:no-track href="https://www.eltinto.xyz/personalizar/?email={{ email }}" target="_blank">haciendo click aquí</a>.
+                <a ses:no-track href="https://www.{{ env }}eltinto.xyz/personalizar/?email={{ email }}" target="_blank">haciendo click aquí</a>.
               </p>
             </div>
             <hr style="width: 100%; border-top: 1px solid #eaeaea;">
@@ -100,7 +100,7 @@
                     <td>
                       <a
                         ses:tags="type:WBP"
-                        href="https://eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_cursor.png"
@@ -111,7 +111,7 @@
                     <td>
                       <a
                         ses:tags="type:FB"
-                        href="https://www.facebook.com/sharer/sharer.php?u=https://eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/facebook_icon.png"
@@ -122,7 +122,7 @@
                     <td>
                       <a
                         ses:tags="type:TW"
-                        href="https://twitter.com/intent/tweet?text={{tweet}}%20https://eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        href="https://twitter.com/intent/tweet?text={{tweet}}%20https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/twitter_icon.png"
@@ -133,7 +133,7 @@
                     <td>
                       <a
                         ses:tags="type:WP"
-                        href="https://api.whatsapp.com/send?text={{tweet}}%20https://eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        href="https://api.whatsapp.com/send?text={{tweet}}%20https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/whatsapp_icon.png"
@@ -150,7 +150,7 @@
             <p style="text-align:center;">
               Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
             </p>
-            <a ses:no-track href="https://eltinto.xyz/suscribirse/" target="_blank" style="color: #FFFFFF; text-decoration: none;">
+            <a ses:no-track href="https://{{ env }}eltinto.xyz/suscribirse/" target="_blank" style="color: #FFFFFF; text-decoration: none;">
               <div style="background-color: #5044e4; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">
                 <p style="text-align: center;">Suscribirse</p>
               </div>
@@ -168,7 +168,7 @@
                   <a
                     ses:no-track
                     style="color: #FFFFFF"
-                    href="https://www.eltinto.xyz/desuscribirse/personalizar/?email={{email}}"
+                    href="https://www.{{ env }}eltinto.xyz/desuscribirse/personalizar/?email={{email}}"
                     target="_blank"
                   >
                       aquí

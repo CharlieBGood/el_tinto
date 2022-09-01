@@ -52,17 +52,34 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     template = loader.get_template(
         f'../templates/mailings/{html_file}'
     )
+
     send_email_address = (
         '☕ El Tinto <info@eltinto.xyz>'
         if os.getenv('DJANGO_CONFIGURATION') == 'Production'
-        else 'El Tinto Pruebas <pruebas@eltinto.xyz>'
+        else '☕ El Tinto Pruebas <pruebas@eltinto.xyz>'
     )
+
+    mail_data['env'] = (
+        'dev.'
+        if os.getenv('DJANGO_CONFIGURATION') == 'Development'
+        else ''
+    )
+
     html = template.render(mail_data)
+
     if reply_to:
         message_user = EmailMessage(
-            replace_words_in_sentence(mail.subject, user=user), html, send_email_address, emails, reply_to=[reply_to, ],
+            replace_words_in_sentence(mail.subject, user=user),
+            html,
+            send_email_address,
+            emails,
+            reply_to=[reply_to, ],
             headers={
-                'X-SES-CONFIGURATION-SET': 'Engagement',
+                'X-SES-CONFIGURATION-SET': (
+                    'Engagement'
+                    if os.getenv('DJANGO_CONFIGURATION') == 'Production'
+                    else 'Engagement_dev'
+                ),
                 'EMAIL-ID': str(mail.id),
                 'EMAIL-TYPE': mail.type
             }
@@ -71,7 +88,11 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
         message_user = EmailMessage(
             replace_words_in_sentence(mail.subject, user=user), html, send_email_address, emails,
             headers={
-                'X-SES-CONFIGURATION-SET': 'Engagement',
+                'X-SES-CONFIGURATION-SET': (
+                    'Engagement'
+                    if os.getenv('DJANGO_CONFIGURATION') == 'Production'
+                    else 'Engagement_dev'
+                ),
                 'EMAIL-ID': str(mail.id),
                 'EMAIL-TYPE': mail.type
             }

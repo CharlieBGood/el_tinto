@@ -22,3 +22,19 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
+
+      - name: executing remote ssh commands using ssh key
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST_DNS }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.EC2_SSH_KEY }}
+            port: 22
+            script: |
+              cd el_tinto
+              source env/bin/activate
+              sudo pip install -r requirements.txt
+              python manage.py migrate --no-input
+              python manage.py collectstatic --no-input
+              sudo systemctl restart nginx
+              sudo systemctl restart gunicorn

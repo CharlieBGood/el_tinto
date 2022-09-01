@@ -6,6 +6,10 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/gunicorn/
 """
 import os
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "el_tinto.config")
 os.environ.setdefault("DJANGO_CONFIGURATION", os.getenv("DJANGO_CONFIGURATION", "Production"))
 

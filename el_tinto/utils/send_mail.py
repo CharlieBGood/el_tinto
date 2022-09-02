@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from el_tinto.mails.models import Mail
-from el_tinto.utils.utils import replace_words_in_sentence, get_string_days, DAY_OF_THE_WEEK_MAP
+from el_tinto.utils.utils import replace_words_in_sentence
 
 
 def send_several_emails(mail, users):

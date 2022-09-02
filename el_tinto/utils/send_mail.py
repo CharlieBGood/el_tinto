@@ -56,7 +56,7 @@ def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     send_email_address = (
         '☕ El Tinto <info@eltinto.xyz>'
         if os.getenv('DJANGO_CONFIGURATION') == 'Production'
-        else '☕ El Tinto Pruebas <pruebas@eltinto.xyz>'
+        else '☕ El Tinto Pruebas <pruebas@dev.eltinto.xyz>'
     )
 
     mail_data['env'] = (

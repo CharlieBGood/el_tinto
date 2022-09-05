@@ -1,5 +1,4 @@
 import datetime
-from django_user_agents.utils import get_user_agent
 from django.urls import reverse, resolve
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
@@ -80,7 +79,6 @@ def who_are_we(request):
 
 @require_http_methods(["GET", "POST"])
 def suscribe(request):
-    user_agent = get_user_agent(request)
 
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -120,7 +118,6 @@ def suscribe(request):
             )
 
             user.save()
-            user_agent_dict = user_agent.__dict__
             return render(
                 request,
                 'suscribe.html',
@@ -130,7 +127,7 @@ def suscribe(request):
                     'suscribe_active': True,
                     'email_provider': get_email_provider(user.email),
                     'email_provider': get_email_provider(user.email),
-                    'email_provider_link': get_email_provider_link(user.email, user_agent.is_movile),
+                    'email_provider_link': get_email_provider_link(user.email, request.user_agent.is_mobile),
                 }
             )
 

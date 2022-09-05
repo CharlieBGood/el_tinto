@@ -3,8 +3,9 @@ from django.urls import reverse, resolve
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
+from el_tinto.utils.datetime import get_string_date
 from el_tinto.utils.send_mail import send_email
-from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP, get_string_days
+from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP, get_string_days, get_email_provider
 from el_tinto.web_page.forms import UserForm, UnsuscribeForm
 from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
@@ -28,10 +29,11 @@ def index(request):
                 'home.html',
                 context={
                     'html': mark_safe(mail.html), 
-                    'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                    'date': get_string_date(mail.dispatch_date.date()),
                     'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                     'tweet': mail.tweet,
-                    'el_tinto': True
+                    'el_tinto': True,
+                    'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
                 }
             ) 
         else:
@@ -46,10 +48,11 @@ def index(request):
             'home.html',
             context={
                 'html': mark_safe(mail.html), 
-                'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                'date': get_string_date(mail.dispatch_date.date()),
                 'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                 'tweet': mail.tweet,
-                'el_tinto': True
+                'el_tinto': True,
+                'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
             }
         )
 
@@ -118,7 +121,12 @@ def suscribe(request):
             return render(
                 request,
                 'suscribe.html',
-                context={'valid': True, 'name': user.first_name, 'suscribe_active': True}
+                context={
+                    'valid': True,
+                    'name': user.first_name,
+                    'suscribe_active': True,
+                    'email_provider': get_email_provider(user.email)
+                }
             )
     
     elif request.method == 'GET':
@@ -262,13 +270,13 @@ def customize_days(request):
 
 
 def error_404_view(request, exception):
-    # we add the path to the the 404.html file
+    # we add the path to the 404.html file
     # here. The name of our HTML file is 404.html
     return render(request, '404.html')
 
 
 def error_500_view(request):
    
-    # we add the path to the the 500.html file
+    # we add the path to the 500.html file
     # here. The name of our HTML file is 404.html
     return render(request, '500.html')

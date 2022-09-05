@@ -5,12 +5,12 @@ def replace_words_in_sentence(sentence, user=None):
     """Replace all the words from sentence that match the replacement structure with user info."""
     if user:
         matches = re.findall('\{[a-zA-Z_]+\}', sentence)
-    
+
         for match in matches:
             sentence = replace_word(sentence, match, user)
-        
+
         return re.sub(' +', ' ', sentence)
-    
+
     else:
         return sentence
 
@@ -18,14 +18,14 @@ def replace_words_in_sentence(sentence, user=None):
 def replace_word(sentence, word, model):
     """Replace a word for its model equivalent"""
     disallowed_characters = ['{', '}']
-    
+
     attribute = word
-    
+
     for character in disallowed_characters:
         attribute = attribute.replace(character, '')
-    
+
     model_attribute = getattr(model, attribute)
-    
+
     return sentence.replace(word, model_attribute)
 
 
@@ -71,6 +71,7 @@ def get_email_headers(headers):
 
     return email_headers
 
+
 def get_string_days(numeric_days):
     """Get the string value of the days based on its numeric representation"""
 
@@ -94,6 +95,10 @@ def get_string_days(numeric_days):
     return string_days, display_type
 
 
+def get_email_provider(email):
+    return email.split('@')[1].split('.')[0].lower()
+
+
 # Constants
 
 EVENT_TYPE_CLICK = 'Click'
@@ -109,4 +114,19 @@ DAY_OF_THE_WEEK_MAP = {
     '4': 'viernes',
     '5': 'sábado',
     '6': 'domingo'
+}
+
+SPANISH_MONTHS_DICT = {
+    'January': 'Enero',
+    'February': 'Febrero',
+    'March': 'Marzo',
+    'April': 'Abril',
+    'May': 'Mayo',
+    'June': 'Junio',
+    'July': 'Julio',
+    'August': 'Agosto',
+    'September': 'Septiembre',
+    'October': 'Octubre',
+    'November': 'Noviembre',
+    'December': 'Diciembre'
 }

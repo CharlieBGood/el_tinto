@@ -66,6 +66,7 @@ def test_send_daily_email(modeladmin, request, queryset):
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,
             'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
+            'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
         },
         [mail.test_email],
         user=user

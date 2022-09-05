@@ -18,7 +18,7 @@ class ReceiveSNSNotification(View):
         body_unicode = request.body.decode('utf-8')
         body = json.loads(body_unicode)
         try:
-            SNSNotification(data=body, headers=http_headers).process()
+            SNSNotification.objects.create(data=body, headers=http_headers).process()
             return HttpResponse(status=status.HTTP_202_ACCEPTED)
         except Exception as e:
             print(f"Exception during processing SNS Notification {e}")

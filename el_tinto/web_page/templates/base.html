@@ -27,6 +27,13 @@
 
     <title>{% block title %}{% endblock %}</title>
     <style>
+        @font-face {
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Raleway'), url(https://fonts.gstatic.com/s/raleway/v9/UAnF6lSK1JNc1tqTiG8pNALUuEpTyoUstqEm5AMlJo4.ttf) format('truetype');
+            mso-font-alt: 'Arial';
+        }
         body {
             font-family: Arial;
         }
@@ -35,6 +42,12 @@
         }
         h2 {
             font-size: 2.2rem;
+        }
+        h3 {
+            line-height: 150%;
+        }
+        p {
+            line-height: 150%;
         }
         label {
             color: #FFFFFF;
@@ -45,6 +58,16 @@
         }
         .text-color {
             color: #FFFFFF
+        }
+        .logo-title{
+            display: block;
+            margin: 40px auto 20px auto;
+            width: 40%
+        }
+        .logo-subtitle{
+            text-align: center;
+            font-size: 25px;
+            font-family: 'Raleway'
         }
         .strong-text{
             font-weight: 800;
@@ -122,6 +145,16 @@
             }
             .active {
                 border: 0;
+            }
+            .logo-subtitle{
+                text-align: center;
+                font-size: 20px;
+                font-family: 'Raleway'
+            }
+            .logo-title{
+                display: block;
+                margin: 20px auto;
+                width: 60%
             }
         }
     </style>

@@ -120,7 +120,7 @@ def suscribe(request):
             )
 
             user.save()
-
+            user_agent_dict = user_agent.__dict__
             return render(
                 request,
                 'suscribe.html',

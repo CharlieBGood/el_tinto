@@ -99,6 +99,22 @@ def get_email_provider(email):
     return email.split('@')[1].split('.')[0].lower()
 
 
+def get_email_provider_link(email, is_movile):
+    email_provider = get_email_provider(email)
+
+    if is_movile:
+        email_provider_link = EMAIL_PROVIDERS.get(email_provider)
+
+    else:
+        email_provider_link = EMAIL_PROVIDERS.get(email_provider)
+        if email_provider == 'gmail':
+            email_provider_link += f'{email}/#search/from%3A%40eltinto.xyz+in%3Aanywhere+newer_than%3A1d'
+        elif email_provider == 'yahoo':
+            email_provider_link += 'search/keyword=from%253Aeltinto.xyz'
+
+    return email_provider_link
+
+
 # Constants
 
 EVENT_TYPE_CLICK = 'Click'
@@ -129,4 +145,18 @@ SPANISH_MONTHS_DICT = {
     'October': 'Octubre',
     'November': 'Noviembre',
     'December': 'Diciembre'
+}
+
+EMAIL_PROVIDERS = {
+    'gmail': 'https://mail.google.com/mail/u/',
+    'hotmail': 'https://outlook.live.com/mail/0/',
+    'outlook': 'https://outlook.live.com/mail/0/',
+    'yahoo': 'https://mail.yahoo.com/d/'
+}
+
+MOVILE_EMAIL_PROVIDERS = {
+    'gmail': 'googlegmail://',
+    'hotmail': 'ms-outlook://',
+    'outlook': 'ms-outlook://',
+    'yahoo': 'ymail://'
 }

@@ -103,10 +103,10 @@ def get_email_provider_link(email, is_movile):
     email_provider = get_email_provider(email)
 
     if is_movile:
-        email_provider_link = EMAIL_PROVIDERS.get(email_provider)
+        email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
 
     else:
-        email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
+        email_provider_link = EMAIL_PROVIDERS.get(email_provider)
         if email_provider == 'gmail':
             email_provider_link += f'{email}/#search/from%3A%40eltinto.xyz+in%3Aanywhere+newer_than%3A1d'
         elif email_provider == 'yahoo':

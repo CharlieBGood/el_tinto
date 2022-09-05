@@ -2,6 +2,7 @@ from django.contrib import admin, messages
 from django.utils import timezone
 from .models import Mail, SentEmailsInteractions
 from el_tinto.users.models import User
+from el_tinto.utils.datetime import get_string_date
 from el_tinto.utils.send_mail import send_email, send_several_emails
 from el_tinto.utils.scheduler import get_scheduler
 from el_tinto.utils.utils import replace_words_in_sentence
@@ -61,7 +62,7 @@ def test_send_daily_email(modeladmin, request, queryset):
         html_version,
         {
             'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-            'date': timezone.now().date().strftime("%d/%m/%Y"),
+            'date': get_string_date(mail.dispatch_date.date()),
             'name': user.first_name if user else '',
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,

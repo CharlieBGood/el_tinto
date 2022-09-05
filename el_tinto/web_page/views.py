@@ -126,7 +126,6 @@ def suscribe(request):
                     'name': user.first_name,
                     'suscribe_active': True,
                     'email_provider': get_email_provider(user.email),
-                    'email_provider': get_email_provider(user.email),
                     'email_provider_link': get_email_provider_link(user.email, request.user_agent.is_mobile),
                 }
             )

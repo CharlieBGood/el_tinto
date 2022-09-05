@@ -96,7 +96,11 @@ def get_string_days(numeric_days):
 
 
 def get_email_provider(email):
-    return email.split('@')[1].split('.')[0].lower()
+    email_provider = email.split('@')[1].split('.')[0].lower()
+    if email_provider == 'hotmail':
+        return 'outlook'
+    else:
+        return email_provider
 
 
 def get_email_provider_link(email, is_movile):

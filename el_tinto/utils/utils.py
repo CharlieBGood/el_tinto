@@ -103,10 +103,10 @@ def get_email_provider(email):
         return email_provider
 
 
-def get_email_provider_link(email, is_movile):
+def get_email_provider_link(email, is_movile, device_family):
     email_provider = get_email_provider(email)
 
-    if is_movile:
+    if is_movile and device_family == 'iPhone':
         email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
 
     else:
@@ -153,14 +153,12 @@ SPANISH_MONTHS_DICT = {
 
 EMAIL_PROVIDERS = {
     'gmail': 'https://mail.google.com/mail/u/',
-    'hotmail': 'https://outlook.live.com/mail/0/',
     'outlook': 'https://outlook.live.com/mail/0/',
     'yahoo': 'https://mail.yahoo.com/d/'
 }
 
 MOVILE_EMAIL_PROVIDERS = {
     'gmail': 'googlegmail://',
-    'hotmail': 'ms-outlook://',
     'outlook': 'ms-outlook://',
     'yahoo': 'ymail://'
 }

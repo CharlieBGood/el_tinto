@@ -1,3 +1,5 @@
+import time
+
 from django.contrib import admin, messages
 from django.utils import timezone
 from .models import Mail, SentEmailsInteractions
@@ -38,6 +40,33 @@ def cancel_send_daily_email(modeladmin, request, queryset):
     scheduler.remove_job(mail.id)
     mail.programmed = False
     mail.save()
+
+
+@admin.action(description='Send email to best users')
+def send_email_to_best_users(modeladmin, request, queryset):
+    mail = queryset.first()
+    users = User.objects.filter(best_user=True)
+
+    n = 13
+    users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
+
+    for user in users_chunked_list:
+        html_version = 'survey.html'
+
+        send_email(
+            mail,
+            html_version,
+            {
+                'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
+                'name': user.first_name if user.first_name else user.email.split('@')[0],
+            },
+            [user.email],
+            user=user
+        )
+        mail.recipients.add(user)
+        mail.save()
+
+    time.sleep(1)
 
 
 @admin.action(description='Test send daily email')

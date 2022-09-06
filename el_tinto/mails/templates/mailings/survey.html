@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Tinto</title>
+  <style>
+    body {
+      font-family: Arial;
+    }
+    h1 {
+      font-size: 46px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    p {
+        line-height: 150%;
+    }
+    a {
+      color: #348286;
+    }
+    a div {
+      background-color: #5044e4;
+      border-radius: 12px;
+      height: 45px;
+      color: #FFFFFF;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    .main {
+      padding: 20px 0;
+    }
+    @media only screen and (min-width: 768px) {
+      .main {
+        padding: 20px 26%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+          <td>
+            <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" style="margin: 0 auto; display: block;"/>
+            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
+              <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
+                Historias importantes para gente ocupada
+              </h2>
+            </div>
+            <div style="padding: 0 5%; margin: 10px 0 20px 0;">
+              {{ html }}
+            </div>
+            <div style="background-color: #5044e4; padding: 5px 5%;">
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
+                los derechos reservados.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
+                quisieras que incluyamos algo nuevo?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
+                <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+                o responde a este correo y te daremos respuesta tan pronto como podamos
+              </p>
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

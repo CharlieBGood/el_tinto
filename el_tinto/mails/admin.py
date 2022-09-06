@@ -54,12 +54,14 @@ def send_email_to_best_users(modeladmin, request, queryset):
         for user in users_list:
             html_version = 'survey.html'
 
+            name = user.first_name if user.first_name else user.email.split('@')[0]
+            html = mail.html.replace('{{ name }}', name)
+
             send_email(
                 mail,
                 html_version,
                 {
-                    'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-                    'name': user.first_name if user.first_name else user.email.split('@')[0],
+                    'html': mark_safe(replace_words_in_sentence(html, user=user)),
                 },
                 [user.email],
                 user=user

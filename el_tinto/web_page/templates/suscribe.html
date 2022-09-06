@@ -81,6 +81,11 @@
                         <p style="text-align: center">
                             Pronto recibirás un correo de bienvenida para que empieces a degustarnos todas las mañanas.
                         </p>
+                        {% if email_provider != 'gmail' %}
+                            <p>
+                                Si no te llegó a la carpeta principal <strong>abre spam solo por esta vez</strong>
+                                y sigue las instrucciones
+                            </p>
                     </div>
                 </div>
                 {% if email_provider_link %}

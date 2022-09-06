@@ -55,6 +55,7 @@ def send_email_to_best_users(modeladmin, request, queryset):
             html_version = 'survey.html'
 
             name = user.first_name if user.first_name else user.email.split('@')[0]
+            mail.subject = mail.subject if user.first_name else 'Queremos hablar contigo'
             html = mail.html.replace('{{ name }}', name)
 
             send_email(

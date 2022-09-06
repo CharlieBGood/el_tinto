@@ -83,31 +83,33 @@
                         </p>
                     </div>
                 </div>
-                <div class="row justify-content-center">
-                    <a
-                        style="width: 250px; box-shadow: 3px 6px #A9A9A9; border: 1px solid #A9A9A9;"
-                        class="btn py-3 mt-4 btn-hover"
-                        href={{ email_provider_link }}
-                        role="button"
-                    >
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-2">
-                                    <img
-                                        src="https://el-tinto-utils.s3.amazonaws.com/{{ email_provider }}_icon.png"
-                                        style="width: 30px; margin: 0 auto"
-                                    >
-                                </div>
-                                <div class="col-8">
-                                    <p style="margin: 0; text-align: right"><strong>Abrir {{ email_provider|capfirst }}</strong></p>
-                                </div>
-                                <div class="col-2">
-                                    <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
+                {% if email_provider_link %}
+                    <div class="row justify-content-center">
+                        <a
+                            style="width: 250px; box-shadow: 3px 6px #A9A9A9; border: 1px solid #A9A9A9;"
+                            class="btn py-3 mt-4 btn-hover"
+                            href={{ email_provider_link }}
+                            role="button"
+                        >
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img
+                                            src="https://el-tinto-utils.s3.amazonaws.com/{{ email_provider }}_icon.png"
+                                            style="width: 30px; margin: 0 auto"
+                                        >
+                                    </div>
+                                    <div class="col-8">
+                                        <p style="margin: 0; text-align: right"><strong>Abrir {{ email_provider|capfirst }}</strong></p>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
     </div>

@@ -3,8 +3,9 @@ from django.urls import reverse, resolve
 from django.shortcuts import render, redirect
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.mails.models import Mail
+from el_tinto.utils.datetime import get_string_date
 from el_tinto.utils.send_mail import send_email
-from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP, get_string_days
+from el_tinto.utils.utils import DAY_OF_THE_WEEK_MAP, get_string_days, get_email_provider, get_email_provider_link
 from el_tinto.web_page.forms import UserForm, UnsuscribeForm
 from django.views.decorators.http import require_http_methods
 from django.utils.safestring import mark_safe
@@ -27,29 +28,31 @@ def index(request):
                 request,
                 'home.html',
                 context={
-                    'html': mark_safe(mail.html), 
-                    'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                    'html': mark_safe(mail.html),
+                    'date': get_string_date(mail.dispatch_date.date()),
                     'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                     'tweet': mail.tweet,
-                    'el_tinto': True
+                    'el_tinto': True,
+                    'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
                 }
-            ) 
+            )
         else:
             raise Http404()
 
     else:
         mails = Mail.objects.filter(type=Mail.DAILY)
         mail = mails.order_by('-created_at')[0]
-        
+
         return render(
             request,
             'home.html',
             context={
-                'html': mark_safe(mail.html), 
-                'date': mail.dispatch_date.date().strftime("%d/%m/%Y"),
+                'html': mark_safe(mail.html),
+                'date': get_string_date(mail.dispatch_date.date()),
                 'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                 'tweet': mail.tweet,
-                'el_tinto': True
+                'el_tinto': True,
+                'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
             }
         )
 
@@ -71,36 +74,37 @@ def who_are_we(request):
         request,
         'who_are_we.html',
         context={'who_are_we_active': True}
-    ) 
+    )
 
 
 @require_http_methods(["GET", "POST"])
 def suscribe(request):
+
     if request.method == 'POST':
         form = UserForm(request.POST)
         form.is_valid()
         try:
             user = User.objects.get(email=form.cleaned_data['email'])
-            
+
             if user.is_active:
                 return render(
                     request,
                     'suscribe.html',
                     context={'error': 'Este correo ya existe en nuestra base de datos', 'suscribe_active': True}
                 )
-            
+
             else:
                 user.is_active = True
                 user.first_name = form.cleaned_data['first_name']
                 user.last_name = form.cleaned_data['last_name']
                 user.save()
-                
+
                 return render(
                     request,
                     'suscribe.html',
                     context={'valid': True, 'name': user.first_name, 'suscribe_active': True}
                 )
-        
+
         except User.DoesNotExist:
             user = User.objects.create(
                 email=form.cleaned_data['email'],
@@ -108,19 +112,28 @@ def suscribe(request):
                 last_name=form.cleaned_data['last_name']
             )
             mail = Mail(subject='Bienvenido a El Tinto')
-            
+
             send_email(
                 mail, 'onboarding.html', {'name': user.first_name}, [user.email],
             )
-            
-            user.save()
 
+            user.save()
             return render(
                 request,
                 'suscribe.html',
-                context={'valid': True, 'name': user.first_name, 'suscribe_active': True}
+                context={
+                    'valid': True,
+                    'name': user.first_name,
+                    'suscribe_active': True,
+                    'email_provider': get_email_provider(user.email),
+                    'email_provider_link': get_email_provider_link(
+                        user.email,
+                        request.user_agent.is_mobile,
+                        request.user_agent.device.family
+                    ),
+                }
             )
-    
+
     elif request.method == 'GET':
         return render(
             request,
@@ -149,14 +162,14 @@ def unsuscribe(request):
                     unsuscribe_instance = form.save(commit=False)
                     unsuscribe_instance.user = user
                     unsuscribe_instance.save()
-                    
+
                 user.is_active = False
                 user.save()
             except User.DoesNotExist:
                 pass
-            
+
         return redirect('index')
-    
+
     elif request.method == 'GET':
         email = request.GET.get('email', None)
         if email:
@@ -170,7 +183,7 @@ def unsuscribe(request):
                     )
             except User.DoesNotExist:
                 pass
-        
+
         return redirect('index')
 
 
@@ -262,13 +275,13 @@ def customize_days(request):
 
 
 def error_404_view(request, exception):
-    # we add the path to the the 404.html file
+    # we add the path to the 404.html file
     # here. The name of our HTML file is 404.html
     return render(request, '404.html')
 
 
 def error_500_view(request):
-   
-    # we add the path to the the 500.html file
+
+    # we add the path to the 500.html file
     # here. The name of our HTML file is 404.html
     return render(request, '500.html')

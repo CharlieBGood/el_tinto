@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_agents %}
 
 <!doctype html>
 <html lang="en">
@@ -27,6 +28,13 @@
 
     <title>{% block title %}{% endblock %}</title>
     <style>
+        @font-face {
+            font-family: 'Raleway';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Raleway'), url(https://fonts.gstatic.com/s/raleway/v9/UAnF6lSK1JNc1tqTiG8pNALUuEpTyoUstqEm5AMlJo4.ttf) format('truetype');
+            mso-font-alt: 'Arial';
+        }
         body {
             font-family: Arial;
         }
@@ -35,6 +43,12 @@
         }
         h2 {
             font-size: 2.2rem;
+        }
+        h3 {
+            line-height: 150%;
+        }
+        p {
+            line-height: 150%;
         }
         label {
             color: #FFFFFF;
@@ -45,6 +59,21 @@
         }
         .text-color {
             color: #FFFFFF
+        }
+        .logo-title{
+            display: block;
+            margin: 40px auto 20px auto;
+            width: 40%
+        }
+        .logo-subtitle{
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Raleway'
+        }
+        a:hover {
+            transform:scale(1.1,1.1);
+            -webkit-transform:scale(1.1,1.1);
+            -moz-transform:scale(1.1,1.1);
         }
         .strong-text{
             font-weight: 800;
@@ -123,6 +152,16 @@
             .active {
                 border: 0;
             }
+            .logo-subtitle{
+                text-align: center;
+                font-size: 23px;
+                font-family: 'Raleway'
+            }
+            .logo-title{
+                display: block;
+                margin: 20px auto;
+                width: 60%
+            }
         }
     </style>
     {% block style %}{% endblock %}
@@ -131,8 +170,7 @@
     <nav class="navbar navbar-light navbar-expand-sm navbar-padding shadow-sm py-1 bg-white rounded">
         <div class="container-fluid">
             <a class="navbar-brand ml-5 strong-text a-nav" href="/" style="font-family: Segoe UI Bold; font-weight: 900;">
-                <img src="https://el-tinto-utils.s3.amazonaws.com/logo.png" width="36" height="24" class="d-inline-block" style="vertical-align: 0">
-                El Tinto
+                <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo_left.png" height="24" class="d-inline-block" style="vertical-align: 0">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -182,6 +220,7 @@
   </body>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://kit.fontawesome.com/fa4330be08.js" crossorigin="anonymous"></script>
   <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJ4EVEBK9R"></script>
     <script>

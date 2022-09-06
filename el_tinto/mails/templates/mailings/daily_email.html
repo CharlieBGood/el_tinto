@@ -18,6 +18,10 @@
     }
     h3 {
       font-size: 18px;
+      line-height: 150%;
+    }
+    p {
+        line-height: 150%;
     }
     a {
       color: #348286;
@@ -31,12 +35,32 @@
       border: none;
       cursor: pointer;
     }
+    .logo-subtitle{
+      text-align: center;
+      font-size: 23px;
+      font-family: 'Raleway'
+    }
+    .logo-title{
+      display: block;
+      margin: 20px auto;
+      width: 60%
+    }
     .main {
       padding: 20px 0;
     }
     @media only screen and (min-width: 768px) {
       .main {
-        padding: 20px 26%;
+        padding: 20px 20%;
+      }
+      .logo-title{
+        display: block;
+        margin: 40px auto 20px auto;
+        width: 40%
+      }
+      .logo-subtitle{
+        text-align: center;
+        font-size: 28px;
+        font-family: 'Raleway'
       }
     }
   </style>
@@ -47,26 +71,44 @@
     <table style="width: 100%">
       <tbody>
         <tr>
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/logo.png" width="54" height="36" class="d-inline-block" style="vertical-align: 0">
+                    </td>
+                    <td>
+                        <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                        <a
+                          style="text-decoration: none"
+                          href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        >
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <hr style="width: 100%; border-top: 2px solid #eaeaea; margin-top: 0">
+        <tr>
+            <table>
+                <tr>
+                    <td>
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_just_text.png"
+                          class="logo-title">
+                        <p class="logo-subtitle">- {{ email_type }} -</p>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <tr>
           <td>
-            <img src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_logo.png" style="margin: 0 auto; display: block;"/>
             <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
               <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
                 Historias importantes para gente ocupada
               </h2>
             </div>
-            <div style="padding: 0 5%; margin: 10px 0 20px 0;">
-              <p>
-                Un correo diario con lo más relevante del momento en Colombia, curado con los medios 
-                más rigurosos e independientes.
-              </p>
-              <p>
-                ¿No te llegan los correos a la bandeja principal? Revisa cómo evitarlo en nuestro FAQ
-                <a ses:no-track href="https://www.{{ env }}eltinto.xyz/faq/" target="_blank">haciendo click aquí</a>.
-              </p>
-            </div>
-            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
-            <p style="text-align:center; margin: 40px 0; color: #696969; font-size: 18px">{{date}}</p>
-            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
+            <br>
             <h3 style="text-align:justify">
               {% if name %}
               Buenos días {{ name }}, este es El Tinto de hoy.

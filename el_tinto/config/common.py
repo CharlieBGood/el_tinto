@@ -23,8 +23,7 @@ class Common(Configuration):
         'rest_framework',            # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
         'django_filters',            # Filtering rest endpoints
-        'django_social_share',       # Social media sharing
-        'fontawesomefree',           # Icons
+        'django_user_agents',          # Allow device identification for requests
 
         # Your apps
         'el_tinto.users',
@@ -43,6 +42,7 @@ class Common(Configuration):
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'django_user_agents.middleware.UserAgentMiddleware'
     )
 
     ALLOWED_HOSTS = ["*"]
@@ -215,12 +215,21 @@ class Common(Configuration):
     }
 
     # Cache
+    # CACHES = {
+    #     'default': {
+    #         'BACKEND': 'django_redis.cache.RedisCache',
+    #         'LOCATION': 'redis://127.0.0.1:6379/',
+    #         'OPTIONS': {
+    #             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    #         }
+    #     }
+    # }
     CACHES = {
         'default': {
-            'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': 'redis://127.0.0.1:6379/',
-            'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            }
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         }
     }
+
+    # Name of cache backend to cache user agents. If it is not specified default
+    # cache alias will be used. Set to `None` to disable caching.
+    USER_AGENTS_CACHE = 'default'

@@ -5,12 +5,12 @@ def replace_words_in_sentence(sentence, user=None):
     """Replace all the words from sentence that match the replacement structure with user info."""
     if user:
         matches = re.findall('\{[a-zA-Z_]+\}', sentence)
-    
+
         for match in matches:
             sentence = replace_word(sentence, match, user)
-        
+
         return re.sub(' +', ' ', sentence)
-    
+
     else:
         return sentence
 
@@ -18,14 +18,14 @@ def replace_words_in_sentence(sentence, user=None):
 def replace_word(sentence, word, model):
     """Replace a word for its model equivalent"""
     disallowed_characters = ['{', '}']
-    
+
     attribute = word
-    
+
     for character in disallowed_characters:
         attribute = attribute.replace(character, '')
-    
+
     model_attribute = getattr(model, attribute)
-    
+
     return sentence.replace(word, model_attribute)
 
 
@@ -71,6 +71,7 @@ def get_email_headers(headers):
 
     return email_headers
 
+
 def get_string_days(numeric_days):
     """Get the string value of the days based on its numeric representation"""
 
@@ -94,6 +95,30 @@ def get_string_days(numeric_days):
     return string_days, display_type
 
 
+def get_email_provider(email):
+    email_provider = email.split('@')[1].split('.')[0].lower()
+    if email_provider == 'hotmail':
+        return 'outlook'
+    else:
+        return email_provider
+
+
+def get_email_provider_link(email, is_movile, device_family):
+    email_provider = get_email_provider(email)
+
+    if is_movile and device_family == 'iPhone':
+        email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
+
+    else:
+        email_provider_link = EMAIL_PROVIDERS.get(email_provider)
+        if email_provider == 'gmail':
+            email_provider_link += f'{email}/#search/from%3A%40eltinto.xyz+in%3Aanywhere+newer_than%3A1d'
+        elif email_provider == 'yahoo':
+            email_provider_link += 'search/keyword=from%253Aeltinto.xyz'
+
+    return email_provider_link
+
+
 # Constants
 
 EVENT_TYPE_CLICK = 'Click'
@@ -109,4 +134,31 @@ DAY_OF_THE_WEEK_MAP = {
     '4': 'viernes',
     '5': 'sábado',
     '6': 'domingo'
+}
+
+SPANISH_MONTHS_DICT = {
+    'January': 'Enero',
+    'February': 'Febrero',
+    'March': 'Marzo',
+    'April': 'Abril',
+    'May': 'Mayo',
+    'June': 'Junio',
+    'July': 'Julio',
+    'August': 'Agosto',
+    'September': 'Septiembre',
+    'October': 'Octubre',
+    'November': 'Noviembre',
+    'December': 'Diciembre'
+}
+
+EMAIL_PROVIDERS = {
+    'gmail': 'https://mail.google.com/mail/u/',
+    'outlook': 'https://outlook.live.com/mail/0/',
+    'yahoo': 'https://mail.yahoo.com/d/'
+}
+
+MOVILE_EMAIL_PROVIDERS = {
+    'gmail': 'googlegmail://',
+    'outlook': 'ms-outlook://',
+    'yahoo': 'ymail://'
 }

@@ -7,6 +7,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from el_tinto.mails.models import Mail
+from el_tinto.utils.datetime import get_string_date
 from el_tinto.utils.utils import replace_words_in_sentence
 
 
@@ -33,11 +34,12 @@ def send_several_emails(mail, users):
                     html_version,
                     {
                         'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-                        'date': timezone.now().date().strftime("%d/%m/%Y"),
+                        'date': get_string_date(mail.dispatch_date.date()),
                         'name': user.first_name,
                         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                         'email': user.email,
-                        'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22")
+                        'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
+                        'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
                     },
                     [user.email],
                     user=user

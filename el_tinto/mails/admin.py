@@ -50,21 +50,22 @@ def send_email_to_best_users(modeladmin, request, queryset):
     n = 13
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
-    for user in users_chunked_list:
-        html_version = 'survey.html'
+    for users_list in users_chunked_list:
+        for user in users_list:
+            html_version = 'survey.html'
 
-        send_email(
-            mail,
-            html_version,
-            {
-                'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
-                'name': user.first_name if user.first_name else user.email.split('@')[0],
-            },
-            [user.email],
-            user=user
-        )
-        mail.recipients.add(user)
-        mail.save()
+            send_email(
+                mail,
+                html_version,
+                {
+                    'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
+                    'name': user.first_name if user.first_name else user.email.split('@')[0],
+                },
+                [user.email],
+                user=user
+            )
+            mail.recipients.add(user)
+            mail.save()
 
     time.sleep(1)
 

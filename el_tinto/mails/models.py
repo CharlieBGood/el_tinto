@@ -8,8 +8,6 @@ class Mail(models.Model):
     
     #TODO add SQL field for personalized queries
     
-    #TODO Send email for new user
-    
     # Type constants
     DAILY = 'Daily'
     TEST = 'Test'
@@ -58,6 +56,7 @@ class Mail(models.Model):
     programmed = models.BooleanField(default=False, editable = False)
 
     tweet = models.CharField(max_length=255, default='', help_text='255 characters max')
+    subject_message = models.CharField(max_length=128, default='', help_text='Texto que acompaña al subject')
     
     recipients = models.ManyToManyField(
         'users.User',

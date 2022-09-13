@@ -1,3 +1,4 @@
+import os
 import time
 
 from django.contrib import admin, messages
@@ -17,7 +18,7 @@ def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
     users = User.objects.filter(is_active=True)
 
-    if mail.dispatch_date > timezone.now() + timedelta(minutes=5):
+    if os.getenv('DJANGO_CONFIGURATION') == 'Production' and mail.dispatch_date > timezone.now() + timedelta(minutes=5):
         scheduler = get_scheduler()
         scheduler.add_job(
             send_several_emails,

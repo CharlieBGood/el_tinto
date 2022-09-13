@@ -13,7 +13,7 @@ from el_tinto.utils.utils import replace_words_in_sentence
 
 def send_several_emails(mail, users):
     
-    n = 13
+    n = 79
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
     html_version = 'default.html' if mail.version == Mail.DEFUALT_TESTING else 'daily_email.html'
@@ -21,7 +21,7 @@ def send_several_emails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
 
-            if 0 < len(user.preferred_email_days) < 7:
+            if 0 < len(user.preferred_email_days) <= 6:
                 html_version = 'daily_email_with_days.html'
 
             week_day = timezone.now().date().weekday()

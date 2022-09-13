@@ -56,7 +56,7 @@ class Mail(models.Model):
     programmed = models.BooleanField(default=False, editable = False)
 
     tweet = models.CharField(max_length=255, default='', help_text='255 characters max')
-    subject_message = models.CharField(max_length=128, default='', help_text='Texto que acompaña al subject')
+    subject_message = models.CharField(max_length=128, default='', blank=True, help_text='Texto que acompaña al subject')
     
     recipients = models.ManyToManyField(
         'users.User',

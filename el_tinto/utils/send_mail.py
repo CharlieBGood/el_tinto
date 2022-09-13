@@ -12,8 +12,7 @@ from el_tinto.utils.utils import replace_words_in_sentence
 
 
 def send_several_emails(mail, users):
-    
-    n = 13
+    n = 79
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
     html_version = 'default.html' if mail.version == Mail.DEFUALT_TESTING else 'daily_email.html'
@@ -21,7 +20,7 @@ def send_several_emails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
 
-            if 0 < len(user.preferred_email_days) < 7:
+            if 0 < len(user.preferred_email_days) <= 6:
                 html_version = 'daily_email_with_days.html'
 
             week_day = timezone.now().date().weekday()
@@ -39,15 +38,17 @@ def send_several_emails(mail, users):
                         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
                         'email': user.email,
                         'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
-                        'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
+                        'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
+                        'subject_message': mail.subject_message
                     },
                     [user.email],
                     user=user
                 )
                 mail.recipients.add(user)
                 mail.save()
-        
+
         time.sleep(1)
+
 
 def send_email(mail, html_file, mail_data, emails, user=None, reply_to=None):
     """Send email from template."""

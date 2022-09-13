@@ -1,3 +1,4 @@
+import os
 import time
 
 from django.contrib import admin, messages
@@ -30,7 +31,20 @@ def send_daily_email(modeladmin, request, queryset):
         mail.programmed = True
         mail.save()
     else:
-        messages.error(request, "Programmed time must be at least 5 minutes greater than current time")
+        if os.getenv('DJANGO_CONFIGURATION') != 'Production':
+            scheduler = get_scheduler()
+            scheduler.add_job(
+                send_several_emails,
+                trigger='date',
+                run_date=mail.dispatch_date,
+                args=[mail, users],
+                id=str(mail.id)
+            )
+            scheduler.start()
+            mail.programmed = True
+            mail.save()
+        else:
+            messages.error(request, "Programmed time must be at least 5 minutes greater than current time")
 
 
 @admin.action(description='Cancel send daily email')
@@ -100,7 +114,8 @@ def test_send_daily_email(modeladmin, request, queryset):
             'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'email': user.email,
             'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
-            'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario'
+            'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
+            'subject_message': mail.subject_message
         },
         [mail.test_email],
         user=user

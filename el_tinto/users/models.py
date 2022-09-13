@@ -52,7 +52,6 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=25, blank=True, default='')
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
-    best_user = models.BooleanField(default=False)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

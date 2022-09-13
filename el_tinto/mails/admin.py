@@ -18,7 +18,7 @@ def send_daily_email(modeladmin, request, queryset):
     mail = queryset.first()
     users = User.objects.filter(is_active=True)
 
-    if os.getenv('DJANGO_CONFIGURATION') == 'Production' and mail.dispatch_date > timezone.now() + timedelta(minutes=5):
+    if mail.dispatch_date > timezone.now() + timedelta(minutes=5):
         scheduler = get_scheduler()
         scheduler.add_job(
             send_several_emails,
@@ -31,7 +31,20 @@ def send_daily_email(modeladmin, request, queryset):
         mail.programmed = True
         mail.save()
     else:
-        messages.error(request, "Programmed time must be at least 5 minutes greater than current time")
+        if os.getenv('DJANGO_CONFIGURATION') != 'Production':
+            scheduler = get_scheduler()
+            scheduler.add_job(
+                send_several_emails,
+                trigger='date',
+                run_date=mail.dispatch_date,
+                args=[mail, users],
+                id=str(mail.id)
+            )
+            scheduler.start()
+            mail.programmed = True
+            mail.save()
+        else:
+            messages.error(request, "Programmed time must be at least 5 minutes greater than current time")
 
 
 @admin.action(description='Cancel send daily email')

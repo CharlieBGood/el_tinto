@@ -6,11 +6,12 @@ def replace_words_in_sentence(sentence, user=None):
     Replace all the words from sentence that match the replacement structure with user info.
     If no user is provided, return the same sentence
 
-    params:
-    :sentence: [str]
-    :user: [User object]
+    :params:
+    sentence: str
+    user: User object
 
-    return: sentence [str]
+    :return:
+    sentence: str
     """
     if user:
         matches = re.findall('\{[a-zA-Z_]+\}', sentence)
@@ -30,12 +31,13 @@ def replace_word(sentence, word, model):
     """
     Replace a word for its model equivalent
 
-    params:
-    :sentence: [str]
-    :word: [str]
-    :model: [Model Object]
+    :params:
+    sentence: str
+    word: str
+    model: Model Object
 
-    return: sentence [str]
+    :return:
+    sentence: str
     """
     disallowed_characters = ['{', '}']
 
@@ -81,10 +83,11 @@ def get_email_headers(headers):
     """
     Get email headers as dict
 
-    params:
-    :headers: [dict]
+    :params:
+    headers: dict
 
-    return: email_headers [dict]
+    :return:
+    email_headers: dict
     """
 
     email_headers = {}
@@ -104,12 +107,12 @@ def get_string_days(numeric_days):
     """
     Get the string value of the days based on its numeric representation
 
-    params:
-    :numeric_days: [[str]]
+    :params:
+    numeric_days: [str]
 
-    return:
-    :string_days: [str]
-    :display_type: [list]
+    :return:
+    string_days: str | [str]
+    display_type: str
     """
 
     display_type = 'str'
@@ -136,11 +139,11 @@ def get_email_provider(email):
     """
     Get the email provider of an email
 
-    params:
-    :email: [str]
+    :params:
+    email: str
 
-    return:
-    :email_provider: [str]
+    :return:
+    email_provider: str
     """
     email_provider = email.split('@')[1].split('.')[0].lower()
 
@@ -154,18 +157,18 @@ def get_email_provider_link(email, is_mobile, device_family):
     """
     Get the link of the email provider service
 
-    params:
-    :email: [str]
-    :is_mobile: [bool]
-    :device_family: [str]
+    :params:
+    email: str
+    is_mobile: bool
+    device_family: str
 
-    return:
-    :email_provider_link: [str]
+    :return:
+    email_provider_link: str
     """
     email_provider = get_email_provider(email)
 
     if is_mobile and device_family == 'iPhone':
-        email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
+        email_provider_link = MOBILE_EMAIL_PROVIDERS.get(email_provider)
 
     else:
         email_provider_link = EMAIL_PROVIDERS.get(email_provider)
@@ -215,7 +218,7 @@ EMAIL_PROVIDERS = {
     'yahoo': 'https://mail.yahoo.com/d/'
 }
 
-MOVILE_EMAIL_PROVIDERS = {
+MOBILE_EMAIL_PROVIDERS = {
     'gmail': 'googlegmail://',
     'outlook': 'ms-outlook://',
     'yahoo': 'ymail://'

@@ -15,11 +15,11 @@ def send_email_to_best_users(_, request, queryset):
     """
     Send email to best users
 
-    params:
-    :request: [Request object]
-    :queryset: [Mail queryset]
+    :params:
+    request: Request object
+    queryset: Mail queryset
 
-    return: None
+    :return: None
     """
     mail = queryset.first()
     users = User.objects.filter(best_user=True)

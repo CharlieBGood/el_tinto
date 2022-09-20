@@ -6,10 +6,11 @@ def only_one_instance(action_name):
     Decorator to make sure only one instance of the object is updated at the time.
     If more than one instance is selected returns an error message.
 
-    params:
-    :action_name: [str]
+    :params:
+    action_name: str
 
-    return: decorator [func]
+    :return:
+    decorator: func
     """
     def decorator(admin_action):
         def wrapper(*args, **kwargs):

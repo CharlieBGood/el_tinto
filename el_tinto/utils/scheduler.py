@@ -13,7 +13,8 @@ def get_scheduler():
     """
     Get Scheduler instance
 
-    return: scheduler [Scheduler]
+    return:
+    scheduler: Scheduler object
     """
     jobstores = {
         'default': SQLAlchemyJobStore(url=os.getenv('DATABASE_FULL_URL'))
@@ -40,11 +41,11 @@ def schedule_mail(mail, users):
     """
     schedule mail sending.
 
-    params:
-    :mail: Mail to be sent [Mail object]
-    :users: Users to which the mail will be sent [User queryset]
+    :params:
+    mail: Mail object
+    users: User queryset
 
-    return None
+    :return: None
     """
     scheduler = get_scheduler()
     scheduler.add_job(
@@ -63,10 +64,10 @@ def schedule_mail_checking(mail):
     """
     schedule mail notification to admins in case mail has not been sent.
 
-    params:
-    :mail: Mail to be sent [Mail object]
+    :params:
+    mail: Mail object
 
-    return None
+    :return: None
     """
     scheduler = get_scheduler()
     scheduler.add_job(

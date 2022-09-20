@@ -7,10 +7,11 @@ def convert_utc_to_local_datetime(utc_datetime):
     """
     Convert a UTC datetime object to a datetime object in the Bogotá zone time.
 
-    params:
-    :utc_datetime: [datetime object]
+    :params:
+    utc_datetime: datetime object
 
-    return: local_datetime [datetime object]
+    :return:
+    local_datetime: datetime object
     """
     zone = "America/Bogota"
 
@@ -23,10 +24,11 @@ def get_string_date(date):
     """
     Convert a date into a string in spanish.
 
-    params:
-    :date: [date object]
+    :params:
+    date: date object
 
-    return: spanish_string_date [date object]
+    :return:
+    spanish_string_date: date object
     """
     string_date = date.strftime("%d de %B del %Y")
     for word in string_date.split(' '):

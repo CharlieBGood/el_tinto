@@ -20,11 +20,11 @@ def send_several_mails(mail, users):
     """
     Send mail to several users
 
-    params:
-    :mail: [Mail object]
-    :users: [User queryset]
+    :params:
+    mail: Mail object
+    users: User queryset
 
-    return: None
+    :return: None
     """
     # This number is based on AWS SES limitations.
     # Is calculated as the maximum number of mails/s - 1 to make sure never surpass AWS email sending capability
@@ -67,13 +67,13 @@ def send_mail(mail, html_file, mail_data, mail_address, user=None, reply_to=None
     """
     Send mail from template.
 
-    params:
-    :mail: [Mail object]
-    :html_file: [str]
-    :mail_data [dict]
-    :mail_address [str array]
-    :user [User object]
-    :reply_to [str]
+    :params:
+    mail: Mail object
+    html_file: str
+    mail_data: dict
+    mail_address: [str]
+    user: User object
+    reply_to: str
     """
     template = loader.get_template(f'../templates/mailings/{html_file}')
 
@@ -112,15 +112,15 @@ def send_warning_mail(mail):
     """
     Send a warning mail to all admins if mail was not sent at the correct time.
 
-    params:
-    :mail: Mail object
+    :params:
+    mail: Mail object
 
-    return: None
+    :return: None
     """
     if not mail.sent_datetime:
-        mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩')
+        error_mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩')
         send_mail(
-            mail,
+            error_mail,
             'mail_not_sent.html',
             {},
             [user.email for user in User.objects.filter(is_active=True, is_staff=True)]
@@ -135,11 +135,11 @@ def get_mail_template(mail, user):
     """
     Defines the mail template to be used based on the type of mail and the user customization.
 
-    params:
-    :mail: Mail object
-    :user: User object
+    :params:
+    mail: Mail object
+    user: User object
 
-    return: [str]
+    :return: str
     """
     if mail.version == Mail.DEFAULT_TESTING:
         return 'default.html'
@@ -152,11 +152,12 @@ def get_mail_template_data(mail, user):
     """
     Get the dictionary with all the mail data used to replace in template
 
-    params:
-    :mail: Mail object
-    :user: User object
+    :params:
+    mail: Mail object
+    user: User object
 
-    return: email_data [dict]
+    :return:
+    email_data: dict
     """
     mail_data = {
         'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),

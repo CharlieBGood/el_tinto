@@ -21,11 +21,11 @@ def send_daily_mail(_, request, queryset):
     Mails are allowed to be sent only 5 minutes after the current time (only in production).
     If more than 1 mail is selected, returns error message.
 
-    params:
-    :request: [Request object]
-    :queryset: [Mails queryset]
+    :params:
+    request: Request object
+    queryset: Mails queryset
 
-    return: None
+    :return: None
     """
     mail = queryset.first()
     users = User.objects.filter(is_active=True)

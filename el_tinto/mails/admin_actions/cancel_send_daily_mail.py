@@ -28,6 +28,8 @@ def cancel_send_daily_email(_, request, queryset):
     if not mail.sent_datetime:
         scheduler = get_scheduler()
         scheduler.remove_job(str(mail.id))
+        scheduler.remove_job(f'{str(mail.id)}_check')
+        scheduler.start()
         mail.programmed = False
         mail.save()
 

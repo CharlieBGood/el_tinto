@@ -27,6 +27,8 @@ scheduler = BackgroundScheduler(
     timezone=timezone('America/Bogota')
 )
 
+scheduler.start()
+
 
 def schedule_mail(mail, users):
     """
@@ -45,7 +47,6 @@ def schedule_mail(mail, users):
         args=[mail, users],
         id=str(mail.id)
     )
-    scheduler.start()
     mail.programmed = True
     mail.save()
 
@@ -66,4 +67,3 @@ def schedule_mail_checking(mail):
         args=[mail],
         id=f'{str(mail.id)}_check'
     )
-    scheduler.start()

@@ -24,4 +24,4 @@ def cancel_send_daily_email(_, request, queryset):
         mail.programmed = False
         mail.save()
     else:
-        messages.error("Can not cancel mail sending after mail has been sent")
+        messages.error(request, "Can not cancel mail sending after mail has been sent")

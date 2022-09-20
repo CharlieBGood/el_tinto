@@ -58,7 +58,7 @@ def send_several_mails(mail, users):
     now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
     string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
     logger.info(f'Mail {mail.id} was successfully sent at {string_now_datatime}')
-    mail.programmed = now_datetime
+    mail.sent_datetime = now_datetime
     mail.save()
 
 

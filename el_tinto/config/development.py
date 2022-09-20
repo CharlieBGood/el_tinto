@@ -39,6 +39,7 @@ class Development(Common):
     sentry_sdk.init(
         dsn="https://69ad3a71e9eb42f9ae208aef0e12041d@o1213992.ingest.sentry.io/6353621",
         integrations=[DjangoIntegration()],
+        environment='development',
 
         # Set traces_sample_rate to 1.0 to capture 100%
         # of transactions for performance monitoring.

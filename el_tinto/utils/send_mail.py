@@ -71,7 +71,7 @@ def send_mail(mail, html_file, mail_data, mail_address, user=None, reply_to=None
     :mail: [Mail object]
     :html_file: [str]
     :mail_data [dict]
-    :emails [str array]
+    :mail_address [str array]
     :user [User object]
     :reply_to [str]
     """
@@ -119,13 +119,12 @@ def send_warning_mail(mail):
     """
     if not mail.sent_datetime:
         mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩')
-        for user in User.objects.filter(is_staff=True):
-            send_mail(
-                mail,
-                'mail_not_sent.html',
-                {},
-                user.email
-            )
+        send_mail(
+            mail,
+            'mail_not_sent.html',
+            {},
+            [user.email for user in User.objects.filter(is_active=True, is_staff=True)]
+        )
 
         now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")

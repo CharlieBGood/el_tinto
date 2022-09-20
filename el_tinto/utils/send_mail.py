@@ -56,7 +56,7 @@ def send_several_mails(mail, users):
         time.sleep(1)
 
     now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
-    string_now_datatime = now_datetime.strftime("%m/%d/%Y, %H:%M:%S")
+    string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
     logger.info(f'Mail {mail.id} was successfully sent at {string_now_datatime}')
     mail.programmed = now_datetime
     mail.save()
@@ -127,7 +127,7 @@ def send_warning_mail(mail):
             )
 
         now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
-        string_now_datatime = now_datetime.strftime("%m/%d/%Y, %H:%M:%S")
+        string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
         logger.error(f'Mail {mail.id} sending failed at {string_now_datatime}')
 
 

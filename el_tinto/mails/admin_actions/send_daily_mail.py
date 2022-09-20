@@ -38,7 +38,7 @@ def send_daily_mail(_, request, queryset):
         schedule_mail_checking(mail)
 
         now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
-        string_now_datatime = now_datetime.strftime("%m/%d/%Y, %H:%M:%S")
+        string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
         logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
 
     else:

@@ -4,7 +4,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views
-from .web_page.views import index, faqs, suscribe, who_are_we, unsuscribe, old_index, customize, customize_days
+from el_tinto.web_page.views.index import index
+from el_tinto.web_page.views.faqs import faqs
+from el_tinto.web_page.views.suscribe import suscribe
+from el_tinto.web_page.views.who_are_we import who_are_we
+from el_tinto.web_page.views.unsuscribe import unsuscribe
+from el_tinto.web_page.views.old_index import old_index
+from el_tinto.web_page.views.customize import customize
+from el_tinto.web_page.views.customize_days import customize_days
 
 router = DefaultRouter()
 
@@ -26,5 +33,5 @@ urlpatterns = [
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = 'el_tinto.web_page.views.error_404_view'
-handler500 = 'el_tinto.web_page.views.error_500_view'
+handler404 = 'el_tinto.web_page.views.404_error.error_404_view'
+handler500 = 'el_tinto.web_page.views.500_error.error_500_view'

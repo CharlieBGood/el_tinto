@@ -169,7 +169,13 @@ class Common(Configuration):
             'mail_admins': {
                 'level': 'ERROR',
                 'class': 'django.utils.log.AdminEmailHandler'
-            }
+            },
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': '/mails.log',
+                'formatter': 'simple'
+            },
         },
         'loggers': {
             'django': {
@@ -190,6 +196,10 @@ class Common(Configuration):
                 'handlers': ['console'],
                 'level': 'INFO'
             },
+            'mails': {
+                'handlers': ['file'],
+                'level': 'INFO'
+            }
         }
     }
 

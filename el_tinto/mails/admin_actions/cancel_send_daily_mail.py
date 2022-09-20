@@ -5,7 +5,7 @@ from django.contrib import admin, messages
 
 from el_tinto.utils.date_time import convert_utc_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
-from el_tinto.utils.scheduler import get_scheduler
+from el_tinto.utils.scheduler import scheduler
 
 logger = logging.getLogger("mails")
 
@@ -26,7 +26,6 @@ def cancel_send_daily_email(_, request, queryset):
     mail = queryset.first()
 
     if not mail.sent_datetime:
-        scheduler = get_scheduler()
         scheduler.remove_job(str(mail.id))
         scheduler.remove_job(f'{str(mail.id)}_check')
         scheduler.start()

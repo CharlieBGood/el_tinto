@@ -9,32 +9,23 @@ from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 from el_tinto.utils.send_mail import send_several_mails, send_warning_mail
 
 
-def get_scheduler():
-    """
-    Get Scheduler instance
-
-    return:
-    scheduler: Scheduler object
-    """
-    jobstores = {
-        'default': SQLAlchemyJobStore(url=os.getenv('DATABASE_FULL_URL'))
-    }
-    executors = {
-        'default': ThreadPoolExecutor(20),
-        'processpool': ProcessPoolExecutor(5)
-    }
-    job_defaults = {
-        'coalesce': False,
-        'max_instances': 3
-    }
-    scheduler = BackgroundScheduler(
-        jobstores=jobstores,
-        executors=executors,
-        job_defaults=job_defaults,
-        timezone=timezone('America/Bogota')
-    )
-
-    return scheduler
+jobstores = {
+    'default': SQLAlchemyJobStore(url=os.getenv('DATABASE_FULL_URL'))
+}
+executors = {
+    'default': ThreadPoolExecutor(20),
+    'processpool': ProcessPoolExecutor(5)
+}
+job_defaults = {
+    'coalesce': False,
+    'max_instances': 3
+}
+scheduler = BackgroundScheduler(
+    jobstores=jobstores,
+    executors=executors,
+    job_defaults=job_defaults,
+    timezone=timezone('America/Bogota')
+)
 
 
 def schedule_mail(mail, users):
@@ -47,7 +38,6 @@ def schedule_mail(mail, users):
 
     :return: None
     """
-    scheduler = get_scheduler()
     scheduler.add_job(
         send_several_mails,
         trigger='date',
@@ -69,7 +59,6 @@ def schedule_mail_checking(mail):
 
     :return: None
     """
-    scheduler = get_scheduler()
     scheduler.add_job(
         send_warning_mail,
         trigger='date',

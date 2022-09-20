@@ -29,7 +29,7 @@ def test_send_daily_email(_, request, queryset):
     send_mail(
         mail,
         html_version,
-        get_mail_template_data(mail, user)
+        get_mail_template_data(mail, user),
         [mail.test_email],
         user=user
     )

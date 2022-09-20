@@ -76,3 +76,4 @@ def schedule_mail_checking(mail):
         args=[mail],
         id=f'{str(mail.id)}_check'
     )
+    scheduler.start()

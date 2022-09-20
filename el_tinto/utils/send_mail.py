@@ -59,6 +59,7 @@ def send_several_mails(mail, users):
     string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
     logger.info(f'Mail {mail.id} was successfully sent at {string_now_datatime}')
     mail.sent_datetime = now_datetime
+    mail.programmed = True
     mail.save()
 
 

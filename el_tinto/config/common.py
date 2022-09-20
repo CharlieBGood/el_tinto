@@ -173,7 +173,7 @@ class Common(Configuration):
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': '/mails.log',
+                'filename': os.path.join(BASE_DIR, 'mails.log'),
                 'formatter': 'simple'
             },
         },

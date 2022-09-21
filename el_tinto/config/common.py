@@ -2,14 +2,14 @@ import os
 from os.path import join
 from distutils.util import strtobool
 from configurations import Configuration
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
-class Common(Configuration):
 
+class Common(Configuration):
     INSTALLED_APPS = (
         'django.contrib.admin',
         'django.contrib.auth',
@@ -18,12 +18,11 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
 
-
         # Third party apps
-        'rest_framework',            # utilities for rest apis
+        'rest_framework',  # utilities for rest apis
         'rest_framework.authtoken',  # token authentication
-        'django_filters',            # Filtering rest endpoints
-        'django_user_agents',          # Allow device identification for requests
+        'django_filters',  # Filtering rest endpoints
+        'django_user_agents',  # Allow device identification for requests
 
         # Your apps
         'el_tinto.users',
@@ -61,14 +60,14 @@ class Common(Configuration):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'HOST': os.getenv("DATABASE_URL", 
-                    'postgres'),
-            'NAME': os.getenv("POSTGRES_DB", 
-                    'postgres'),
-            'USER': os.getenv("POSTGRES_USER", 
-                    'postgres'),
-            'PASSWORD': os.getenv("POSTGRES_PASSWORD", 
-                        'local'),
+            'HOST': os.getenv("DATABASE_URL",
+                              'postgres'),
+            'NAME': os.getenv("POSTGRES_DB",
+                              'postgres'),
+            'USER': os.getenv("POSTGRES_USER",
+                              'postgres'),
+            'PASSWORD': os.getenv("POSTGRES_PASSWORD",
+                                  'local'),
         }
     }
 
@@ -169,7 +168,13 @@ class Common(Configuration):
             'mail_admins': {
                 'level': 'ERROR',
                 'class': 'django.utils.log.AdminEmailHandler'
-            }
+            },
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(BASE_DIR, 'mails.log'),
+                'formatter': 'simple'
+            },
         },
         'loggers': {
             'django': {
@@ -190,6 +195,10 @@ class Common(Configuration):
                 'handlers': ['console'],
                 'level': 'INFO'
             },
+            'mails': {
+                'handlers': ['file'],
+                'level': 'INFO'
+            }
         }
     }
 

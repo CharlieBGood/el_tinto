@@ -2,21 +2,43 @@ import re
 
 
 def replace_words_in_sentence(sentence, user=None):
-    """Replace all the words from sentence that match the replacement structure with user info."""
+    """
+    Replace all the words from sentence that match the replacement structure with user info.
+    If no user is provided, return the same sentence
+
+    :params:
+    sentence: str
+    user: User object
+
+    :return:
+    sentence: str
+    """
     if user:
         matches = re.findall('\{[a-zA-Z_]+\}', sentence)
 
         for match in matches:
             sentence = replace_word(sentence, match, user)
 
-        return re.sub(' +', ' ', sentence)
+        sentence = re.sub(' +', ' ', sentence)
+
+        return sentence
 
     else:
         return sentence
 
 
 def replace_word(sentence, word, model):
-    """Replace a word for its model equivalent"""
+    """
+    Replace a word for its model equivalent
+
+    :params:
+    sentence: str
+    word: str
+    model: Model Object
+
+    :return:
+    sentence: str
+    """
     disallowed_characters = ['{', '}']
 
     attribute = word
@@ -30,6 +52,7 @@ def replace_word(sentence, word, model):
 
 
 def replace_social_media_buttons(html):
+    # TODO review if still usefull
     """Replace social media buttons in html"""
     social_media_buttons_html = """
         <img style="display: block; margin-left: auto; margin-right: auto; margin-top: 60px"' 
@@ -57,7 +80,15 @@ def replace_social_media_buttons(html):
 
 
 def get_email_headers(headers):
-    """Get email headers as dict"""
+    """
+    Get email headers as dict
+
+    :params:
+    headers: dict
+
+    :return:
+    email_headers: dict
+    """
 
     email_headers = {}
 
@@ -73,7 +104,16 @@ def get_email_headers(headers):
 
 
 def get_string_days(numeric_days):
-    """Get the string value of the days based on its numeric representation"""
+    """
+    Get the string value of the days based on its numeric representation
+
+    :params:
+    numeric_days: [str]
+
+    :return:
+    string_days: str | [str]
+    display_type: str
+    """
 
     display_type = 'str'
 
@@ -96,18 +136,39 @@ def get_string_days(numeric_days):
 
 
 def get_email_provider(email):
+    """
+    Get the email provider of an email
+
+    :params:
+    email: str
+
+    :return:
+    email_provider: str
+    """
     email_provider = email.split('@')[1].split('.')[0].lower()
+
     if email_provider == 'hotmail':
-        return 'outlook'
-    else:
-        return email_provider
+        email_provider = 'outlook'
+
+    return email_provider
 
 
-def get_email_provider_link(email, is_movile, device_family):
+def get_email_provider_link(email, is_mobile, device_family):
+    """
+    Get the link of the email provider service
+
+    :params:
+    email: str
+    is_mobile: bool
+    device_family: str
+
+    :return:
+    email_provider_link: str
+    """
     email_provider = get_email_provider(email)
 
-    if is_movile and device_family == 'iPhone':
-        email_provider_link = MOVILE_EMAIL_PROVIDERS.get(email_provider)
+    if is_mobile and device_family == 'iPhone':
+        email_provider_link = MOBILE_EMAIL_PROVIDERS.get(email_provider)
 
     else:
         email_provider_link = EMAIL_PROVIDERS.get(email_provider)
@@ -157,7 +218,7 @@ EMAIL_PROVIDERS = {
     'yahoo': 'https://mail.yahoo.com/d/'
 }
 
-MOVILE_EMAIL_PROVIDERS = {
+MOBILE_EMAIL_PROVIDERS = {
     'gmail': 'googlegmail://',
     'outlook': 'ms-outlook://',
     'yahoo': 'ymail://'

@@ -64,6 +64,6 @@ def schedule_mail_checking(mail):
         send_warning_mail,
         trigger='date',
         run_date=mail.dispatch_date + datetime.timedelta(minutes=10),
-        args=[mail],
+        args=[mail.id],
         id=f'{str(mail.id)}_check'
     )

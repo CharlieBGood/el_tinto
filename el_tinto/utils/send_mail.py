@@ -108,15 +108,16 @@ def send_mail(mail, html_file, mail_data, mail_address, user=None, reply_to=None
     message_user.send(fail_silently=True)
 
 
-def send_warning_mail(mail):
+def send_warning_mail(mail_id):
     """
     Send a warning mail to all admins if mail was not sent at the correct time.
 
     :params:
-    mail: Mail object
+    mail_id: int
 
     :return: None
     """
+    mail = Mail.objects.get(pk=mail_id)
     if not mail.sent_datetime:
         error_mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩')
         send_mail(

@@ -38,11 +38,11 @@ def send_several_mails(mail, users):
 
             html_version = get_mail_template(mail, user)
 
-            week_day = timezone.now().date().weekday()
+            week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
 
-            send_today = True if user.preferred_email_days and week_day in user.preferred_email_days else False
+            send_today = True if len(user.preferred_email_days) == 0 or week_day in user.preferred_email_days else False
 
-            if not user.preferred_email_days or send_today:
+            if send_today:
                 send_mail(
                     mail,
                     html_version,

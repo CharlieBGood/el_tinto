@@ -1,14 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import UserManager as BaseUserManager
-from django.dispatch import receiver
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
-from django.db.models.signals import post_save
 from phonenumber_field.modelfields import PhoneNumberField
 
 
 class UserManager(BaseUserManager):
-    """ User Manager that knows how to create users via email instead of username """
+    """
+    User Manager that knows how to create users via email instead of username
+    """
     def _create_user(self, email, password, **extra_fields):
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
@@ -52,18 +52,21 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=25, blank=True, default='')
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
+    referral_code = models.CharField(max_length=6, blank=True, default='')
+    referred_by = models.OneToOneField('users.User', default=None, blank=True, null=True, on_delete=models.CASCADE)
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def save(self, *args, **kwargs):
+        from el_tinto.utils.users import create_user_referral_code
+
+        if not self.referral_code:
+            self.referral_code = create_user_referral_code(self)
+        super(User, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.email
-
-
-# @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-# def create_auth_token(sender, instance=None, created=False, **kwargs):
-#    if created:
-#        Token.objects.create(user=instance)
 
 
 class Unsuscribe(models.Model):

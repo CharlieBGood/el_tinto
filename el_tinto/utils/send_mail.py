@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.utils import replace_words_in_sentence
+from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use
 
 logger = logging.getLogger("mails")
 
@@ -166,7 +166,7 @@ def get_mail_template_data(mail, user):
         'name': user.first_name,
         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
         'email': user.email,
-        'tweet': mail.tweet.replace(' ', '%20').replace('"', "%22"),
+        'tweet': replace_special_characters_for_url_use(mail.tweet),
         'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
         'subject_message': mail.subject_message
     }

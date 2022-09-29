@@ -109,7 +109,77 @@
                 Historias importantes para gente ocupada
               </h2>
             </div>
+            <h2 style="text-align:center; font-weight: 400; margin: 0; font-size: 25px">
+              <strong>
+                  {% if referred_users_count < 1 %}
+                    {{ referred_users_count }}/1
+                  {% elif referred_users_count < 5 %}
+                    {{ referred_users_count }}/5
+                  {% elif referred_users_count < 10 %}
+                    {{ referred_users_count }}/10
+                  {% elif referred_users_count < 15 %}
+                    {{ referred_users_count }}/15
+                  {% elif referred_users_count < 30 %}
+                    {{ referred_users_count }}/30
+                  {% else %}
+                    {{ referred_users_count }}
+                  {% endif %}
+              </strong>
+              compañeros de Tinto
+            </h2>
             <br>
+            {% if referred_users_count < 1 %}
+              <img
+                src=https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_1.png
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 5 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_2.gif
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 10 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_3.gif"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 15 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_3.gif"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 30 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_3.gif"
+                style="display: block; width: 100%"
+              >
+            {% else %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TGCHI_3.gif"
+                style="display: block; width: 100%"
+              >
+            {% endif %}
+            <br>
+            <h4 style="text-align:center; padding: 0 30px; margin: 0">
+              Invita más amigos para ver cómo continúa esta historia compartiendo tu link personalizado de referidos
+            </h4>
+            <br>
+            <a
+              ses:tags="type:WP"
+              href="https://api.whatsapp.com/send?text=El%20Tinto, historias%20importantes%20para%20gente%20ocupada. %20https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}"
+              target="_blank"
+            >
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/whatsapp_icon.png"
+                style="width: 40px; height: auto; margin: 0 auto; display: block;"
+              >
+            </a>
+            <br>
+            <h4 style="text-align:center; padding: 0 30px; margin: 0">
+              ¡Porque El Tinto siempre es más sabroso acompañado!
+            </h4>
+            <br>
+            <hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />
             <h3 style="text-align:justify">
               {% if name %}
               Buenos días {{ name }}, este es El Tinto de hoy.
@@ -118,17 +188,9 @@
               {% endif %}
             </h3>
               {{html}}
-            <img
-              style="display: block; margin-left: auto; margin-right: auto; margin-top: 60px"
-              src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_social_media_share.gif"
-              alt="el_tinto_social_media_share_giff"
-              width="50%"
-              height="auto"
-            />
               <h3 style="text-align: center; margin-top: 30px;">
                 <strong>¿Te gustó el Tinto de hoy y quieres compartirlo?</strong>
               </h3>
-
               <table style="width: 40%; margin: 30px auto 60px auto;">
                 <tbody>
                   <tr>

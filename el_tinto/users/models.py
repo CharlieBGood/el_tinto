@@ -53,7 +53,14 @@ class User(AbstractUser):
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
     referral_code = models.CharField(max_length=6, blank=True, default='')
-    referred_by = models.OneToOneField('users.User', default=None, blank=True, null=True, on_delete=models.CASCADE)
+    referred_by = models.ForeignKey(
+        'users.User',
+        default=None,
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        related_name='referred_users'
+    )
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

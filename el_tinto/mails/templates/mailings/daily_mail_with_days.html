@@ -116,7 +116,71 @@
                 <a ses:no-track href="https://www.{{ env }}eltinto.xyz/personalizar/?email={{ email }}" target="_blank">haciendo click aquí</a>.
               </p>
             </div>
-            <hr style="width: 100%; border-top: 1px solid #eaeaea;">
+            <hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />
+            <h2 style="text-align: center; font-weight: 400; margin: 0; font-size: 25px; padding: 0 30px;">
+              <strong>
+                  {% if referred_users_count < 1 %}
+                    {{ referred_users_count }}/1
+                  {% elif referred_users_count < 5 %}
+                    {{ referred_users_count }}/5
+                  {% elif referred_users_count < 10 %}
+                    {{ referred_users_count }}/10
+                  {% elif referred_users_count < 15 %}
+                    {{ referred_users_count }}/15
+                  {% elif referred_users_count < 30 %}
+                    {{ referred_users_count }}/30
+                  {% else %}
+                    {{ referred_users_count }}
+                  {% endif %}
+              </strong>
+              usuarios inscritos a El Tinto
+            </h2>
+            <h3 style="text-align: center; font-weight: 400; margin: 10px 0 0 0;">
+                Comparte tu link personalizado
+                <a
+                  ses:tags="type:WP"
+                  href="https://api.whatsapp.com/send?text=El%20Tinto, historias%20importantes%20para%20gente%20ocupada. %20https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}"
+                  target="_blank"
+                >
+                  <img
+                    src="https://el-tinto-utils.s3.amazonaws.com/whatsapp_icon.png"
+                    style="width: 30px; margin: 0 auto; display: inherit; vertical-align: bottom"
+                  >
+                </a>
+            </h3>
+            <br>
+            {% if referred_users_count < 1 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_1.png"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 5 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_2.gif"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 10 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_3.gif"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 15 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_4.gif"
+                style="display: block; width: 100%"
+              >
+            {% elif referred_users_count < 30 %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_5.gif"
+                style="display: block; width: 100%"
+              >
+            {% else %}
+              <img
+                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/TAMAGOCHI_WHAT+A+LEGEND_.gif"
+                style="display: block; width: 100%"
+              >
+            {% endif %}
+            <br>
             <h3 style="text-align:justify">
               {% if name %}
               Buenos días {{ name }}, este es El Tinto de hoy.

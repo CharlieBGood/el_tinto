@@ -21,7 +21,9 @@ class Command(BaseCommand):
             if not options.get('email', False):
                 raise Exception('email is mandatory')
 
-            if not options.get('referred_users', False):
+            try:
+                options['referred_users']
+            except KeyError:
                 raise Exception('referred_users is mandatory')
 
             if options.get('run', False):
@@ -46,10 +48,12 @@ class Command(BaseCommand):
                 if not mail:
                     mail = Mail.objects.create(subject='Ejemplo para el testeo')
 
+                user_base_name = user.email.split('@')[0]
+
                 # create new users
                 for i in range(options.get('referred_users')):
                     new_user = User.objects.create(
-                        email=f'randomemail{str(i)}@ejemplo.com',
+                        email=f'{user_base_name}randomemail{str(i)}@ejemplo.com',
                         referred_by=user
                     )
                     SentEmails.objects.create(

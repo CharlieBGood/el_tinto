@@ -14,6 +14,10 @@ class MailsAdmin(admin.ModelAdmin):
     readonly_fields = ('sent_datetime', )
     actions = [send_daily_mail, test_send_daily_email, cancel_send_daily_email]
 
+    def get_queryset(self, request):
+        qs = super(MailsAdmin, self).get_queryset(request)
+        return qs.exclude(tye=Mail.WELCOME)
+
     def save_model(self, request, obj, form, change):
         obj.created_by = request.user
         super(MailsAdmin, self).save_model(request, obj, form, change)

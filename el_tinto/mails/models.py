@@ -10,11 +10,13 @@ class Mail(models.Model):
     DAILY = 'Daily'
     TEST = 'Test'
     PROMOTION = 'Promotion'
+    WELCOME = 'Welcome'
 
     TYPE_OPTIONS = [
         (DAILY, 'Diario'),
         (TEST, 'Testeo'),
-        (PROMOTION, 'Promoción')
+        (PROMOTION, 'Promoción'),
+        (WELCOME, 'Bienvenida')
     ]
 
     # Version constants

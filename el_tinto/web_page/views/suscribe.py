@@ -65,6 +65,8 @@ def suscribe(request):
 
             mail = Mail.objects.create(subject='Bienvenido a El Tinto', type=Mail.WELCOME)
 
+            mail.recipients.add(user)
+
             send_mail(
                 mail, 'onboarding.html', {'name': user.first_name}, [user.email],
             )

@@ -45,11 +45,49 @@
                                     </div>
                                 </div>
                             </div>
+                            {% if referral_code %}
+                                <div class="row text-color strong-text justify-content-center" style="font-size: 20px">
+                            {% else %}
+                                <div class="row text-color strong-text justify-content-center" style="font-size: 20px; display: none">
+                            {% endif %}
+                                <div class="col-12 col-md-8">
+                                    <p>
+                                        Este es el código de la persona que te refirió 👀
+{#                                        <a href="/faq/" class="p-2" style="color: #FFFFFF">#}
+{#                                            <i#}
+{#                                                class="fa fa-circle-question"#}
+{#                                                data-bs-toggle="tooltip"#}
+{#                                                data-bs-placement="right"#}
+{#                                                title="El Tinto siempre es más rico acompañado. ¡Conoce nuestro sistema#}
+{#                                                de referidos!"#}
+{#                                            >#}
+{#                                            </i>#}
+{#                                        </a>#}
+                                    </p>
+                                </div>
+                            </div>
+                            {% if referral_code %}
+                                <div class="row justify-content-center">
+                            {% else %}
+                                <div class="row justify-content-center" style="display: none">
+                            {% endif %}
+                                <div class="col-12 col-md-8 pb-5">
+                                    <div class="input-group has-validation">
+                                        <input
+                                            type="text" class="form-control" id="referral_code"
+                                            name="referral_code" style="padding: 12px"
+                                            placeholder="Código de referido (Opcional)"
+                                            value={{ referral_code }}
+                                            readonly
+                                        >
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row text-color strong-text justify-content-center" style="font-size: 20px">
                                 <div class="col-12 col-md-8">
                                     <p>
                                         ¡Ayúdanos a llegar a tu correo!
-                                        <a href="/faq/" style="color: #FFFFFF">
+                                        <a href="/faq/" class="p-2" style="color: #FFFFFF">
                                             <i
                                                 class="fa fa-circle-question"
                                                 data-bs-toggle="tooltip"

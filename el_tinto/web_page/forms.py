@@ -7,6 +7,7 @@ class UserForm(forms.Form):
     email = forms.CharField()
     first_name = forms.CharField(required=False)
     last_name = forms.CharField(required=False)
+    referral_code = forms.CharField(required=False)
 
 
 class UnsuscribeForm(forms.ModelForm):

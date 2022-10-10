@@ -41,7 +41,7 @@ def suscribe(request):
         except User.DoesNotExist:
             referred_by = None
 
-            if form.cleaned_data.get('referral_code') and form.cleaned_data.get('referral_code') != '':
+            if form.cleaned_data.get('referral_code') != 'None' and form.cleaned_data.get('referral_code') != 'readonly':
                 try:
                     # Find user by referral code without taking into account case-sensitive search
                     referred_by = User.objects.get(referral_code__iexact=form.cleaned_data['referral_code'])

@@ -198,6 +198,10 @@ class Common(Configuration):
             'mails': {
                 'handlers': ['file'],
                 'level': 'INFO'
+            },
+            'debugger_mails': {
+                'handlers': ['file'],
+                'level': 'INFO'
             }
         }
     }

@@ -15,7 +15,6 @@ from el_tinto.utils.users import calculate_referred_users
 from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use
 
 logger = logging.getLogger("mails")
-debugger_logger = logging.getLogger("debugger_mails")
 
 
 def send_several_mails(mail, users):
@@ -29,7 +28,7 @@ def send_several_mails(mail, users):
     :return: None
     """
     dispatch_beginning = datetime.datetime.now()
-    string_dispatch_beginning = dispatch_beginning.strftime("%m/%d/%Y")
+    string_dispatch_beginning = convert_utc_to_local_datetime(dispatch_beginning).strftime("%H:%M:%S of %m/%d/%Y")
 
     # This number is based on AWS SES limitations.
     # Is calculated as the maximum number of mails/s - 1 to make sure never surpass AWS email sending capability
@@ -38,7 +37,7 @@ def send_several_mails(mail, users):
     # Split total users into chunks of length n to send at most those emails per second
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
-    debugger_logger.info(f"For today's Email {string_dispatch_beginning} the dispatch times for every 79 emails is:")
+    logger.info(f"For today's Email {string_dispatch_beginning} the dispatch times for every 79 emails is:")
 
     for users_list in users_chunked_list:
         for user in users_list:
@@ -63,11 +62,11 @@ def send_several_mails(mail, users):
         time.sleep(1)
 
         dispatched_time = datetime.datetime.now()
-        delta_time = dispatch_beginning - dispatched_time
+        delta_time = dispatched_time - dispatch_beginning
 
         dispatch_beginning = dispatched_time
 
-        debugger_logger.info(f"{delta_time} seconds")
+        logger.info(f"{delta_time} seconds")
 
     now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
     string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")

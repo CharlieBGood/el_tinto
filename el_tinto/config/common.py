@@ -199,10 +199,6 @@ class Common(Configuration):
                 'handlers': ['file'],
                 'level': 'INFO'
             },
-            'debugger_mails': {
-                'handlers': ['file'],
-                'level': 'INFO'
-            }
         }
     }
 

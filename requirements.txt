@@ -17,6 +17,7 @@ django_unique_upload==0.2.1
 djangorestframework==3.13.1
 Markdown==3.3.6
 django-filter==21.1
+django-cors-headers==3.13.0
 
 # Developer Tools
 django-extensions==3.2.0
@@ -58,3 +59,5 @@ PyYAML==6.0
 ua-parser==0.16.1
 user-agents==2.2.0
 django-user-agents==0.4.0
+django-tinymce==3.5.0
+django-jazzmin==2.6.0

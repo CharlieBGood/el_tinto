@@ -7,6 +7,7 @@ class Local(Common):
     DEBUG = True
 
     # Testing
+    CORS_ALLOW_ALL_ORIGINS = True
     INSTALLED_APPS = Common.INSTALLED_APPS
     INSTALLED_APPS += ('django_nose',)
     TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

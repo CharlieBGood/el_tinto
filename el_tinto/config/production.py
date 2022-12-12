@@ -12,6 +12,7 @@ class Production(Common):
     # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
     INSTALLED_APPS += ("gunicorn", )
+    CORS_ALLOW_ALL_ORIGINS = True  # TODO: make sure we want requests available from any origin
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -38,17 +39,17 @@ class Production(Common):
     EMAIL_BACKEND = 'django_ses.SESBackend'
     
     
-    sentry_sdk.init(
-        dsn="https://69ad3a71e9eb42f9ae208aef0e12041d@o1213992.ingest.sentry.io/6353621",
-        integrations=[DjangoIntegration()],
-        environment='production',
-
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
-        traces_sample_rate=0.2,
-
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
-    )
+    # sentry_sdk.init(
+    #     dsn="https://69ad3a71e9eb42f9ae208aef0e12041d@o1213992.ingest.sentry.io/6353621",
+    #     integrations=[DjangoIntegration()],
+    #     environment='production',
+    #
+    #     # Set traces_sample_rate to 1.0 to capture 100%
+    #     # of transactions for performance monitoring.
+    #     # We recommend adjusting this value in production.
+    #     traces_sample_rate=0.2,
+    #
+    #     # If you wish to associate users to errors (assuming you are using
+    #     # django.contrib.auth) you may enable sending PII data.
+    #     send_default_pii=True
+    # )

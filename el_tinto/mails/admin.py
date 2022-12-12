@@ -23,8 +23,8 @@ class MailsAdmin(admin.ModelAdmin):
         super(MailsAdmin, self).save_model(request, obj, form, change)
 
 
-admin.site.site_header = "El Tinto Administrador"
-admin.site.site_title = "El Tinto"
+admin.site.site_header = "La Cafetera"
+admin.site.site_title = "La Cafetera"
 admin.site.index_title = "El Tinto"
 
 # @admin.register(SentEmailsInteractions)

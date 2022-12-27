@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 
@@ -18,4 +19,4 @@ def edit_tinto_in_cms(_, request, queryset):
     """
     tinto = queryset.first()
 
-    return redirect(f'https://google.com/{tinto.id}')
+    return redirect(f'{settings.LA_CAFETERA_URL}/editar-tinto/{tinto.id}')

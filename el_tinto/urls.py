@@ -15,7 +15,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('', include('el_tinto.web_page.urls')),
     path('sns/', include('el_tinto.ses_sns.urls')),
-    path('', include('el_tinto.tintos.urls'))
+    path('', include('el_tinto.tintos.urls')),
+    path('mails/', include('el_tinto.mails.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

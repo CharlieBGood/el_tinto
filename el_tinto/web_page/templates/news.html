@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block meta_tags %}
+    <meta property="og:title" content="El Tinto" />
+    <meta property="og:url" content="https://eltinto.xyz/el-tinto/" />
+{% endblock %}
+
+{% block title %}El Tinto{% endblock %}
+
+{% block style %}
+
+<style>
+    h1 {
+        font-size: 46px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    h3 {
+        font-size: 18px;
+    }
+    hr {
+        opacity: 1;
+    }
+    a {
+        color: #348286;
+    }
+    a div {
+        background-color: #5044e4;
+        border-radius: 12px;
+        height: 45px;
+        color: #FFFFFF;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+    }
+    .main {
+        padding: 20px 5%;
+    }
+    @media only screen and (min-width: 768px) {
+        .main {
+            padding: 20px 26%;
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<body>
+  <div class="main">
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%;">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/logo.png" width="54" height="36" class="d-inline-block" style="vertical-align: 0">
+                    </td>
+                    <td style="vertical-align: bottom">
+                        <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <hr style="width: 100%; border-top: 2px solid #eaeaea; margin-top: 0">
+        <tr>
+            <table>
+                <tr>
+                    <td>
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/el_tinto_just_text.png"
+                          class="logo-title"
+                        >
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <tr>
+          <td>
+            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
+              <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
+                Historias importantes para gente ocupada
+              </h2>
+            </div>
+            <br>
+            {{html}}
+            <h2 style="text-align:center; margin: 60px 0 0 0">
+              <strong>Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
+            </h2>
+            <a href="/suscribirse/" style="color: #FFFFFF; text-decoration: none;">
+              <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 100px auto;">
+                <p style="text-align: center; margin: 1rem !important">Suscribirse</p>
+              </div>
+            </a>
+            <div style="background-color: #5044e4; padding: 5px 5%;">
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
+                los derechos reservados.
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
+                quisieras que incluyeramos algo nuevo?
+              </p>
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
+                <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+                y te daremos respuesta antes de que se te enfríe el tintico.
+              </p>
+              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+{% endblock %}

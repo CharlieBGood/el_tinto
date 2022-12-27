@@ -29,3 +29,5 @@ class Local(Common):
     AWS_SECRET_ACCESS_KEY = os.getenv('DJANGO_AWS_SECRET_ACCESS_KEY')
     # Mail
     EMAIL_BACKEND = 'django_ses.SESBackend'
+
+    LA_CAFETERA_URL = 'http://localhost:3000'

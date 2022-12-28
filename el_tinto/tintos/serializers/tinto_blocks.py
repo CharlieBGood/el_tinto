@@ -13,6 +13,14 @@ class TintoBlocksSerializer(serializers.ModelSerializer):
         exclude = ['created_at']
 
 
+class PatchTintoBlockSerializer(serializers.ModelSerializer):
+    """Patch TintoBlocks serializer."""
+
+    class Meta:
+        model = TintoBlocks
+        exclude = ['created_at']
+
+
 class CreateTintoBlocksSerializer(serializers.ModelSerializer):
     """Create TintoBlocks serializer."""
     tinto = serializers.PrimaryKeyRelatedField(

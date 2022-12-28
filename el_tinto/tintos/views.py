@@ -5,7 +5,11 @@ from rest_framework.response import Response
 
 from el_tinto.tintos.models import TintoBlocks, Tinto, TintoBlocksEntries, NewsType, TintoBlockType
 from el_tinto.tintos.serializers.tintos import TintoSerializer
-from el_tinto.tintos.serializers.tinto_blocks import TintoBlocksSerializer, CreateTintoBlocksSerializer
+from el_tinto.tintos.serializers.tinto_blocks import (
+    TintoBlocksSerializer,
+    CreateTintoBlocksSerializer,
+    PatchTintoBlockSerializer
+)
 from el_tinto.tintos.serializers.tinto_blocks_entries import (
     TintoBlocksEntriesSerializer,
     RetrieveTintoBlockEntry,
@@ -50,7 +54,13 @@ class TintoBlocksViewSet(
 
     def get_serializer_class(self):
         """Return specific serializer class depending on the performed action."""
-        return CreateTintoBlocksSerializer if self.action == 'create' else TintoBlocksSerializer
+        print(self.action)
+        if self.action == 'create':
+            return CreateTintoBlocksSerializer
+        elif self.action == 'partial_update':
+            return PatchTintoBlockSerializer
+        else:
+            return TintoBlocksSerializer
 
     def perform_create(self, serializer):
         tinto = serializer.validated_data.pop('tinto')

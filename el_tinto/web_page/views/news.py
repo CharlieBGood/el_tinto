@@ -19,7 +19,8 @@ def news(request, news_id):
     except Tinto.mail.RelatedObjectDoesNotExist:
         raise Http404()
 
-    if tinto_block_entry.tinto_block.type.name != 'News' or tinto_block_entry.tinto.mail.type != Mail.DAILY:
+    #TODO: Add verification that only correct news can be shared
+    if tinto_block_entry.tinto.mail.type != Mail.DAILY:
         raise Http404()
 
     else:

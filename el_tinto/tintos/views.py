@@ -54,7 +54,6 @@ class TintoBlocksViewSet(
 
     def get_serializer_class(self):
         """Return specific serializer class depending on the performed action."""
-        print(self.action)
         if self.action == 'create':
             return CreateTintoBlocksSerializer
         elif self.action == 'partial_update':

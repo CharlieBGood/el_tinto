@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 
 @admin.action(description='Send email to best users')
-@only_one_instance('send_email_to_best_users')
+@only_one_instance
 # TODO: review the function. Do not use in production, needs generalization.
 def send_email_to_best_users(_, request, queryset):
     """

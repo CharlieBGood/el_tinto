@@ -5,7 +5,7 @@ from el_tinto.utils.send_mail import send_mail, get_mail_template, get_mail_temp
 
 
 @admin.action(description='Test send daily email')
-@only_one_instance('test_send_daily_email')
+@only_one_instance
 def test_send_daily_email(_, request, queryset):
     """
     Send a test email to the user in the email field defined as 'test_email'

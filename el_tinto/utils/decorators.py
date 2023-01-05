@@ -16,7 +16,7 @@ def only_one_instance(admin_action):
     """
     @wraps(admin_action)
     def inner(*args, **kwargs):
-        if len(args[2]) == 1:
+        if len(args[2]) > 1:
             messages.error(args[1], f"Only one {args[0].model.__name__} at the time is allowed")
         else:
             return admin_action(*args, **kwargs)

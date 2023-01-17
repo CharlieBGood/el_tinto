@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
 from el_tinto.tintos.models import TintoBlocks, Tinto
+from el_tinto.tintos.serializers.news_types import NewsTypeSerializer
 from el_tinto.tintos.serializers.tinto_block_entry_types import TintoBlockTypeSerializer
 
 
 class TintoBlocksSerializer(serializers.ModelSerializer):
     """TintoBlocks serializer."""
     type = TintoBlockTypeSerializer()
+    news_type = NewsTypeSerializer()
 
     class Meta:
         model = TintoBlocks

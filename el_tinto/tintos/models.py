@@ -138,6 +138,6 @@ class NewsType(models.Model):
         return f"{self.name} - {self.label}"
 
     class Meta:
-        verbose_name = "Tipo de noticia"
-        verbose_name_plural = "Tipos de noticia"
+        verbose_name = "Tipo de historia"
+        verbose_name_plural = "Tipos de historias"
         ordering = ('name',)

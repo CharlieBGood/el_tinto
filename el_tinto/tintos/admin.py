@@ -8,7 +8,7 @@ from el_tinto.tintos.models import TintoBlocks, Tinto, TintoBlocksEntries, NewsT
 class TintoAdmin(admin.ModelAdmin):
     """"Tinto Admin."""
     actions = [edit_tinto_in_cms]
-    exclude = ('html',)
+    exclude = ('html', 'name')
 
 
 @admin.register(TintoBlocks)

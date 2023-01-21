@@ -29,7 +29,7 @@ class TintoBlocksAdmin(admin.ModelAdmin):
         Return empty perms dict thus hiding the model from admin index.
         """
         if request.user.groups.filter(name__in=['Founder']):
-            return super(TintoAdmin, self).get_model_perms(request)
+            return super(TintoBlocksAdmin, self).get_model_perms(request)
         else:
             return {}
 
@@ -43,7 +43,7 @@ class TintoBlocksEntriesAdmin(admin.ModelAdmin):
         Return empty perms dict thus hiding the model from admin index.
         """
         if request.user.groups.filter(name__in=['Founder']):
-            return super(TintoAdmin, self).get_model_perms(request)
+            return super(TintoBlocksEntriesAdmin, self).get_model_perms(request)
         else:
             return {}
 
@@ -57,7 +57,7 @@ class TintoBlockTypeAdmin(admin.ModelAdmin):
         Return empty perms dict thus hiding the model from admin index.
         """
         if request.user.groups.filter(name__in=['Founder']):
-            return super(TintoAdmin, self).get_model_perms(request)
+            return super(TintoBlockTypeAdmin, self).get_model_perms(request)
         else:
             return {}
 
@@ -65,3 +65,12 @@ class TintoBlockTypeAdmin(admin.ModelAdmin):
 @admin.register(NewsType)
 class NewsTypeAdmin(admin.ModelAdmin):
     """"NewsType Admin."""
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Founder', 'Editor']):
+            return super(NewsTypeAdmin, self).get_model_perms(request)
+        else:
+            return {}

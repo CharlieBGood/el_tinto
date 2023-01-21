@@ -10,20 +10,56 @@ class TintoAdmin(admin.ModelAdmin):
     actions = [edit_tinto_in_cms]
     exclude = ('html', 'name')
 
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Editor', 'Founder']):
+            return super(TintoAdmin, self).get_model_perms(request)
+        else:
+            return {}
+
 
 @admin.register(TintoBlocks)
 class TintoBlocksAdmin(admin.ModelAdmin):
     """"TintoBlocks Admin."""
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Founder']):
+            return super(TintoAdmin, self).get_model_perms(request)
+        else:
+            return {}
 
 
 @admin.register(TintoBlocksEntries)
 class TintoBlocksEntriesAdmin(admin.ModelAdmin):
     """"TintoBlocksEntries Admin."""
 
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Founder']):
+            return super(TintoAdmin, self).get_model_perms(request)
+        else:
+            return {}
+
 
 @admin.register(TintoBlockType)
 class TintoBlockTypeAdmin(admin.ModelAdmin):
     """"TintoBlockType Admin."""
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Founder']):
+            return super(TintoAdmin, self).get_model_perms(request)
+        else:
+            return {}
 
 
 @admin.register(NewsType)

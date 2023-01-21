@@ -53,7 +53,7 @@ class Tinto(models.Model):
     class Meta:
         verbose_name = "Tinto"
         verbose_name_plural = "Tintos"
-        ordering = ('email_dispatch_date', 'created_at')
+        ordering = ('-email_dispatch_date', 'created_at')
 
 
 class TintoBlocksEntries(models.Model):

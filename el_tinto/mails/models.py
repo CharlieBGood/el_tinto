@@ -64,7 +64,7 @@ class Mail(models.Model):
     programmed = models.BooleanField(default=False, editable=False)
     tinto = models.OneToOneField('tintos.Tinto', on_delete=models.SET_NULL, null=True, related_name='mail')
 
-    tweet = models.CharField(max_length=255, default='', help_text='255 characters max')
+    tweet = models.CharField(max_length=226, default='', help_text='226 characters max')
     subject_message = models.CharField(max_length=256, default='', blank=True,
                                        help_text='Texto que acompaña al subject')
 

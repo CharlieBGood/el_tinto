@@ -22,10 +22,28 @@ class MailsAdmin(admin.ModelAdmin):
         obj.created_by = request.user
         super(MailsAdmin, self).save_model(request, obj, form, change)
 
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Editor', 'Founder']):
+            return super(MailsAdmin, self).get_model_perms(request)
+        else:
+            return {}
+
 
 @admin.register(Templates)
 class TemplatesAdmin(admin.ModelAdmin):
     """"Templates Admin."""
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Founder']):
+            return super(TemplatesAdmin, self).get_model_perms(request)
+        else:
+            return {}
 
 
 admin.site.site_header = "La Cafetera"

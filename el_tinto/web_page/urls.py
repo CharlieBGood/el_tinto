@@ -1,5 +1,4 @@
 from django.urls import path
-from rest_framework.routers import DefaultRouter
 from el_tinto.web_page.views.index import index
 from el_tinto.web_page.views.faqs import faqs
 from el_tinto.web_page.views.suscribe import suscribe

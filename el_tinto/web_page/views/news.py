@@ -11,7 +11,7 @@ from django.http import Http404
 @require_http_methods(["GET"])
 def news(request, news_id):
 
-    tinto_block_entry = TintoBlocksEntries.objects.get(tinto_block__id=news_id)
+    tinto_block_entry = TintoBlocksEntries.objects.get(id=news_id)
 
     try:
         tinto_block_entry.tinto.mail

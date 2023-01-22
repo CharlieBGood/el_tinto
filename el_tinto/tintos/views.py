@@ -73,7 +73,7 @@ class TintoBlocksViewSet(
         )
 
 
-class TintoBlocksEntriesBlocksViewSet(
+class TintoBlocksEntriesViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.RetrieveModelMixin,

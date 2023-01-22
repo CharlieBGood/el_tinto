@@ -6,8 +6,8 @@ SHARE_NEWS = """
           <tr>
             <td style="padding: 0">
               <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_1_SHARE.png"
-                  style="display: block; height: 30px"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_SHARE.png"
+                  style="display: block;"
                 >
             </td>
             <td style="padding: 0">
@@ -16,8 +16,8 @@ SHARE_NEWS = """
                 href="https://{{env}}eltinto.xyz/noticias/{{id}}/" class="" target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_2_WEB.png"
-                  style="display: block; height: 30px"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_WEB.png"
+                  style="display: block;"
                 >
               </a>
             </td>
@@ -28,8 +28,8 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_3_FB.png"
-                  style="display: block; height: 30px"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_FB.png"
+                  style="display: block;"
                 >
               </a>
             </td>
@@ -40,8 +40,8 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_4_TW.png"
-                  style="display: block; height: 30px"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_TW.png"
+                  style="display: block;"
                 >
               </a>
             </td>
@@ -52,8 +52,8 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_5_WA.png"
-                  style="display: block; height: 30px"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_WA.png"
+                  style="display: block;"
                 >
               </a>
             </td>

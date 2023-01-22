@@ -53,3 +53,5 @@ class Production(Common):
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
+
+    LA_CAFETERA_URL = 'https://www.lacafetera.eltinto.xyz'

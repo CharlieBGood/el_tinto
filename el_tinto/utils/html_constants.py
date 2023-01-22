@@ -1,7 +1,7 @@
 LINE_BREAKER = '<hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />'
 
 SHARE_NEWS = """
-    <table style="border-spacing: 0: margin: 30px 0 0 0">
+    <table style="border-spacing: 0; margin: 30px 0 0 0">
         <tbody>
           <tr>
             <td style="padding: 0">

@@ -12,6 +12,7 @@ class Production(Common):
     # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
     INSTALLED_APPS += ("gunicorn", )
+    CORS_ALLOW_ALL_ORIGINS = True  # TODO: make sure we want requests available from any origin
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.0/howto/static-files/

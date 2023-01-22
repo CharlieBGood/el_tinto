@@ -1,0 +1,1 @@
+[{"model": "mails.templates", "pk": 1, "fields": {"name": "Daily", "label": "Correo Diario", "file_name": "daily_mail.html"}}]

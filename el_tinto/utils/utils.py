@@ -1,5 +1,5 @@
+import os
 import re
-
 
 def replace_words_in_sentence(sentence, user=None):
     """
@@ -49,6 +49,30 @@ def replace_word(sentence, word, model):
     model_attribute = getattr(model, attribute)
 
     return sentence.replace(word, model_attribute)
+
+
+def replace_info_in_share_news_buttons(html, tinto_block_entry):
+    """
+    Replace the TintoBlockEntry info in the
+    share news buttons html
+
+    :params:
+    html: str
+    tinto_block_entry: TintoBlockEntry Object
+
+    :return:
+    html: str
+    """
+    change_words_dict = {
+        '{{env}}': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
+        '{{id}}': str(tinto_block_entry.id),
+        '{{title}}': tinto_block_entry.tinto_block.title
+    }
+
+    for word in change_words_dict.keys():
+        html = html.replace(word, change_words_dict[word])
+
+    return html
 
 
 def get_email_headers(headers):

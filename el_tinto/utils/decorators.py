@@ -1,25 +1,24 @@
 from django.contrib import messages
 
+from functools import wraps
 
-def only_one_instance(action_name):
+
+def only_one_instance(admin_action):
     """
     Decorator to make sure only one instance of the object is updated at the time.
     If more than one instance is selected returns an error message.
 
     :params:
-    action_name: str
+    admin_action: func
 
     :return:
-    decorator: func
+    inner: func
     """
-    def decorator(admin_action):
-        def wrapper(*args, **kwargs):
-            if len(args[2]) > 1:
-                messages.error(args[1], "Only one email at the time is allowed")
-            else:
-                return admin_action(*args, **kwargs)
+    @wraps(admin_action)
+    def inner(*args, **kwargs):
+        if len(args[2]) > 1:
+            messages.error(args[1], f"Only one {args[0].model.__name__} at the time is allowed")
+        else:
+            return admin_action(*args, **kwargs)
 
-        wrapper.__name__ = action_name
-        return wrapper
-
-    return decorator
+    return inner

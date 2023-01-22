@@ -11,7 +11,7 @@ logger = logging.getLogger("mails")
 
 
 @admin.action(description='Cancel send daily email')
-@only_one_instance('cancel_send_daily_email')
+@only_one_instance
 def cancel_send_daily_email(_, request, queryset):
     """
     Cancel already programmed daily email.

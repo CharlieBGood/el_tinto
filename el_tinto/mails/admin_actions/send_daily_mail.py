@@ -14,7 +14,7 @@ logger = logging.getLogger("mails")
 
 
 @admin.action(description='Send daily mail')
-@only_one_instance('send_daily_mail')
+@only_one_instance
 def send_daily_mail(_, request, queryset):
     """
     Send daily mail.

@@ -11,6 +11,7 @@ class Development(Common):
     # https://docs.djangoproject.com/en/2.0/ref/settings/#allowed-hosts
     ALLOWED_HOSTS = ["*"]
     INSTALLED_APPS += ("gunicorn",)
+    CORS_ALLOW_ALL_ORIGINS = True
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -50,3 +51,5 @@ class Development(Common):
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True
     )
+
+    LA_CAFETERA_URL = 'https://www.dev.lacafetera.eltinto.xyz'

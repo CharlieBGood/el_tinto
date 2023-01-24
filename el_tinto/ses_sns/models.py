@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 
 from el_tinto.mails.models import Mail, SentEmails, SentEmailsInteractions
+from el_tinto.tintos.models import TintoBlocksEntries
 from el_tinto.users.models import User
 from el_tinto.utils.utils import get_email_headers, EVENT_TYPE_CLICK, EVENT_TYPE_OPEN, EVENT_TYPES
 
@@ -71,16 +72,26 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                     type=click_data['linkTags']['type'][0],
-
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:
-                                SentEmailsInteractions.objects.create(
-                                    user=user,
-                                    mail=mail,
-                                    link=click_data.get('link'),
-                                    type=click_data['linkTags']['type'][0]
-                                )
+                                if len(click_data['linkTags']['type']) > 1:
+                                    SentEmailsInteractions.objects.create(
+                                        user=user,
+                                        mail=mail,
+                                        link=click_data.get('link'),
+                                        type=click_data['linkTags']['type'][0],
+                                        tinto_block_entry=TintoBlocksEntries.objects.get(
+                                            id=int(click_data['linkTags']['type'][1])
+                                        )
+                                    )
+                                else:
+                                    SentEmailsInteractions.objects.create(
+                                        user=user,
+                                        mail=mail,
+                                        link=click_data.get('link'),
+                                        type=click_data['linkTags']['type'][0]
+                                    )
 
                 else:
                     raise ValueError("Wrong type of notification")

@@ -55,3 +55,11 @@ class Production(Common):
     )
 
     LA_CAFETERA_URL = 'https://www.lacafetera.eltinto.xyz'
+
+    # TINY MCE CONFIGURATIONS
+    TINYMCE_DEFAULT_CONFIG = {
+        "relative_urls": False,
+        "remove_script_host": True,
+        "document_base_url": 'https://eltinto.xyz',
+        "plugins": "link,image,preview,anchor,"
+    }

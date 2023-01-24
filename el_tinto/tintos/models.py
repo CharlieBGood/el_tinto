@@ -5,7 +5,6 @@ from django.db.models import Deferrable
 from tinymce.models import HTMLField
 
 from el_tinto.utils.html_constants import LINE_BREAKER, SHARE_NEWS
-from el_tinto.utils.tintos import generate_tinto_html
 from el_tinto.utils.utils import replace_info_in_share_news_buttons
 
 
@@ -89,14 +88,6 @@ class TintoBlocksEntries(models.Model):
         # Add extra features to display html
         self.create_tinto_block_entry_html_extra_features()
         super(TintoBlocksEntries, self).save(*args, **kwargs)
-
-        # Generate email html every time a tinto block entry is changed
-        try:
-            mail = self.tinto.mail
-            mail.html = generate_tinto_html(self.tinto)
-            mail.save()
-        except:
-            pass
 
     class Meta:
         verbose_name = "Entrada de bloques"

@@ -31,3 +31,13 @@ class Local(Common):
     EMAIL_BACKEND = 'django_ses.SESBackend'
 
     LA_CAFETERA_URL = 'http://localhost:3000'
+
+    # TINY MCE CONFIGURATIONS
+    TINYMCE_DEFAULT_CONFIG = {
+        "relative_urls": False,
+        "remove_script_host": False,
+        "document_base_url": 'http://localhost:8000',
+        "plugins": "link,image,preview,anchor",
+        "theme": "silver",
+        "height": 500,
+    }

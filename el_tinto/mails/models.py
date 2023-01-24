@@ -112,9 +112,17 @@ class SentEmailsInteractions(models.Model):
     class Meta:
         db_table = 'clicks_tracking'
 
-    mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE, related_name='interactions')
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='interactions')
     type = models.CharField(max_length=3, choices=INTERACTION_TYPE, default='')
+    tinto_block_entry = models.ForeignKey(
+        'tintos.TintoBlocksEntries',
+        on_delete=models.CASCADE,
+        default=None,
+        null=True,
+        blank=True,
+        related_name='interactions'
+    )
     link = models.TextField()
     click_date = models.DateTimeField(auto_now_add=True)
 

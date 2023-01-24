@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 
 from el_tinto.mails.models import Mail, SentEmails, SentEmailsInteractions
+from el_tinto.tintos.models import TintoBlocksEntries
 from el_tinto.users.models import User
 from el_tinto.utils.utils import get_email_headers, EVENT_TYPE_CLICK, EVENT_TYPE_OPEN, EVENT_TYPES
 
@@ -71,7 +72,6 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                     type=click_data['linkTags']['type'][0],
-
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:
@@ -79,7 +79,10 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                     link=click_data.get('link'),
-                                    type=click_data['linkTags']['type'][0]
+                                    type=click_data['linkTags']['type'][0],
+                                    tinto_block_entry=TintoBlocksEntries.objects.filter(
+                                        id=int(click_data['linkTags']['tinto_block_entry'][0])
+                                    ).first()
                                 )
 
                 else:

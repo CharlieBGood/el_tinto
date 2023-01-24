@@ -302,7 +302,6 @@ class Common(Configuration):
         "login_logo": "el_tinto_logo.png",
         "site_icon": 'favicon.ico',
         "copyright": "El Tinto",
-        # "related_modal_active": True,
         "show_ui_builder": False
     }
 

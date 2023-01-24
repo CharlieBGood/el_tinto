@@ -4,7 +4,7 @@ from el_tinto.utils.decorators import only_one_instance
 from el_tinto.utils.send_mail import send_mail, get_mail_template, get_mail_template_data
 
 
-@admin.action(description='Test send daily email')
+@admin.action(description='Enviar correo de prueba')
 @only_one_instance
 def test_send_daily_email(_, request, queryset):
     """

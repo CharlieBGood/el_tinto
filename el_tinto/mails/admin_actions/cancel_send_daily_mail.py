@@ -10,7 +10,7 @@ from el_tinto.utils.scheduler import scheduler
 logger = logging.getLogger("mails")
 
 
-@admin.action(description='Cancel send daily email')
+@admin.action(description='Cancelar envío de correo')
 @only_one_instance
 def cancel_send_daily_email(_, request, queryset):
     """

@@ -3,6 +3,7 @@ from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from el_tinto.mails.serializers import MailsSerializer
 from el_tinto.tintos.models import TintoBlocks, Tinto, TintoBlocksEntries, NewsType, TintoBlockType
 from el_tinto.tintos.serializers.tintos import TintoSerializer
 from el_tinto.tintos.serializers.tinto_blocks import (
@@ -38,6 +39,17 @@ class TintoViewSet(
 
         serializer = RetrieveTintoBlockEntry(tinto_blocks_entries, many=True)
         return Response(serializer.data)
+
+    @action(detail=True, methods=['GET'], url_path='mail')
+    def get_tinto_mail(self, request, pk=None):
+        tinto = self.get_object()
+
+        try:
+            mail = tinto.mail
+            serializer = MailsSerializer(mail)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Tinto.mail.RelatedObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class TintoBlocksViewSet(
@@ -103,20 +115,30 @@ class TintoBlocksEntriesViewSet(
             old_position = serializer.validated_data['old_position']
             new_position = serializer.validated_data['new_position']
 
-            tinto_block_entry_one = tinto.tintoblocksentries_set.get(position=old_position)
-            tinto_block_entry_two = tinto.tintoblocksentries_set.get(position=new_position)
+            changing_tinto_block_entry = tinto.tintoblocksentries_set.get(position=old_position)
 
             with transaction.atomic():
-                tinto_block_entry_one.position, tinto_block_entry_two.position = \
-                    tinto_block_entry_two.position, tinto_block_entry_one.position
+                if new_position > old_position:
+                    for tinto_block_entry in tinto.tintoblocksentries_set.filter(
+                            position__range=[old_position+1, new_position]
+                    ):
+                        tinto_block_entry.position -= 1
+                        tinto_block_entry.save()
 
-                tinto_block_entry_one.save()
-                tinto_block_entry_two.save()
+                else:
+                    for tinto_block_entry in tinto.tintoblocksentries_set.filter(
+                            position__range=[new_position, old_position-1]
+                    ):
+                        tinto_block_entry.position += 1
+                        tinto_block_entry.save()
+
+                changing_tinto_block_entry.position = new_position
+                changing_tinto_block_entry.save()
+
         else:
-            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # TODO: Improve response
-        return Response()
+        return Response(status=status.HTTP_200_OK)
 
 
 class TintoBlockTypeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

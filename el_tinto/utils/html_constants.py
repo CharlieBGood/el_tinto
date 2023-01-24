@@ -12,8 +12,8 @@ SHARE_NEWS = """
             </td>
             <td style="padding: 0">
               <a
-                ses:tags="type:WBP"
-                href="https://{{env}}eltinto.xyz/noticias/{{id}}/" class="" target="_blank"
+                href="https://{{env}}eltinto.xyz/noticias/{{id}}/" class="" 
+                target="_blank"
               >
                 <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_WEB.png"
@@ -23,7 +23,6 @@ SHARE_NEWS = """
             </td>
             <td style="padding: 0">
               <a
-                ses:tags="type:FB"
                 href="https://www.facebook.com/sharer/sharer.php?u=https://{{env}}eltinto.xyz/noticias/{{id}}/"
                 target="_blank"
               >
@@ -35,7 +34,6 @@ SHARE_NEWS = """
             </td>
             <td style="padding: 0">
               <a
-                ses:tags="type:TW"
                 href="https://twitter.com/intent/tweet?text={{title}}%20@ElTinto_%20https://{{env}}eltinto.xyz/noticias/{{id}}/"
                 target="_blank"
               >
@@ -47,7 +45,6 @@ SHARE_NEWS = """
             </td>
             <td style="padding: 0">
               <a
-                ses:tags="type:WP"
                 href="https://api.whatsapp.com/send?text={{title}}%20https://{{env}}eltinto.xyz/noticias/{{id}}/"
                 target="_blank"
               >

@@ -13,7 +13,7 @@ from datetime import timedelta
 logger = logging.getLogger("mails")
 
 
-@admin.action(description='Send daily mail')
+@admin.action(description='Enviar correo diario')
 @only_one_instance
 def send_daily_mail(_, request, queryset):
     """

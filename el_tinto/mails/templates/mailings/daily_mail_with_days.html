@@ -19,6 +19,7 @@
     h3 {
       font-size: 18px;
       line-height: 150%;
+      font-weight: 400
     }
     p {
         line-height: 150%;
@@ -191,11 +192,13 @@
             {% endif %}
             <br>
             <h3 style="text-align:justify">
-              {% if name %}
-              Buenos días {{ name }}, este es El Tinto de hoy.
-              {% else %}
-              Buenos días, este es El Tinto de hoy.
-              {% endif %}
+              <strong>
+                {% if name %}
+                  Buenos días {{ name }}, este es El Tinto de hoy.
+                {% else %}
+                  Buenos días, este es El Tinto de hoy.
+                {% endif %}
+              </strong>
             </h3>
               {{html}}
             <img

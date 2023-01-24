@@ -5,7 +5,6 @@ from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
 from tinymce.models import HTMLField
 
-from el_tinto.tintos.models import Tinto
 from el_tinto.utils.date_time import get_string_date
 
 
@@ -87,12 +86,6 @@ class Mail(models.Model):
 
     def save(self, *args, **kwargs):
         super(Mail, self).save(*args, **kwargs)
-
-        # Update Tinto name
-        self.tinto.name = self.subject
-        self.tinto.save()
-
-
 
 
 class SentEmails(models.Model):

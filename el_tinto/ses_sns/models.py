@@ -75,23 +75,15 @@ class SNSNotification(models.Model):
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:
-                                if len(click_data['linkTags']['type']) > 1:
-                                    SentEmailsInteractions.objects.create(
-                                        user=user,
-                                        mail=mail,
-                                        link=click_data.get('link'),
-                                        type=click_data['linkTags']['type'][0],
-                                        tinto_block_entry=TintoBlocksEntries.objects.get(
-                                            id=int(click_data['linkTags']['type'][1])
-                                        )
-                                    )
-                                else:
-                                    SentEmailsInteractions.objects.create(
-                                        user=user,
-                                        mail=mail,
-                                        link=click_data.get('link'),
-                                        type=click_data['linkTags']['type'][0]
-                                    )
+                                SentEmailsInteractions.objects.create(
+                                    user=user,
+                                    mail=mail,
+                                    link=click_data.get('link'),
+                                    type=click_data['linkTags']['type'][0],
+                                    tinto_block_entry=TintoBlocksEntries.objects.filter(
+                                        id=int(click_data['linkTags']['tinto_block_entry'][0])
+                                    ).first()
+                                )
 
                 else:
                     raise ValueError("Wrong type of notification")

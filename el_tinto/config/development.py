@@ -57,7 +57,9 @@ class Development(Common):
     # TINY MCE CONFIGURATIONS
     TINYMCE_DEFAULT_CONFIG = {
         "relative_urls": False,
-        "remove_script_host": True,
+        "remove_script_host": False,
         "document_base_url": 'https://dev.eltinto.xyz',
-        "plugins": "link,image,preview,anchor,"
+        "plugins": "link,image,preview,anchor",
+        "theme": "silver",
+        "height": 500,
     }

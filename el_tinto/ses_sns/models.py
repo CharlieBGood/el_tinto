@@ -82,7 +82,7 @@ class SNSNotification(models.Model):
                                     type=click_data['linkTags']['type'][0],
                                     tinto_block_entry=TintoBlocksEntries.objects.filter(
                                         id=int(click_data['linkTags']['tinto_block_entry'][0])
-                                    ).first()
+                                    ).first() if click_data['linkTags'].get('tinto_block_entry') else None
                                 )
 
                 else:

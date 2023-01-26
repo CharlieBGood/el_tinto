@@ -298,9 +298,8 @@ class Common(Configuration):
     JAZZMIN_SETTINGS = {
         # Welcome text on the login screen
         "welcome_sign": "Bienvenido",
-        "site_logo": "el-tinto_perfil.png",
-        "login_logo": "el_tinto_logo.png",
-        "site_icon": 'favicon.ico',
+        "site_logo": "el_tinto_favicon.ico",
+        "site_icon": 'el_tinto_favicon.ico',
         "copyright": "El Tinto",
         "show_ui_builder": False
     }

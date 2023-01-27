@@ -112,6 +112,7 @@ class Common(Configuration):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
+                    'el_tinto.utils.context_processor.global_variables'
                 ],
             },
         },
@@ -298,8 +299,9 @@ class Common(Configuration):
     JAZZMIN_SETTINGS = {
         # Welcome text on the login screen
         "welcome_sign": "Bienvenido",
-        "site_logo": "el_tinto_favicon.ico",
-        "site_icon": 'el_tinto_favicon.ico',
+        "site_logo": "el_tinto_imagen_sin_espacios.png",
+        "site_icon": 'favicon.ico',
+        "login_logo": 'el_tinto_imagotipo_small.jpeg',
         "copyright": "El Tinto",
         "show_ui_builder": False
     }

@@ -10,6 +10,10 @@
     body {
       font-family: Arial;
     }
+    {#This targets gmail html and allows to change default gmail behavior for links#}
+    u + #body a {
+        color: #fca311;
+    }
     h1 {
       font-size: 46px;
     }
@@ -29,7 +33,7 @@
         font-size: 16px;
     }
     a {
-      color: #348286;
+      color: #fca311;
     }
     a div {
       background-color: #5044e4;
@@ -71,7 +75,7 @@
   </style>
 </head>
 
-<body>
+<body id="body">
   <div class="main">
     <span style="color: transparent; width: 1px; height: 1px">{{ subject_message }}</span>
     <table style="width: 100%">

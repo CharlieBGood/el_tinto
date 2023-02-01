@@ -72,6 +72,9 @@ class SNSNotification(models.Model):
                                     user=user,
                                     mail=mail,
                                     type=click_data['linkTags']['type'][0],
+                                    tinto_block_entry=TintoBlocksEntries.objects.filter(
+                                        id=int(click_data['linkTags']['tinto_block_entry'][0])
+                                    ).first() if click_data['linkTags'].get('tinto_block_entry') else None
                                 )
 
                             except SentEmailsInteractions.DoesNotExist:

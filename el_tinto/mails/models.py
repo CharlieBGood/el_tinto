@@ -100,13 +100,15 @@ class SentEmailsInteractions(models.Model):
     WHATSAPP = 'WP'
     WEB_PAGE = 'WBP'
     OTHER = 'OT'
+    VAKI = 'VAKI'
 
     INTERACTION_TYPE = [
         (TWITTER, 'Twitter'),
         (FACEBOOK, 'Facebook'),
         (WHATSAPP, 'Whatsapp'),
         (WEB_PAGE, 'Web page'),
-        (OTHER, 'Other')
+        (OTHER, 'Other'),
+        (VAKI, 'Vaki')
     ]
 
     class Meta:
@@ -114,7 +116,7 @@ class SentEmailsInteractions(models.Model):
 
     mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE, related_name='interactions')
     user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='interactions')
-    type = models.CharField(max_length=3, choices=INTERACTION_TYPE, default='')
+    type = models.CharField(max_length=4, choices=INTERACTION_TYPE, default='')
     tinto_block_entry = models.ForeignKey(
         'tintos.TintoBlocksEntries',
         on_delete=models.CASCADE,

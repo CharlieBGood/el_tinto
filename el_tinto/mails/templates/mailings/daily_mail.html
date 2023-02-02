@@ -33,7 +33,8 @@
         font-size: 16px;
     }
     a {
-      color: #fca311;
+      color: #fca311 !important;
+      text-decoration: underline !important;
     }
     a div {
       background-color: #5044e4; 
@@ -89,7 +90,7 @@
                     <td>
                         <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
                         <a
-                          style="text-decoration: none"
+                          style="text-decoration: none !important;"
                           href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
                         >
                             <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
@@ -263,7 +264,11 @@
             <p style="text-align:center;">
               Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
             </p>
-            <a ses:no-track href="https://{{ env }}eltinto.xyz/suscribirse/" target="_blank" style="color: #FFFFFF; text-decoration: none;">
+            <a ses:no-track
+               href="https://{{ env }}eltinto.xyz/suscribirse/"
+               target="_blank"
+               style="color: #FFFFFF; text-decoration: none !important;"
+            >
               <div style="background-color: #5044e4; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">
                 <p style="text-align: center;">Suscribirse</p>
               </div>
@@ -280,7 +285,7 @@
                 Te puedes desuscribir de esta lista
                   <a ses:no-track href="https://www.{{ env }}eltinto.xyz/desuscribirse/personalizar/?email={{email}}"
                     target="_blank"
-                    style="color: #FFFFFF"
+                    style="color: #FFFFFF !important;"
                   >
                       aquí
                   </a>.
@@ -289,7 +294,12 @@
                 quisieras que incluyeramos algo nuevo?
               </p>
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a 
-                <a ses:no-track href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+                <a
+                  ses:no-track href='mailto:info@eltinto.xyz'
+                  style='color: #FFFFFF !important; text-decoration: none !important;'
+                >
+                  info@eltinto.xyz
+                </a>
                 o responde a este correo y te daremos respuesta antes de que se te enfríe el tintico.
               </p>
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">

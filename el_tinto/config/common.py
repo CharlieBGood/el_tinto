@@ -32,8 +32,8 @@ class Common(Configuration):
         'el_tinto.mails',
         'el_tinto.web_page',
         'el_tinto.ses_sns',
-        'el_tinto.tintos'
-
+        'el_tinto.tintos',
+        'el_tinto.advertisement'
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/

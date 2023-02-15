@@ -6,8 +6,9 @@ SHARE_NEWS = """
           <tr>
             <td style="padding: 0">
               <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_SHARE.png"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_SHARE.png"
                   style="display: block;"
+                  height=40px;
                 >
             </td>
             <td style="padding: 0">
@@ -17,8 +18,9 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_WEB.png"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
                   style="display: block;"
+                  height=40px;
                 >
               </a>
             </td>
@@ -29,8 +31,9 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_FB.png"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
                   style="display: block;"
+                  height=40px;
                 >
               </a>
             </td>
@@ -41,8 +44,9 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_TW.png"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
                   style="display: block;"
+                  height=40px;
                 >
               </a>
             </td>
@@ -53,8 +57,9 @@ SHARE_NEWS = """
                 target="_blank"
               >
                 <img
-                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_WA.png"
+                  src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
                   style="display: block;"
+                  height=40px;
                 >
               </a>
             </td>

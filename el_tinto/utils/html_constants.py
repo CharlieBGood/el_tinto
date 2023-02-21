@@ -7,8 +7,7 @@ SHARE_NEWS = """
             <td style="padding: 0">
               <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_SHARE.png"
-                  style="display: block;"
-                  height=40px;
+                  style="display: block; height:40px"
                 >
             </td>
             <td style="padding: 0">
@@ -19,8 +18,7 @@ SHARE_NEWS = """
               >
                 <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
-                  style="display: block;"
-                  height=40px;
+                  style="display: block; height:40px"
                 >
               </a>
             </td>
@@ -32,8 +30,7 @@ SHARE_NEWS = """
               >
                 <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
-                  style="display: block;"
-                  height=40px;
+                  style="display: block; height:40px"
                 >
               </a>
             </td>
@@ -45,8 +42,7 @@ SHARE_NEWS = """
               >
                 <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
-                  style="display: block;"
-                  height=40px;
+                  style="display: block; height:40px"
                 >
               </a>
             </td>
@@ -58,8 +54,7 @@ SHARE_NEWS = """
               >
                 <img
                   src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
-                  style="display: block;"
-                  height=40px;
+                  style="display: block; height:40px"
                 >
               </a>
             </td>

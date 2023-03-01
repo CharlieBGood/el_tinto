@@ -31,7 +31,11 @@ def send_email_to_best_users(_, request, queryset):
         for user in users_list:
             html_version = 'survey.html'
 
-            mail.subject = mail.subject if user.first_name else 'Queremos hablar contigo'
+            mail.subject = (
+                f'{user.first_name}, te tenemos una propuesta'
+                if user.first_name and user.first_name != ''
+                else 'Te tenemos una propuesta'
+            )
             html = mail.html
 
             send_mail(

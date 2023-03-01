@@ -8,7 +8,7 @@ from el_tinto.utils.utils import replace_words_in_sentence
 from django.utils.safestring import mark_safe
 
 
-@admin.action(description='Send email to best users')
+@admin.action(description='Enviar a mejores usuarios')
 @only_one_instance
 # TODO: review the function. Do not use in production, needs generalization.
 def send_email_to_best_users(_, request, queryset):
@@ -31,9 +31,8 @@ def send_email_to_best_users(_, request, queryset):
         for user in users_list:
             html_version = 'survey.html'
 
-            name = user.first_name if user.first_name else user.email.split('@')[0]
             mail.subject = mail.subject if user.first_name else 'Queremos hablar contigo'
-            html = mail.html.replace('{{ name }}', name)
+            html = mail.html
 
             send_mail(
                 mail,

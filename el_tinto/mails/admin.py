@@ -3,6 +3,7 @@ from el_tinto.mails.admin_actions.cancel_send_daily_mail import cancel_send_dail
 from el_tinto.mails.admin_actions.edit_tinto_in_cms import edit_tinto_in_cms
 from el_tinto.mails.admin_actions.send_daily_mail import send_daily_mail
 from el_tinto.mails.admin_actions.test_send_daily_mail import test_send_daily_email
+from el_tinto.mails.admin_actions.send_mail_to_best_users import send_email_to_best_users
 from el_tinto.mails.models import Mail, Templates
 
 
@@ -12,7 +13,7 @@ class MailsAdmin(admin.ModelAdmin):
 
     list_display = ['type', 'subject', 'created_at', 'created_by', 'programmed', 'sent_datetime']
     readonly_fields = ('sent_datetime', 'tinto')
-    actions = [send_daily_mail, test_send_daily_email, cancel_send_daily_email, edit_tinto_in_cms]
+    actions = [send_daily_mail, test_send_daily_email, cancel_send_daily_email, edit_tinto_in_cms, send_email_to_best_users]
 
     def get_queryset(self, request):
         qs = super(MailsAdmin, self).get_queryset(request)

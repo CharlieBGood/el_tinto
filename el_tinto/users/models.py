@@ -52,6 +52,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=25, blank=True, default='')
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
+    best_user = models.BooleanField(default=False)
     referral_code = models.CharField(max_length=6, blank=True, default='')
     referred_by = models.ForeignKey(
         'users.User',
@@ -64,6 +65,20 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    @property
+    def user_name(self):
+        """
+        returns the first name of the user if it exists else returns the email of the user
+        """
+        return self.first_name if self.first_name and self.first_name != '' else self.email.split('@')[0]
+
+    @property
+    def opened_mails(self):
+        """
+        returns how many emails the user has opened
+        """
+        return self.sentemails_set.exclude(opened_date=None).count()
 
     def save(self, *args, **kwargs):
         from el_tinto.utils.users import create_user_referral_code

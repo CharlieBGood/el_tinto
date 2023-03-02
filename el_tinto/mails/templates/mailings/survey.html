@@ -10,6 +10,10 @@
     body {
       font-family: Arial;
     }
+    {#This targets gmail html and allows to change default gmail behavior for links#}
+    u + #body a {
+        color: #fca311;
+    }
     h1 {
       font-size: 46px;
     }
@@ -23,7 +27,8 @@
         line-height: 150%;
     }
     a {
-      color: #fca311;
+      color: #fca311 !important;
+      text-decoration: underline !important;
     }
     a div {
       background-color: #5044e4;
@@ -72,7 +77,12 @@
                 quisieras que incluyamos algo nuevo?
               </p>
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
-                <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+                <a
+                  href='mailto:info@eltinto.xyz'
+                  style='color: #FFFFFF !important; text-decoration: none !important;'
+                >
+                  info@eltinto.xyz
+                </a>
                 o responde a este correo y te daremos respuesta tan pronto como podamos
               </p>
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">

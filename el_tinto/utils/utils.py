@@ -1,6 +1,9 @@
 import os
 import re
 
+from el_tinto.users.models import User
+
+
 def replace_words_in_sentence(sentence, user=None):
     """
     Replace all the words from sentence that match the replacement structure with user info.
@@ -34,7 +37,7 @@ def replace_word(sentence, word, model):
     :params:
     sentence: str
     word: str
-    model: Model Object
+    model: Model Instance Object
 
     :return:
     sentence: str
@@ -46,9 +49,13 @@ def replace_word(sentence, word, model):
     for character in disallowed_characters:
         attribute = attribute.replace(character, '')
 
-    model_attribute = getattr(model, attribute)
+    try:
+        model_attribute = getattr(model, attribute)
 
-    return sentence.replace(word, model_attribute)
+    except AttributeError:
+        raise AttributeError(f'Attribute {attribute} does not exist on model {model._meta.model.__name__}')
+
+    return sentence.replace(word, str(model_attribute))
 
 
 def replace_info_in_share_news_buttons(html, tinto_block_entry):

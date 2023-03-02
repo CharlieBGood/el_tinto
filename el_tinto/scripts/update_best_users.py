@@ -3,7 +3,7 @@ import csv
 from el_tinto.users.models import User
 
 def update_best_users():
-    with open('el_tinto/scripts/user_interviews.csv') as file:
+    with open('el_tinto/scripts/best_users.csv') as file:
 
         csvreader = csv.reader(file)
 
@@ -11,7 +11,7 @@ def update_best_users():
         next(csvreader)
 
         for row in csvreader:
-            user = User.objects.filter(email=row[1]).first()
+            user = User.objects.filter(email=row[4]).first()
 
             if user:
                 user.best_user = True

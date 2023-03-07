@@ -62,7 +62,14 @@ class User(AbstractUser):
         on_delete=models.CASCADE,
         related_name='referred_users'
     )
-    
+
+    #TODO: Remove fields after email sending
+    size_group = models.CharField(max_length=2, default='')
+    i = models.CharField(max_length=2, default='')
+    group = models.CharField(max_length=2, default='')
+    invite = models.CharField(max_length=180, default='')
+    date_time = models.CharField(max_length=180, default='')
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 

@@ -32,9 +32,9 @@ def send_email_to_best_users(_, request, queryset):
             html_version = 'survey.html'
 
             mail.subject = (
-                f'{user.first_name}, te tenemos una propuesta'
+                f'{user.first_name}, confirmamos tu invitación a diseñar El Tinto'
                 if user.first_name and user.first_name != ''
-                else 'Te tenemos una propuesta'
+                else 'Confirmamos tu invitación a diseñar El Tinto'
             )
             html = mail.html
 

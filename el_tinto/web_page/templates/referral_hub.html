@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% load django_template_maths %}
+
+{% block meta_tags %}
+    <meta property="og:title" content="El Tinto - Referidos" />
+    <meta property="og:url" content="https://eltinto.xyz/referidos/" />
+{% endblock %}
+
+{% block title %}El Tinto - Referidos{% endblock %}
+
+{% block content %}
+
+<div class="col-md-7 col-11">
+    <div class="row justify-content-center py-5">
+        <img
+            src={{ el_tinto_imagotype_url }}
+            style="margin: 0 auto; width: 75%; min-width: 235px;"
+        />
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12">
+            <h2 class="strong-text">Invita Tinteros → ¡Gana recompensas!</h2>
+        </div>
+        <div class="col-12">
+            <img src="https://eltinto-media.s3.amazonaws.com/Screenshot+2023-04-05+at+21.00.10.png" style="max-width: 100%">
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-12">
+            <h2 class="strong-text">¿Cómo voy?</h2>
+        </div>
+        <div class="row mt-2">
+            <div class="card" style="width: 18rem; border-width: 4px; border-color: #5044e4">
+              <img src="https://t4.ftcdn.net/jpg/02/48/82/03/360_F_248820392_SkQEoM0P1SsGS82D3XIF6HBJZNeoHzfZ.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+                <p class="card-text">
+                    {% if referral_race_position == 1  %}
+                        Eres nuestro <strong>Tintero #1</strong> 🥳🥳🥳. Vas de cabeza en la competencia, no te dejes quitar el puesto!
+                    {% elif referral_race_position == 2  %}
+                        Eres nuestro <strong>Tintero #2</strong> 🥳🥳🥳. Estás al borde de la victoria, vamos por ese primer puesto!
+                    {% elif referral_race_position == 3  %}
+                        Eres nuestro <strong>Tintero #3</strong> 🥳🥳🥳. De granito en granito se arman los Tintos, vamos por ese primer puesto!
+                    {% else %}
+                        Haces parte del <strong>{{ referral_percentage }}%</strong> de Tinteros que más han compartido el sabor del buen
+                        Tinto con otros!
+                    {% endif %}
+                </p>
+              </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xl-6 col-12" style="max-width: 18rem;">
+                <div class="row mt-2">
+                    <span class="badge" style="background-color: #5044e4; font-size: 18px; border-radius: 12px; font-weight: 400">
+                        Referidos
+                        <p style="font-size: 40px; margin: 0"><strong>{{ referral_count }}</strong></p>
+                    </span>
+                </div>
+            </div>
+            <div class="col-xl-6 col-12 align-self-center">
+                <p style="margin: 0; font-size: 18px">
+                    {% if referral_count < 1 %}
+                        ¡Solamente te hace falta <strong>1</strong> referido para ganar <strong>Stickers</strong>!
+                    {% elif referral_count < 3 %}
+                        ¡Solamente te hacen falta <strong>{{ 3|sub:referral_count }}</strong> referidos para desbloquear el <strong>Tinto Dominguero</strong>!
+                    {% elif referral_count < 5 %}
+                        ¡Solamente te hacen falta <strong>{{ 5|sub:referral_count }}</strong> referidos para desbloquear <strong>La Cafeteria</strong>!
+                    {% elif referral_count < 10 %}
+                        ¡Solamente te hacen falta <strong>{{ 10|sub:referral_count }}</strong> referidos para ser <strong>Embajador de El Tinto</strong>!
+                    {% elif referral_count < 17 %}
+                        ¡Solamente te hacen falta <strong>{{ 17|sub:referral_count }}</strong> referidos para ganar un <strong>Mug</strong>!
+                    {% elif referral_count < 25 %}
+                        ¡Solamente te hacen falta <strong>{{ 25|sub:referral_count }}</strong> referidos para ganar una <strong>Gorra</strong>!
+                    {% elif referral_count < 50 %}
+                        ¡Solamente te hacen falta <strong>{{ 50|sub:referral_count }}</strong> referidos para ganar una deliciosa <strong>Bolsa de Café</strong>!
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center" style="margin-top: 75px">
+        <div class="col-12">
+            <h2 class="strong-text">¡Comparte tu link por redes!</h2>
+        </div>
+        <div class="col-12" style="margin-top: 20px">
+            <p>¡Combate la desinformación en redes invitando a todos a leer El Tinto!</p>
+        </div>
+        <div class="col-12">
+            <table style="border-spacing: 0; margin: 0 0 75px 0">
+                <tbody>
+                  <tr>
+                      <td style="padding: 0">
+                          <a
+                            href="https://api.whatsapp.com/send?text={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
+                            target="_blank"
+                          >
+                            <img
+                              src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
+                              style="display: block; height:60px"
+                            >
+                          </a>
+                      </td>
+                    <td style="padding: 0">
+                      <a
+                        href="https://www.facebook.com/sharer/sharer.php?u={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
+                        target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
+                          style="display: block; height:60px"
+                        >
+                      </a>
+                    </td>
+                    <td style="padding: 0">
+                      <a
+                        href="https://twitter.com/intent/tweet?text={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
+                        target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
+                          style="display: block; height:60px"
+                        >
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-center" style="margin-bottom: 50px">
+        <div class="col-12">
+            <h2 class="strong-text">O copia y pega tu link...</h2>
+        </div>
+        <div class="col-12" style="margin-top: 20px">
+            <p>¡Combate la desinformación y salva un panda bebé (ok, no) compartiendo El Tinto con los demás!</p>
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-8 col-12">
+                    <div class="mb-3">
+                        <input type="email" disabled class="form-control" id="share_link_value" value="https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}">
+                    </div>
+                </div>
+                <div class="col-md-4 col-12">
+                    <button type="button" class="btn btn-primary position-relative" style="background-color: #5044e4; border: 0" id="share_link_button">
+                      <i class="fa-sharp fa fa-copy" style="margin-right: 5px"></i>¡Copia tu link!
+                      <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                        <span class="visually-hidden">¡Copia tu link!</span>
+                      </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div style="background-color: #5044e4; padding: 5px 5%;">
+            <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+            <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
+              los derechos reservados.
+            </p>
+            <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
+              quisieras que incluyeramos algo nuevo?
+            </p>
+            <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
+              <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
+              y te daremos respuesta antes de que se te enfríe el tintico.
+            </p>
+            <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+   const copyButton = document.getElementById('share_link_button');
+    copyButton.addEventListener('click', (event) => {
+        // getting the text content that we want to copy
+        const content = document.getElementById('share_link_value').value;
+        console.log(content)
+        // loading the content into our clipboard
+        navigator.clipboard.writeText(content);
+    })
+</script>
+{% endblock %}

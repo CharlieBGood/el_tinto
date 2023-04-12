@@ -26,6 +26,7 @@ class Common(Configuration):
         'django_user_agents',  # Allow device identification for requests
         'tinymce',  # WYSIWYG editor
         "corsheaders",  # CORS configuration
+        'django_template_maths',  # Math in templates
 
         # Your apps
         'el_tinto.users',

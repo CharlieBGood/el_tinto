@@ -62,3 +62,7 @@ SHARE_NEWS = """
         </tbody>
     </table>
 """
+
+INVITE_USERS_MESSAGE = """
+Suscríbete%20a%20El%20Tinto%20y%20ayúdame%20a%20aumentar%20mi%20número%20de%20recomendados%20😁%0A%0A*¡Recuerda%20que%20tienes%20que%20abrir%20por%20lo%20menos%20un%20correo%20para%20que%20cuentes%20como%20mi%20referido!*%0A%0AEl%20Tinto,%20historias%20importantes%20para%20gente%20ocupada.%20
+"""

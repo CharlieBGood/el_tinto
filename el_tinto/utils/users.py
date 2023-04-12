@@ -1,6 +1,8 @@
 import random
 import string
 
+from django.db.models import Count
+
 from el_tinto.users.models import User
 
 
@@ -56,3 +58,26 @@ def create_user_referral_code(user):
             referral_code_exists = True
 
     return referral_code.upper()
+
+
+def calculate_referred_users_percentage(user):
+    """
+    Calculates in what percentage of the total users the current user is
+    based on the amount of users he/she has referred.
+
+    :params:
+    user: User object
+
+    :return:
+    referred_users_percentage: float
+    """
+    referred_users_count = User.objects.values('referred_by').annotate(refferred_count=Count('referred_by'))\
+        .exclude(referred_by=None).order_by('refferred_count')
+
+    user_referral_count = user.referred_users.count()
+
+    # referral_distribution_
+    #
+    # for count in referred_users_count:
+
+    return 0.1

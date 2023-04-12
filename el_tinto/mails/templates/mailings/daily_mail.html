@@ -48,7 +48,8 @@
     .logo-subtitle{
       text-align: center;
       font-size: 23px;
-      font-family: 'Gill Sans MT'
+      font-family: 'Gill Sans MT';
+      margin: 10px auto 30px auto;
     }
     .logo-title{
       display: block;
@@ -76,7 +77,7 @@
 
 <body id="body">
   <div class="main">
-    <span style="color: transparent; width: 1px; height: 1px">{{ subject_message }}</span>
+    <span style="color: transparent; width: 1px; height: 1px; display: none">{{ subject_message }}</span>
     <table style="width: 100%">
       <tbody>
         <tr>
@@ -112,15 +113,16 @@
                         </p>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
+                    </td>
+                </tr>
             </table>
         </tr>
+        {% block days_reminder %}{% endblock %}
         <tr>
           <td>
-            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
-              <h3 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
-                Historias importantes para gente ocupada
-              </h3>
-            </div>
             <h2 style="text-align: center; font-weight: 400; margin: 0; font-size: 25px; padding: 0 30px;">
               <strong>
                   {% if referred_users_count < 1 %}

@@ -1,16 +1,12 @@
-import datetime
 import os
 
 from django.shortcuts import render
-from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
-from el_tinto.utils.date_time import get_string_date
 from django.views.decorators.http import require_http_methods
-from django.utils.safestring import mark_safe
 from django.http import Http404
 
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
-from el_tinto.utils.users import calculate_referred_users_percentage
+from el_tinto.utils.users import calculate_referral_race_parameters
 
 
 @require_http_methods(["GET"])
@@ -36,11 +32,14 @@ def get_referral_hub_context(user):
     :return:
     referral_hub_context: dict
     """
+
+    referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
+
     referral_hub_context = {
         'referral_code': user.referral_code,
         'referral_count': user.referred_users.count(),
-        'referral_percentage': calculate_referred_users_percentage(user),
-        'referral_race_position': 21,
+        'referral_percentage': referral_percentage,
+        'referral_race_position': referral_race_position,
         'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
         'invite_users_message': INVITE_USERS_MESSAGE,
     }

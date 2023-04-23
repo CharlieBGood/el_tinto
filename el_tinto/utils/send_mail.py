@@ -91,11 +91,7 @@ def send_mail(mail, html_file, mail_data, mail_address, user=None, reply_to=None
     """
     template = loader.get_template(f'../templates/mailings/{html_file}')
 
-    send_email_address = (
-        '☕ El Tinto <info@eltinto.xyz>'
-        if os.getenv('DJANGO_CONFIGURATION') == 'Production'
-        else '☕ El Tinto Pruebas <pruebas@dev.eltinto.xyz>'
-    )
+    send_email_address = get_sending_mail_address(mail)
 
     mail_data['env'] = ('dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '')
 
@@ -159,6 +155,9 @@ def get_mail_template(mail, user):
     if mail.version == Mail.DEFAULT_TESTING:
         return 'default.html'
 
+    elif mail.type == Mail.MILESTONE:
+        return 'milestones.html'
+
     else:
         return 'daily_mail_with_days.html' if 0 < len(user.preferred_email_days) < 7 else 'daily_mail.html'
 
@@ -172,7 +171,7 @@ def get_mail_template_data(mail, user):
     user: User object
 
     :return:
-    email_data: dict
+    mail_data: dict
     """
     mail_data = {
         'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
@@ -188,3 +187,28 @@ def get_mail_template_data(mail, user):
     }
 
     return mail_data
+
+
+def get_sending_mail_address(mail):
+    """
+    Get sending mail address based on mail type
+
+    :params:
+    mail: Mail object
+
+    :return:
+    sending_mail_address: dict
+    """
+    if mail.type == Mail.MILESTONE:
+        return (
+            '☕ El Tinto - CEO <alejandro@eltinto.xyz>'
+            if os.getenv('DJANGO_CONFIGURATION') == 'Production'
+            else '☕ El Tinto Pruebas - CEO <alejandro@dev.eltinto.xyz>'
+        )
+
+    else:
+        return(
+            '☕ El Tinto <info@eltinto.xyz>'
+            if os.getenv('DJANGO_CONFIGURATION') == 'Production'
+            else '☕ El Tinto Pruebas <info@dev.eltinto.xyz>'
+        )

@@ -20,6 +20,19 @@
     .banner_subtitle {
         font-size: 2.2vw;
     }
+    .landing_particules {
+        display: none;
+    }
+    .dot {
+      height: 23px;
+      width: 23px;
+      background-color: #ffa414;
+      border-radius: 50%;
+      margin: 0 20px;
+    }
+    .carousel-item {
+        height: 400px;
+    }
     @media only screen and (max-width: 768px) {
         .banner_title {
             font-size: 16px;
@@ -27,57 +40,260 @@
         }  
         .banner_subtitle {
             font-size: 14px;
-        }   
+        }
+        .landing_particules {
+            display: block;
+        }
+        .carousel-item {
+            height: 525px;
+        }
     }
 </style>
 
 {% endblock %}
 
 {% block content %}
-<div class="col-md-7 col-11">
-    <div class="row justify-content-center py-5">
-        <img src={{ el_tinto_imagotype_url }}
-            style="margin: 0 auto; width: 75%; min-width: 235px;"
-        />
+<div class="col">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-10" style="padding: 0">
+            <h2 class="strong-text">Historias importantes para gente ocupada</h2>
+        </div>
     </div>
-    <div class="row">
-        <img src="https://el-tinto-utils.s3.amazonaws.com/home/header_1.png" style="border-radius: 20px;">
-        <p
-            class="banner_title"
-            style="color: #FFFFFF; position: absolute; padding: 30px; min-width: 180px;"
-        >
-            <strong>El internet tiene mucho ruido, pásalo con El Tinto.</strong>
-        </p>
-        <p
-            class="banner_subtitle"
-            style="color: #FFFFFF; position: relative; margin: -17% 0 0 0; padding: 30px; min-width: 180px;"
-        >
-            <strong>Historias importantes para gente ocupada</strong>
-        </p>
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-7 col-10" style="padding: 0">
+            <p>
+                Revisamos más de 60+ fuentes. Infórmate en menos de lo que te tomas un tinto.
+                <br>
+                <strong>¡Es gratis!</strong>
+            </p>
+        </div>
     </div>
-    <div class="row justify-content-center mt-4">
-        <div class="col-12">
+    <div class="row justify-content-center">
+        {% if not valid %}
+            <div class="col-md-7 col-10 py-md-4" style="background-color: #5044e4; border-radius: 12px;">
+                <div class="container" style="padding: 20px 0">
+                    <form method="POST" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                        <div class="row justify-content-center">
+                            <div class="col-11 col-md-10">
+                                <div class="input-group has-validation">
+                                    <input type="email" class="form-control" id="email" name="email" style="padding: 12px" placeholder="tu@correo.com" required>
+                                    <div class="invalid-feedback text-color">
+                                        Por favor ingrese un correo válido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-color strong-text justify-content-center mt-4">
+                            <div class="col-11 col-md-10">
+                                <p style="margin: 0 0 10px 0">
+                                    ¡Ayúdanos a llegar a tu correo!
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                                <div class="col-md-5 col-11">
+                                    <input class="form-control" id="first_name" name="first_name" style="padding: 12px" placeholder="Nombre (Opcional)">
+                                </div>
+                                <div class="col-md-5 col-11 mt-md-0 mt-2">
+                                    <input class="form-control" id="last_name" name="last_name" style="padding: 12px" placeholder="Apellido (Opcional)">
+                                </div>
+                            </div>
+                        <div class="row justify-content-center">
+                            <div class="col-11 col-md-10">
+                                <button type="submit" class="btn button mt-4 text-color strong-text shadow-sm" style="padding: 12px">¡Únete gratis!</button>
+                            </div>
+                        </div>
+                        <div class="row text-color strong-text justify-content-center mt-4" style="font-size: 20px">
+                            <div class="col-11 col-md-10">
+                                <p>
+                                    Únete a miles de personas que toman El Tinto.
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-md-7 col-10 px-4 px-md-0 py-md-2 pt-2 pb-0">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-11">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/email_icon.jpeg"
+                        style="width: 100px; display: block; margin: 0 auto">
+                        {% if name %}
+                            <h3 style="text-align: center">{{name}}, ¡revisa tu correo!</h3>
+                        {% else %}
+                            <h3 style="text-align: center">¡Revisa tu correo!</h3>
+                        {% endif %}
+                        <p style="text-align: center">
+                            Pronto recibirás un correo de bienvenida para que empieces a degustarnos todas las mañanas.
+                        </p>
+                        {% if email_provider != 'gmail' %}
+                            <p style="text-align: center">
+                                Si no te llegó a la carpeta principal <strong style="color: red; font-size: 22px">abre
+                                spam solo por esta vez</strong> y sigue las instrucciones.
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if email_provider_link %}
+                    <div class="row justify-content-center">
+                        <a
+                            style="width: 250px; box-shadow: 3px 6px #A9A9A9; border: 1px solid #A9A9A9;"
+                            class="btn py-3 mt-4 btn-hover"
+                            href={{ email_provider_link }}
+                            role="button"
+                        >
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <img
+                                            src="https://el-tinto-utils.s3.amazonaws.com/{{ email_provider }}_icon.png"
+                                            style="width: 30px; margin: 0 auto"
+                                        >
+                                    </div>
+                                    <div class="col-8">
+                                        <p style="margin: 0; text-align: right"><strong>Abrir {{ email_provider|capfirst }}</strong></p>
+                                    </div>
+                                    <div class="col-2">
+                                        <i class="fa fa-lg fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="row my-4">
+        <img src="https://el-tinto-utils.s3.amazonaws.com/home/LANDING_PARTI%CC%81CULAS.png" class="landing_particules">
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-10 mt-2 mt-md-0">
+            <h2 class="strong-text">¡Yo quiero una pruebita!</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+        <div class="col-md-7 col-10">
+            <p style="font-size: 20px;">
+                La mejor forma de disfrutar de nuestro producto es suscribiéndose a nuestro boletín diario
+                👉🏻​<a href={% url 'suscribe' %}>aquí</a>👈🏻​. No se lo recomendamos nosotros, se lo
+                recomiendan nuestros usuarios.
+            </p>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="row justify-content-center" style="margin: 40px 0 0 0">
+                    <div class="col-10">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_2.png"
+                            style="margin: 0 auto; display: block;"
+                        />
+                    </div>
+                    <div class="col-10 mt-4 align-content-center">
+                        <p style="text-align: center">
+                            Me toma cinco minutos iniciar el día con los pies en la tierra. No
+                            me pierdo las conversaciones importantes desde que inicié a leer El Tinto
+                            <br>
+                            <br>
+                            <strong>Natalia C., Bogotá, Estudiante de derecho</strong>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="row justify-content-center" style="margin: 40px 0 0 0">
+                    <div class="col-10">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_1.png"
+                            style="margin: 0 auto; display: block;"
+                        />
+                    </div>
+                    <div class="col-10 mt-4 align-content-center">
+                        <p style="text-align: center;">
+                            El Tinto me ayuda a mantenerme al día con los eventos más importantes de mi país. Realmente
+                            no tengo tiempo, así que es perfecto para mí.
+                            <br>
+                            <br>
+                            <strong>Jesús P., Medellín, Desarrollador</strong>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <div class="row justify-content-center" style="margin: 40px 0 0 0">
+                    <div class="col-10">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_3.png"
+                            style="margin: 0 auto; display: block;"
+                        />
+                    </div>
+                    <div class="col-10 mt-4 align-content-center">
+                        <p style="text-align: center">
+                            El Tinto se ha convertido en parte de mi rutina mañanera. La sección "¿Qué estamos viendo?"
+                            ¡se ha vuelto verdaderamente esencial para mí!
+                            <br>
+                            <br>
+                            <strong>Isabella E., Cali, Cineasta</strong>
+                        </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-5">
+        <hr style="width: 10%; border: 1px solid #5044e4; margin: auto 0 auto auto" />
+        <div class="dot"></div>
+        <hr style="width: 10%; border: 1px solid #5044e4; margin: auto auto auto 0" />
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-10">
             <h2 class="strong-text">Y esto, ¿cómo se toma?</h2>
         </div>
     </div>
     <div class="row justify-content-center mt-2">
-        <div class="col-12">
-            <p style="font-size: 20px; text-align: justify">
-                Calientico y bien cargado. Así llega la información todos los días a los correos de nuestros usuarios. A
-                través de un resumen diario con las historias más importantes del momento, <strong>El Tinto</strong> es la mejor 
-                alternativa para consumir información curada de medios diversos y con la más alta calidad.
+        <div class="col-md-7 col-10">
+            <p style="font-size: 20px">
+                <strong>Calientico y bien cargado.</strong> Así llega la información todos los días a los correos de nuestros usuarios. A
+                través de un resumen diario con las historias más importantes del momento, <strong>El Tinto es la mejor
+                alternativa</strong> para consumir información curada de medios diversos y con la más alta calidad.
             </p>
         </div>
     </div>
-    <hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />
-    <div class="row justify-content-center pt-5">
-        <div class="col-12 mt-2 mt-md-0">
+    <div class="row my-5">
+            <hr style="width: 10%; border: 1px solid #5044e4; margin: auto 0 auto auto" />
+            <div class="dot"></div>
+            <hr style="width: 10%; border: 1px solid #5044e4; margin: auto auto auto 0" />
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-10 mt-2 mt-md-0">
+            <h2 class="strong-text">Pero a mí me gusta es madrugadito para poder despertarme...</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+        <div class="col-md-7 col-10">
+            <p style="font-size: 20px;">
+                No se preocupe, a nosotros también porque sino se nos pegan las cobijas. <strong>Con un correo diario todos
+                los días a las 6 a.m.</strong> esperándolo en su bandeja de entrada, usted podrá despertarse y en tan solo 5
+                minutos, cosa que no se le enfríe, estar al día con las historias más importantes.
+            </p>
+        </div>
+    </div>
+    <div class="row my-5">
+        <hr style="width: 10%; border: 1px solid #5044e4; margin: auto 0 auto auto" />
+        <div class="dot"></div>
+        <hr style="width: 10%; border: 1px solid #5044e4; margin: auto auto auto 0" />
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-10 mt-2 mt-md-0">
             <h2 class="strong-text">Pero eso, ¿sí sabe bueno?</h2>
         </div>
     </div>
     <div class="row justify-content-center mt-2">
-        <div class="col-12">
-            <p style="font-size: 20px; text-align: justify">
+        <div class="col-md-7 col-10">
+            <p style="font-size: 20px;">
                 Hay de todos los sabores y para todos los gustos. <strong>El Tinto</strong> usa como materia prima la 
                 información de la más alta calidad, que curada con el ojo crítico y severo de nuestros experimentados 
                 periodistas, trae un aroma nuevo y fresco a la forma de consumir historias en el país respondiendo
@@ -99,85 +315,6 @@
             </p>
         </div>
     </div>
-    <hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />
-    <div class="row justify-content-center pt-5">
-        <div class="col-12 mt-2 mt-md-0">
-            <h2 class="strong-text">Pero a mí me gusta es madrugadito para poder despertarme...</h2>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-2">
-        <div class="col-12">
-            <p style="font-size: 20px; text-align: justify">
-                No se preocupe, a nosotros también porque sino se nos pegan las cobijas. Con un correo diario todos 
-                los días a las 6 a.m. esperándolo en su bandeja de entrada, usted podrá despertarse y en tan solo 5 
-                minutos, cosa que no se le enfríe, estar al día con las historias más importantes.
-            </p>
-        </div>
-    </div>
-    <hr style="width: 100%; border: 1px solid #5044e4; margin: 40px 0 20px 0;" />
-    <div class="row justify-content-center pt-5">
-        <div class="col-12 mt-2 mt-md-0">
-            <h2 class="strong-text">¡Yo quiero una pruebita!</h2>
-        </div>
-    </div>
-    <div class="row justify-content-center mt-2">
-        <div class="col-12">
-            <p style="font-size: 20px; text-align: justify">
-                La mejor forma de disfrutar de nuestro producto es suscribiéndose a nuestro boletín diario 
-                👉🏻​<a href={% url 'suscribe' %}>aquí</a>👈🏻​. No se lo recomendamos nosotros, se lo
-                recomiendan nuestros usuarios.
-            </p>
-            <div class="row" style="margin: 40px 0 0 0">
-                <div class="col-md-4 col-12">
-                    <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_1.png" 
-                        style="margin: 0 auto; display: block;"
-                    />
-                </div>
-                <div class="col-md-8 col-12 my-md-auto mt-4">
-                    <p>
-                        El Tinto me ayuda a mantenerme al día con los eventos más importantes de mi país. Realmente 
-                        no tengo tiempo, así que es perfecto para mí.
-                        <br>
-                        <br>
-                        <strong>Jesús P., Medellín, Desarrollador</strong>
-                    </p>
-                </div>
-            </div>
-            <div class="row" style="margin: 40px 0 0 0">
-                <div class="col-md-4 col-12">
-                    <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_2.png" 
-                        style="margin: 0 auto; display: block;"
-                    />
-                </div>
-                <div class="col-md-8 col-12 my-md-auto mt-4">
-                    <p>
-                        Me toma cinco minutos abrir el correo para iniciar el día con los pies en la tierra. No 
-                        me pierdo las conversaciones sobre los temas más importantes desde que inicié a leer 
-                        El Tinto
-                        <br>
-                        <br>
-                        <strong>Natalia C., Bogotá, Estudiante de derecho</strong>
-                    </p>
-                </div>
-            </div>
-            <div class="row" style="margin: 40px 0 0 0">
-                <div class="col-md-4 col-12">
-                    <img src="https://el-tinto-utils.s3.amazonaws.com/home/user_3.png" 
-                        style="margin: 0 auto; display: block;"
-                    />
-                </div>
-                <div class="col-md-8 col-12 my-md-auto mt-4">
-                    <p>
-                        El Tinto se ha convertido en parte de mi rutina mañanera. La sección "¿Qué estamos viendo?" 
-                        ¡se ha vuelto esencial para mí! 
-                        <br>
-                        <br>
-                        <strong>Isabella E., Cali, Cineasta</strong>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row" style="margin: 40px 0 0 0;">
         <div style="background-color: #5044e4; padding: 5px 5%;">
             <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
@@ -195,4 +332,41 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+          }, false)
+      })
+  })()
+
+  window.onload = function() {
+    var error = "{{ error }}";
+    if (error){
+        Swal.fire({
+            title: 'Error!',
+            text: error,
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
+    }
+  };
+</script>
 {% endblock %}

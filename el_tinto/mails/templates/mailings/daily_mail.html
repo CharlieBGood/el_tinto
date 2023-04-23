@@ -123,75 +123,6 @@
         {% block days_reminder %}{% endblock %}
         <tr>
           <td>
-            <h2 style="text-align: center; font-weight: 400; margin: 0; font-size: 25px; padding: 0 30px;">
-              <strong>
-                  {% if referred_users_count < 1 %}
-                    {{ referred_users_count }}/1
-                  {% elif referred_users_count < 5 %}
-                    {{ referred_users_count }}/5
-                  {% elif referred_users_count < 10 %}
-                    {{ referred_users_count }}/10
-                  {% elif referred_users_count < 15 %}
-                    {{ referred_users_count }}/15
-                  {% elif referred_users_count < 30 %}
-                    {{ referred_users_count }}/30
-                  {% else %}
-                    {{ referred_users_count }}
-                  {% endif %}
-              </strong>
-              usuarios inscritos a El Tinto
-            </h2>
-            <h3 style="text-align: center; font-weight: 400; margin: 10px 0 0 0;">
-                Comparte tu link personalizado
-                <a
-                  href="https://api.whatsapp.com/send?text=Suscríbete%20a%20El%20Tinto%20y%20ayúdame%20a%20aumentar%20mi%20número%20de%20recomendados%20😁%0A%0A*¡Recuerda%20que%20tienes%20que%20abrir%20por%20lo%20menos%20un%20correo%20para%20que%20cuentes%20como%20mi%20referido!*%0A%0AEl%20Tinto,%20historias%20importantes%20para%20gente%20ocupada.%20https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}"
-                  target="_blank"
-                >
-                  <img
-                    src="https://el-tinto-utils.s3.amazonaws.com/whatsapp_icon.png"
-                    style="width: 30px; margin: 0 auto; display: inherit; vertical-align: bottom"
-                  >
-                </a>
-            </h3>
-            <br>
-            {% if referred_users_count < 1 %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL_TINTO_TGCHI_BEGINING.gif"
-                style="display: block; width: 100%"
-              >
-            {% elif referred_users_count < 5 %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_2.gif"
-                style="display: block; width: 100%"
-              >
-            {% elif referred_users_count < 10 %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_3.gif"
-                style="display: block; width: 100%"
-              >
-            {% elif referred_users_count < 15 %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_4.gif"
-                style="display: block; width: 100%"
-              >
-            {% elif referred_users_count < 30 %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/EL+TINTO_TAGCHI_5.gif"
-                style="display: block; width: 100%"
-              >
-            {% elif referred_users_count >= 30 and email == 'jlosada@losadamunoz.com' %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/el_tinto_extra.gif"
-                style="display: block; width: 100%"
-              >
-            {% else %}
-              <img
-                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/TAMAGOCHI_WHAT+A+LEGEND_.gif"
-                style="display: block; width: 100%"
-              >
-            {% endif %}
-            <br>
-            <br>
             <h3 style="text-align:justify">
               <strong>
                 {% if name %}
@@ -202,6 +133,35 @@
               </strong>
             </h3>
               {{html}}
+              <table>
+                <tr>
+                    <td>
+                        <h2>¡COMPARTE EL TINTO!</h2>
+                        <p>
+                            Regálale al mundo la posibilidad iniciar los días con el buen aroma y el delicioso sabor de
+                            las historias más importantes en solo cinco minutos.
+                        </p>
+                        <p>
+                            No nos tengas en secreto, ya es hora de que todo el mundo se entere de lo nuestro. Y para
+                            que veas lo comprometidos que estamos nosotros, no solo te ayudamos a gritarlo a los cuatro
+                            vientos, sino que además ¡te premiamos por ello!
+                        </p>
+                        <img
+                            src="https://el-tinto-utils.s3.amazonaws.com/referral_program/GIF_PREMIOS.gif"
+                            style="display: block; width: 100%; margin: 40px 0"
+                        >
+                        <a ses:no-track
+                           href="https://api.whatsapp.com/send?text=Suscríbete%20a%20El%20Tinto%20y%20ayúdame%20a%20aumentar%20mi%20número%20de%20recomendados%20😁%0A%0A*¡Recuerda%20que%20tienes%20que%20abrir%20por%20lo%20menos%20un%20correo%20para%20que%20cuentes%20como%20mi%20referido!*%0A%0AEl%20Tinto,%20historias%20importantes%20para%20gente%20ocupada.%20https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}"
+                           target="_blank"
+                           style="color: #FFFFFF; text-decoration: none !important;"
+                        >
+                          <div style="background-color: #8884fc; height: 60px; width: 35%; vertical-align: middle; margin: 40px 0; display: table;">
+                            <p style="text-align: center;">Haz click para compartir</p>
+                          </div>
+                        </a>
+                    </td>
+                </tr>
+              </table>
               <h3 style="text-align: center; margin-top: 30px;">
                 <strong>¿Te gustó el Tinto de hoy y quieres compartirlo?</strong>
               </h3>
@@ -245,7 +205,7 @@
                           height="40px"
                         >
                       </a>
-                    </td style="padding: 0">
+                    </td>
                     <td>
                       <a
                         ses:tags="type:WP"
@@ -262,21 +222,21 @@
                   </tr>
                 </tbody>
               </table>
-            <h2 style="text-align:center;">
-              ¿Te reenviaron este correo?
-            </h2>
-            <p style="text-align:center;">
-              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!
-            </p>
-            <a ses:no-track
-               href="https://{{ env }}eltinto.xyz/suscribirse/"
-               target="_blank"
-               style="color: #FFFFFF; text-decoration: none !important;"
-            >
-              <div style="background-color: #5044e4; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">
-                <p style="text-align: center;">Suscribirse</p>
-              </div>
-            </a>
+{#            <h2 style="text-align:center;">#}
+{#              ¿Te reenviaron este correo?#}
+{#            </h2>#}
+{#            <p style="text-align:center;">#}
+{#              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!#}
+{#            </p>#}
+{#            <a ses:no-track#}
+{#               href="https://{{ env }}eltinto.xyz/suscribirse/"#}
+{#               target="_blank"#}
+{#               style="color: #FFFFFF; text-decoration: none !important;"#}
+{#            >#}
+{#              <div style="background-color: #8884fc; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">#}
+{#                <p style="text-align: center;">Suscribirse</p>#}
+{#              </div>#}
+{#            </a>#}
             <div style="background-color: #5044e4; padding: 5px 5%;">
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
               <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 

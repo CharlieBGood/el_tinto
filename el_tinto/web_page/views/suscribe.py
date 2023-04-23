@@ -63,7 +63,7 @@ def suscribe(request):
                 referred_by=referred_by
             )
 
-            mail = Mail.objects.create(subject='Bienvenido a El Tinto', type=Mail.WELCOME)
+            mail = Mail.objects.create(subject='Bienvenid@ a El Tinto', type=Mail.WELCOME)
 
             mail.recipients.add(user)
 

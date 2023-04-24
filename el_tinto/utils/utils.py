@@ -1,8 +1,6 @@
 import os
 import re
 
-from el_tinto.users.models import User
-
 
 def replace_words_in_sentence(sentence, user=None):
     """
@@ -80,6 +78,10 @@ def replace_info_in_share_news_buttons(html, tinto_block_entry):
         html = html.replace(word, change_words_dict[word])
 
     return html
+
+
+def replace_gmail_links_color_tinymce(pl, o):
+    o.content = o.content.replace("/color: #1155cc;/gi", "")
 
 
 def get_email_headers(headers):
@@ -247,4 +249,14 @@ URL_SPECIAL_CHARACTERS = {
     ' ': '%20',
     '"': "%22",
     '#': '%23'
+}
+
+MILESTONES = {
+    1: {"price": "stickers", "mail_id": 1},
+    3: {"price": "sunday_email", "mail_id": 2},
+    5: {"price": "coffee_shop", "mail_id": 3},
+    10: {"price": "talks", "mail_id": 4},
+    17: {"price": "mug", "mail_id": 5},
+    25: {"price": "hat", "mail_id": 6},
+    50: {"price": "coffee", "mail_id": 7},
 }

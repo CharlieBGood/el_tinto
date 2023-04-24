@@ -51,7 +51,8 @@
         }
         p {
         line-height: 150%;
-        font-size: 16px;
+        font-size: 18px;
+        margin: 0;
         }
         a{
             color: #fca311;
@@ -78,9 +79,10 @@
             width: 40%
         }
         .logo-subtitle{
-            text-align: center;
-            font-size: 28px;
-            font-family: 'Raleway'
+          text-align: center;
+          font-size: 23px;
+          font-family: 'Gill Sans MT';
+          margin: 10px auto 30px auto;
         }
         a:hover {
             transform:scale(1.1,1.1);
@@ -113,7 +115,7 @@
         .navbar-toggler:focus {
             box-shadow: 0 0 0 .15rem #5044e4;
         }
-        .active {
+        .active_link {
             border-bottom: 2px solid #5044e4;
         }
         .accordion-item {
@@ -161,13 +163,14 @@
                 padding-left: 5%;
                 padding-right: 5%;
             }
-            .active {
+            .active_link {
                 border: 0;
             }
             .logo-subtitle{
-                text-align: center;
-                font-size: 23px;
-                font-family: 'Raleway'
+              text-align: center;
+              font-size: 23px;
+              font-family: 'Gill Sans MT';
+              margin: 10px auto 30px auto;
             }
             .logo-title{
                 display: block;
@@ -179,7 +182,7 @@
     {% block style %}{% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-light navbar-expand-sm navbar-padding shadow-sm py-1 bg-white rounded">
+    <nav class="navbar navbar-light navbar-expand-sm navbar-padding shadow py-1 bg-white rounded">
         <div class="container-fluid">
             <a class="navbar-brand ml-5 strong-text a-nav" href="/" style="font-family: Segoe UI Bold; font-weight: 900;">
                 <img src={{ el_tinto_imagotype_url }} height="24" class="d-inline-block" style="vertical-align: 0">
@@ -191,7 +194,7 @@
                 <ul class="navbar-nav me-auto mb-lg-0">
                     <li class="nav-item">
                         {% if suscribe_active %}
-                        <a class="nav-link active" aria-current="page" href="/suscribirse/">¡Suscríbete!</a>
+                        <a class="nav-link active_link" aria-current="page" href="/suscribirse/">¡Suscríbete!</a>
                         {% else %}
                         <a class="nav-link" aria-current="page" href="/suscribirse/">¡Suscríbete!</a>
                         {% endif %}
@@ -207,14 +210,14 @@
                     -->
                     <li class="nav-item">
                         {% if el_tinto %}
-                        <a class="nav-link active" aria-current="page" href="/el-tinto/">El Tinto</a>
+                        <a class="nav-link active_link" aria-current="page" href="/el-tinto-de-hoy/">El Tinto de hoy</a>
                         {% else %}
-                        <a class="nav-link" aria-current="page" href="/el-tinto/">El Tinto</a>
+                        <a class="nav-link" aria-current="page" href="/el-tinto-de-hoy/">El Tinto de hoy</a>
                         {% endif %}
                     </li>
                     <li class="nav-item">
                         {% if faqs_active %}
-                        <a class="nav-link active" aria-current="page" href="/faq/">Preguntas frecuentes</a>
+                        <a class="nav-link active_link" aria-current="page" href="/faq/">Preguntas frecuentes</a>
                         {% else %}
                         <a class="nav-link" aria-current="page" href="/faq/">Preguntas frecuentes</a>
                         {% endif %}
@@ -224,7 +227,7 @@
         </div>
     </nav>
     <div class="container">
-        <div class="row justify-content-center py-5">
+        <div class="row justify-content-center py-4">
             {% block content %}{% endblock %}
         </div>
     </div>

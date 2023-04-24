@@ -10,6 +10,10 @@
     body {
       font-family: Arial;
     }
+    {#This targets gmail html and allows to change default gmail behavior for links#}
+    u + #body a {
+        color: #fca311;
+    }
     h1 {
       font-size: 46px;
     }
@@ -27,8 +31,8 @@
         font-size: 16px;
     }
     a div {
-      background-color: #5044e4; 
-      border-radius: 12px; 
+      background-color: #5044e4;
+      border-radius: 12px;
       height: 45px;
       color: #FFFFFF;
       font-size: 18px;
@@ -46,7 +50,7 @@
   </style>
 </head>
 
-<body>
+<body id="body">
   <div class="main">
     <table style="width: 100%">
       <tbody>
@@ -57,48 +61,24 @@
               style="margin: 0 auto 50px auto; display: block; width: 75%"
             />
             <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
-            <div style="padding: 0 5%; margin: 10px 0 20px 0;">
+            <div style="padding: 0 5%; margin: 10px 0 40px 0;">
+              {{html}}
               <p>
-                  {% if name %}
-                  <strong>Hola {{ name }}, ¡gracias por suscribirte a El Tinto!</strong>
-                  {% else %}
-                  <strong>¡Gracias por suscribirte a El Tinto!</strong>
-                  {% endif %}
+                  ¡Nos vemos mañana temprano para tomar El Tinto!
                   <br>
                   <br>
-                  <br>
-                  Para asegurarte de recibir El Tinto, por favor haz lo siguiente:
-                  <br>
-                  <br>
-                  <br>
-                  <strong>1) Responde</strong> a este correo con “quiero recibir El Tinto”.
-                  <br>
-                  <br>
-                  <br>
-                  Todos los días recibirás un correo a las 6 a.m. que te ayudará a entender las historias más
-                  importantes del momento en Colombia. Es breve y tiene fuentes diversas y rigurosas, para que no te
-                  pierdas en el océano de información que puede ser internet.
-                  <br>
-                  <br>
-                  <br>
-                  Escríbenos a <a href='mailto:info@eltinto.xyz'>info@eltinto.xyz</a>  si tienes cualquier
-                  duda, sugerencia o saludo. Y <a href='https://{{ env }}eltinto.xyz/faq/'>aquí</a>  puedes encontrar
-                  respuestas a las preguntas más frecuentes que nos llegan.
-                  <br>
-                  <br>
-                  <br>
-                  <strong>☕ El Tinto</strong>
+                  Alejandro, Charlie y Paula - cofundadores de El Tinto ☕
               </p>
             </div>
             <div style="background-color: #5044e4; padding: 5px 5%;">
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
                 los derechos reservados.
               </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
                 quisieras que incluyamos algo nuevo?
               </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a 
+              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
                 <a href='mailto:info@eltinto.xyz' style='color: #FFFFFF !important;'>info@eltinto.xyz</a>
                 o responde a este correo y te daremos respuesta tan pronto como podamos
               </p>

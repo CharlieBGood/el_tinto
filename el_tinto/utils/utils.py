@@ -252,11 +252,11 @@ URL_SPECIAL_CHARACTERS = {
 }
 
 MILESTONES = {
-    1: {"price": "stickers", "mail_id": 1},
-    3: {"price": "sunday_email", "mail_id": 2},
-    5: {"price": "coffee_shop", "mail_id": 3},
-    10: {"price": "talks", "mail_id": 4},
-    17: {"price": "mug", "mail_id": 5},
-    25: {"price": "hat", "mail_id": 6},
-    50: {"price": "coffee", "mail_id": 7},
+    1: {"price": "stickers", "mail_id": 1562},
+    3: {"price": "sunday_email", "mail_id": 1563},
+    5: {"price": "coffee_shop", "mail_id": 1564},
+    10: {"price": "talks", "mail_id": 1565},
+    17: {"price": "mug", "mail_id": 1566},
+    25: {"price": "hat", "mail_id": 1567},
+    50: {"price": "coffee", "mail_id": 1568},
 }

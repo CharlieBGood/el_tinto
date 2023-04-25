@@ -4,8 +4,7 @@ from collections import namedtuple
 
 from django.db import models
 
-from el_tinto.mails.models import Mail, SentEmailsInteractions
-from el_tinto.tintos.models import TintoBlocksEntries
+from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.notifications import update_sent_email_data, send_milestone_email, get_or_create_email_interaction
 from el_tinto.utils.utils import get_email_headers, EVENT_TYPE_CLICK, EVENT_TYPE_OPEN, EVENT_TYPES
@@ -55,6 +54,8 @@ class SNSNotification(models.Model):
 
                         if event_type == EVENT_TYPE_OPEN:
                             update_sent_email_data(user, mail)
+                            logger = logging.getLogger("notifications")
+                            logger.info('Sending notification email')
                             send_milestone_email(user)
 
                         elif event_type == EVENT_TYPE_CLICK:

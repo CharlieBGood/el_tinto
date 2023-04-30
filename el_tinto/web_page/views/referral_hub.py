@@ -42,6 +42,7 @@ def get_referral_hub_context(user):
         'referral_race_position': referral_race_position,
         'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
         'invite_users_message': INVITE_USERS_MESSAGE,
+        'username': user.user_name
     }
 
     return referral_hub_context

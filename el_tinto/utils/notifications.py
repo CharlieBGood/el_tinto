@@ -49,13 +49,15 @@ def send_milestone_email(user):
 
             html_version = get_mail_template(mail, user)
 
-            send_mail(
-                mail,
-                html_version,
-                get_mail_template_data(mail, user),
-                [referral_user.email],
-                user=referral_user
-            )
+            if not SentEmails.objects.filter(user=referral_user, mail=mail).exists():
+
+                send_mail(
+                    mail,
+                    html_version,
+                    get_mail_template_data(mail, user),
+                    [referral_user.email],
+                    user=referral_user
+                )
 
     except User.DoesNotExist:
         pass

@@ -8,82 +8,98 @@
 
 {% block title %}El Tinto - Referidos{% endblock %}
 
+{% block style %}
+    <style>
+        .bookmarkRibbon {
+          width: 100%;
+          background: linear-gradient(90deg, rgba(255,255,255,1) 11%, rgba(32,44,84,1) 12%);
+          clip-path: polygon(0% 0%, 100% 0%, calc(100% - 20px) 50%, 100% 100%, 0% 100%);
+        }
+        .ribbonString {
+            font-size: 15px;
+        }
+        @media only screen and (min-width: 1200px) {
+            .ribbonString {
+                font-size: 24px;
+            }
+        }
+    </style>
+{% endblock %}
+
+
 {% block content %}
 
-<div class="col-md-7 col-11">
-    <div class="row justify-content-center py-5">
-        <img
-            src={{ el_tinto_imagotype_url }}
-            style="margin: 0 auto; width: 75%; min-width: 235px;"
-        />
-    </div>
+<div class="col-md-7 col-12">
     <div class="row justify-content-center mt-4">
         <div class="col-12">
-            <h2 class="strong-text">Invita Tinteros → ¡Gana recompensas!</h2>
+            <h2 class="strong-text">¡Hola {{ username }}!</h2>
         </div>
-        <div class="col-12">
-            <img src="https://eltinto-media.s3.amazonaws.com/Screenshot+2023-04-05+at+21.00.10.png" style="max-width: 100%">
-        </div>
-    </div>
-    <div class="row justify-content-center mt-4">
-        <div class="col-12">
-            <h2 class="strong-text">¿Cómo voy?</h2>
-        </div>
-        <div class="row mt-2">
-            <div class="card" style="width: 18rem; border-width: 4px; border-color: #5044e4">
-              <img src="https://t4.ftcdn.net/jpg/02/48/82/03/360_F_248820392_SkQEoM0P1SsGS82D3XIF6HBJZNeoHzfZ.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-                <p class="card-text">
-                    {% if referral_race_position == 1  %}
-                        Eres nuestro <strong>Tintero #1</strong> 🥳🥳🥳. Vas de cabeza en la competencia, no te dejes quitar el puesto!
-                    {% elif referral_race_position == 2  %}
-                        Eres nuestro <strong>Tintero #2</strong> 🥳🥳🥳. Estás al borde de la victoria, vamos por ese primer puesto!
-                    {% elif referral_race_position == 3  %}
-                        Eres nuestro <strong>Tintero #3</strong> 🥳🥳🥳. De granito en granito se arman los Tintos, vamos por ese primer puesto!
-                    {% else %}
-                        Haces parte del <strong>{{ referral_percentage }}%</strong> de Tinteros que más han compartido el sabor del buen
-                        Tinto con otros!
-                    {% endif %}
-                </p>
-              </div>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-xl-6 col-12" style="max-width: 18rem;">
-                <div class="row mt-2">
-                    <span class="badge" style="background-color: #5044e4; font-size: 18px; border-radius: 12px; font-weight: 400">
-                        Referidos
-                        <p style="font-size: 40px; margin: 0"><strong>{{ referral_count }}</strong></p>
-                    </span>
+        <div class="col-12 mt-3">
+            <div class="bookmarkRibbon">
+                <div class="row">
+                    <div class="col-3">
+                        {% if referral_race_position == 1  %}
+                            <img
+                                width="100%"
+                                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_ORO.png" />
+                        {% elif referral_race_position == 2  %}
+                            <img
+                                width="100%"
+                                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_PLATA.png" />
+                        {% elif referral_race_position == 3  %}
+                            <img
+                                width="100%"
+                                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_BRONCE.png" />
+                        {% else %}
+                            <img
+                                width="100%"
+                                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_OTROS.png" />
+                        {% endif %}
+                    </div>
+                    <div class="col-9 d-flex align-items-center" style="padding-left: 5px">
+                        <p style="color: #FFFFFF; margin: 0" class="ribbonString">
+                            {% if referral_race_position == 1  %}
+                                Eres el <strong>usuario #1</strong> que más ha recomendado El Tinto.
+                            {% elif referral_race_position == 2  %}
+                                Eres el <strong>usuario #2</strong> que más ha recomendado El Tinto.
+                            {% elif referral_race_position == 3  %}
+                                Eres el <strong>usuario #3</strong> que más ha recomendado El Tinto.
+                            {% else %}
+                                Eres parte del <strong>{{ referral_percentage }}% de usuarios</strong> que más recomienda El Tinto.
+                            {% endif %}
+                        </p>
+                    </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-12 align-self-center">
-                <p style="margin: 0; font-size: 18px">
-                    {% if referral_count < 1 %}
-                        ¡Solamente te hace falta <strong>1</strong> referido para ganar <strong>Stickers</strong>!
-                    {% elif referral_count < 3 %}
-                        ¡Solamente te hacen falta <strong>{{ 3|sub:referral_count }}</strong> referidos para desbloquear el <strong>Tinto Dominguero</strong>!
-                    {% elif referral_count < 5 %}
-                        ¡Solamente te hacen falta <strong>{{ 5|sub:referral_count }}</strong> referidos para desbloquear <strong>La Cafeteria</strong>!
-                    {% elif referral_count < 10 %}
-                        ¡Solamente te hacen falta <strong>{{ 10|sub:referral_count }}</strong> referidos para ser <strong>Embajador de El Tinto</strong>!
-                    {% elif referral_count < 17 %}
-                        ¡Solamente te hacen falta <strong>{{ 17|sub:referral_count }}</strong> referidos para ganar un <strong>Mug</strong>!
-                    {% elif referral_count < 25 %}
-                        ¡Solamente te hacen falta <strong>{{ 25|sub:referral_count }}</strong> referidos para ganar una <strong>Gorra</strong>!
-                    {% elif referral_count < 50 %}
-                        ¡Solamente te hacen falta <strong>{{ 50|sub:referral_count }}</strong> referidos para ganar una deliciosa <strong>Bolsa de Café</strong>!
-                    {% endif %}
-                </p>
-            </div>
         </div>
     </div>
-    <div class="row justify-content-center" style="margin-top: 75px">
+    <div class="row justify-content-center mt-4">
         <div class="col-12">
-            <h2 class="strong-text">¡Comparte tu link por redes!</h2>
+            <p>
+                {% if referral_count < 1 %}
+                    Estás a solamente (1) referido de conseguir acceso a <strong>Stickers</strong>!
+                {% elif referral_count < 3 %}
+                    Estás a solamente {{ 3|sub:referral_count }} referidos de conseguir acceso a <strong>El Tinto Dominguero.</strong>
+                {% elif referral_count < 5 %}
+                    Estás a solamente {{ 5|sub:referral_count }} referidos de conseguir acceso a <strong>La Cafeteria (Comunidad).</strong>
+                {% elif referral_count < 10 %}
+                    Estás a solamente {{ 10|sub:referral_count }} referidos de conseguir ser <strong>Embajador de El Tinto.</strong>
+                {% elif referral_count < 17 %}
+                    Estás a solamente {{ 17|sub:referral_count }} referidos de conseguir un <strong>Mug.</strong>
+                {% elif referral_count < 25 %}
+                    Estás a solamente {{ 25|sub:referral_count }} referidos de conseguir una <strong>Gorra.</strong>
+                {% elif referral_count < 50 %}
+                    Estás a solamente {{ 50|sub:referral_count }} referidos de conseguir una <strong>Bolsa de Café.</strong>
+                {% endif %}
+            </p>
         </div>
-        <div class="col-12" style="margin-top: 20px">
-            <p>¡Combate la desinformación en redes invitando a todos a leer El Tinto!</p>
+    </div>
+    <div class="row justify-content-center mt-4 p-4" style="background-color: #f8f4f4; border-radius: 12px">
+        <div class="col-12">
+            <h2 class="strong-text" style="font-size: 20px">Comparte por redes sociales</h2>
+        </div>
+        <div class="col-12">
+            <p>Suma referidos compartiendo tu link personalizado</p>
         </div>
         <div class="col-12">
             <table style="border-spacing: 0; margin: 0 0 75px 0">

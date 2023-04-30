@@ -54,7 +54,7 @@ def send_milestone_email(user):
                 send_mail(
                     mail,
                     html_version,
-                    get_mail_template_data(mail, user),
+                    get_mail_template_data(mail, referral_user),
                     [referral_user.email],
                     user=referral_user
                 )

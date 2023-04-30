@@ -1,11 +1,9 @@
-import logging
-
 from django.utils import timezone
 
 from el_tinto.mails.models import SentEmails, SentEmailsInteractions, Mail
 from el_tinto.tintos.models import TintoBlocksEntries
 from el_tinto.users.models import User
-from el_tinto.utils.send_mail import send_mail
+from el_tinto.utils.send_mail import send_mail, get_mail_template, get_mail_template_data
 from el_tinto.utils.utils import MILESTONES
 
 
@@ -41,29 +39,26 @@ def send_milestone_email(user):
 
     :return: None
     """
-    logger = logging.getLogger("notifications")
-    logger.info('Inside function')
     try:
-        logger.info(f'{user}')
-        logger.info(f'{user.referred_by.id}')
         referral_user = User.objects.get(id=user.referred_by.id)
 
-        logger.info(f'{referral_user.referred_users.count()}')
-
         milestone = MILESTONES.get(referral_user.referred_users.count())
-
-        logger.info(f'{milestone}')
 
         if milestone:
             mail = Mail.objects.get(id=milestone.get('mail_id'))
 
-            logger.info(f'{mail.id}')
+            html_version = get_mail_template(mail, user)
 
-            send_mail(mail, 'milestones.html', [referral_user.email], user=referral_user)
+            send_mail(
+                mail,
+                html_version,
+                get_mail_template_data(mail, user),
+                [referral_user.email],
+                user=referral_user
+            )
 
     except User.DoesNotExist:
         pass
-
 
 
 def get_or_create_email_interaction(user, mail, click_data):

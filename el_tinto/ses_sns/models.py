@@ -54,8 +54,6 @@ class SNSNotification(models.Model):
 
                         if event_type == EVENT_TYPE_OPEN:
                             update_sent_email_data(user, mail)
-                            logger = logging.getLogger("notifications")
-                            logger.info('Sending notification email')
                             send_milestone_email(user)
 
                         elif event_type == EVENT_TYPE_CLICK:

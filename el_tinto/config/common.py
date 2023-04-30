@@ -206,6 +206,10 @@ class Common(Configuration):
                 'handlers': ['file'],
                 'level': 'INFO'
             },
+            'notifications': {
+                'handlers': ['file'],
+                'level': 'INFO'
+            },
         }
     }
 

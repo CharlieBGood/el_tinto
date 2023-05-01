@@ -59,6 +59,9 @@ def send_milestone_email(user):
                     user=referral_user
                 )
 
+                mail.recipients.add(referral_user)
+                mail.save()
+
     except User.DoesNotExist:
         pass
 

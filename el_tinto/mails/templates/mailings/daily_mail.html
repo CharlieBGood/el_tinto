@@ -153,8 +153,11 @@
                         <h3 style="margin-top: 30px;">
                           <strong>Tu número de referidos: {{ referred_users_count }}</strong>
                         </h3>
+                        <h3 style="margin-top: 30px;">
+                          <strong>Tu link de referidos: <br> {{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}</strong>
+                        </h3>
                         <a ses:no-track
-                           href="https://api.whatsapp.com/send?text=Suscríbete%20a%20El%20Tinto%20y%20ayúdame%20a%20aumentar%20mi%20número%20de%20recomendados%20😁%0A%0A*¡Recuerda%20que%20tienes%20que%20abrir%20por%20lo%20menos%20un%20correo%20para%20que%20cuentes%20como%20mi%20referido!*%0A%0AEl%20Tinto,%20historias%20importantes%20para%20gente%20ocupada.%20https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}"
+                           href="https://www.{{ env }}eltinto.xyz/referidos/?email={{email}}"
                            target="_blank"
                            style="color: #FFFFFF; text-decoration: none !important;"
                         >

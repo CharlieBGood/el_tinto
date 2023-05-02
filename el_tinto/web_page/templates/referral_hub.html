@@ -18,18 +18,33 @@
         .ribbonString {
             font-size: 15px;
         }
+        .cardTextSize {
+            font-size: 9px;
+            text-align: center;
+            margin-bottom: 0;
+        }
+        .cardNumberSize {
+            font-size: 16px;
+            text-align: center;
+            font-weight: 700;
+        }
         @media only screen and (min-width: 1200px) {
             .ribbonString {
+                font-size: 24px;
+            }
+            .cardTextSize {
+                font-size: 16px;
+            }
+            .cardNumberSize {
                 font-size: 24px;
             }
         }
     </style>
 {% endblock %}
 
-
 {% block content %}
 
-<div class="col-md-7 col-12">
+<div class="col-md-7 col-11">
     <div class="row justify-content-center mt-4">
         <div class="col-12">
             <h2 class="strong-text">¡Hola {{ username }}!</h2>
@@ -94,7 +109,79 @@
             </p>
         </div>
     </div>
-    <div class="row justify-content-center mt-4 p-4" style="background-color: #f8f4f4; border-radius: 12px">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <p><strong>Tu número de referidos: {{ referral_count }}</strong></p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_1_STICKERS.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Stickers de whatsapp</p>
+                <p class="card-text cardNumberSize">1</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_2_DOMINGUERO.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Tinto Dominguero</p>
+                <p class="card-text cardNumberSize">3</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_3_COMUNIDAD.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">La Cafeteria (Comunidad)</p>
+                <p class="card-text cardNumberSize">5</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_4_CHARLAS.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Charlas con El Tinto</p>
+                <p class="card-text cardNumberSize">10</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_5_MUG.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Mug</p>
+                <p class="card-text cardNumberSize">17</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_6_GORRA.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Gorra</p>
+                <p class="card-text cardNumberSize">25</p>
+              </div>
+            </div>
+        </div>
+        <div class="col-3" style="padding: 1%">
+            <div class="card" style="border-color: #5044e4; border-width: 3px">
+              <img src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_7_CAF%C2%90.png" class="card-img-top" style="padding: 0 5%" alt="Card image cap">
+              <div class="card-body" style="padding: 0 10% 10% 10%">
+                <p class="card-text cardTextSize">Café</p>
+                <p class="card-text cardNumberSize">50</p>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4 p-4 shadow" style="background-color: #f8f4f4; border-radius: 12px">
         <div class="col-12">
             <h2 class="strong-text" style="font-size: 20px">Comparte por redes sociales</h2>
         </div>
@@ -102,67 +189,68 @@
             <p>Suma referidos compartiendo tu link personalizado</p>
         </div>
         <div class="col-12">
-            <table style="border-spacing: 0; margin: 0 0 75px 0">
-                <tbody>
-                  <tr>
-                      <td style="padding: 0">
-                          <a
-                            href="https://api.whatsapp.com/send?text={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
-                            target="_blank"
-                          >
-                            <img
-                              src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
-                              style="display: block; height:60px"
-                            >
-                          </a>
-                      </td>
-                    <td style="padding: 0">
-                      <a
+            <div class="row" style="padding: 0 12px;">
+                <div class="col-lg-1 col-2" style="padding: 0">
+                    <img
+                      src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_SHARE.png"
+                      style="display: block; width: 100%"
+                    >
+                </div>
+                <div class="col-lg-1 col-2" style="padding: 0">
+                    <a
+                        href="https://api.whatsapp.com/send?text={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
+                        target="_blank"
+                    >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_WA.png"
+                          style="display: block; width: 100%"
+                        >
+                    </a>
+                </div>
+                <div class="col-lg-1 col-2" style="padding: 0">
+                    <a
                         href="https://www.facebook.com/sharer/sharer.php?u={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
                         target="_blank"
-                      >
+                    >
                         <img
-                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
-                          style="display: block; height:60px"
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_FB.png"
+                          style="display: block; width: 100%"
                         >
-                      </a>
-                    </td>
-                    <td style="padding: 0">
-                      <a
+                    </a>
+                </div>
+                <div class="col-lg-1 col-2" style="padding: 0">
+                    <a
                         href="https://twitter.com/intent/tweet?text={{ invite_users_message }}https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}"
                         target="_blank"
-                      >
+                    >
                         <img
-                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
-                          style="display: block; height:60px"
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_TW.png"
+                          style="display: block; width: 100%"
                         >
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-            </table>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row justify-content-center" style="margin-bottom: 50px">
+    <div class="row justify-content-center shadow p-4 mb-3 mt-2" style="border-radius: 12px">
         <div class="col-12">
-            <h2 class="strong-text">O copia y pega tu link...</h2>
+            <h2 class="strong-text" style="font-size: 20px">Comparte tu link personalizado</h2>
         </div>
-        <div class="col-12" style="margin-top: 20px">
-            <p>¡Combate la desinformación y salva un panda bebé (ok, no) compartiendo El Tinto con los demás!</p>
+        <div class="col-12">
+            <p>Combate la desinformación y salva un bebé panda (ok, no) compartiendo El Tinto con los demás.</p>
         </div>
         <div class="col-12">
             <div class="row">
                 <div class="col-md-8 col-12">
                     <div class="mb-3">
-                        <input type="email" disabled class="form-control" id="share_link_value" value="https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}">
+                        <input
+                            style="font-size: 14px"
+                            type="email" disabled class="form-control" id="share_link_value" value="https://{{ env }}eltinto.xyz/suscribirse/?referral_code={{ referral_code }}">
                     </div>
                 </div>
                 <div class="col-md-4 col-12">
-                    <button type="button" class="btn btn-primary position-relative" style="background-color: #5044e4; border: 0" id="share_link_button">
-                      <i class="fa-sharp fa fa-copy" style="margin-right: 5px"></i>¡Copia tu link!
-                      <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-                        <span class="visually-hidden">¡Copia tu link!</span>
-                      </span>
+                    <button type="button" class="btn btn-primary position-relative" style="background-color: #5044e4; border: 0; border-radius: 12px" id="share_link_button">
+                      <i class="fa fa-copy" style="margin-right: 5px"></i>Copiar link
                     </button>
                 </div>
             </div>

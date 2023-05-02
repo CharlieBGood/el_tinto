@@ -53,15 +53,15 @@
             <div class="bookmarkRibbon">
                 <div class="row">
                     <div class="col-3">
-                        {% if referral_race_position == 1  %}
+                        {% if referral_percentage <= 1  %}
                             <img
                                 width="100%"
                                 src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_ORO.png" />
-                        {% elif referral_race_position == 2  %}
+                        {% elif referral_percentage <= 10  %}
                             <img
                                 width="100%"
                                 src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_PLATA.png" />
-                        {% elif referral_race_position == 3  %}
+                        {% elif referral_percentage <= 20  %}
                             <img
                                 width="100%"
                                 src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_BRONCE.png" />
@@ -92,7 +92,7 @@
         <div class="col-12">
             <p>
                 {% if referral_count < 1 %}
-                    Estás a solamente (1) referido de conseguir acceso a <strong>Stickers</strong>!
+                    Estás a solamente (1) referido de conseguir acceso a <strong>Stickers.</strong>
                 {% elif referral_count < 3 %}
                     Estás a solamente {{ 3|sub:referral_count }} referidos de conseguir acceso a <strong>El Tinto Dominguero.</strong>
                 {% elif referral_count < 5 %}
@@ -234,7 +234,7 @@
     </div>
     <div class="row justify-content-center shadow p-4 mb-3 mt-2" style="border-radius: 12px">
         <div class="col-12">
-            <h2 class="strong-text" style="font-size: 20px">Comparte tu link personalizado</h2>
+            <h2 class="strong-text" style="font-size: 20px">O copia y pega tu link personalizado</h2>
         </div>
         <div class="col-12">
             <p>Combate la desinformación y salva un bebé panda (ok, no) compartiendo El Tinto con los demás.</p>

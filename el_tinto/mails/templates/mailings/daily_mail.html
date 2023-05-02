@@ -136,7 +136,7 @@
               <table>
                 <tr>
                     <td>
-                        <h2>¡Refiere El Tinto!</h2>
+                        <h2 style="margin-top: 0">¡Refiere El Tinto!</h2>
                         <p>
                             Regálale al mundo la posibilidad de iniciar los días con el buen aroma y el delicioso sabor de
                             las historias más importantes en solo cinco minutos.
@@ -148,13 +148,10 @@
                         </p>
                         <img
                             src="https://el-tinto-utils.s3.amazonaws.com/referral_program/giff_premios.gif"
-                            style="display: block; width: 100%; margin: 40px 0"
+                            style="display: block; width: 100%; margin: 0"
                         >
                         <h3 style="margin-top: 30px;">
                           <strong>Tu número de referidos: {{ referred_users_count }}</strong>
-                        </h3>
-                        <h3 style="margin-top: 30px;">
-                          <strong>Tu link de referidos: <br> {{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}</strong>
                         </h3>
                         <a ses:no-track
                            href="https://www.{{ env }}eltinto.xyz/referidos/?email={{email}}"
@@ -165,6 +162,9 @@
                             <p style="text-align: center;">Haz click para compartir</p>
                           </div>
                         </a>
+                        <h3 style="margin-top: 30px;">
+                          <strong>O copia y pega tu link de referidos: <br> {{ env }}eltinto.xyz/suscribirse/?referral_code={{referral_code}}</strong>
+                        </h3>
                     </td>
                 </tr>
               </table>

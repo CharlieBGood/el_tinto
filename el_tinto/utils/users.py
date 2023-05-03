@@ -1,3 +1,4 @@
+import math
 import random
 import string
 
@@ -85,5 +86,5 @@ def calculate_referral_race_parameters(user):
     # calculate percentile
     percentile = (users_gte_current_user / total_users) * 100
 
-    return round(percentile), user_referral_race_position
+    return math.ceil(percentile), user_referral_race_position
 

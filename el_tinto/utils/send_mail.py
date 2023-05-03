@@ -11,7 +11,6 @@ from django.utils.safestring import mark_safe
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.users import calculate_referred_users
 from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use
 
 logger = logging.getLogger("mails")
@@ -182,7 +181,7 @@ def get_mail_template_data(mail, user):
         'tweet': replace_special_characters_for_url_use(mail.tweet),
         'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
         'subject_message': mail.subject_message,
-        'referred_users_count': calculate_referred_users(user),
+        'referred_users_count': user.referred_users_count,
         'referral_code': user.referral_code
     }
 

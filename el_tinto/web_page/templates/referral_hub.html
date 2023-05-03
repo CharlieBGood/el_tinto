@@ -53,7 +53,11 @@
             <div class="bookmarkRibbon">
                 <div class="row">
                     <div class="col-3">
-                        {% if referral_percentage <= 1  %}
+                        {% if referral_count < 1 %}
+                            <img
+                                width="100%"
+                                src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_NINGUNO.png" />
+                        {% elif referral_percentage <= 1  %}
                             <img
                                 width="100%"
                                 src="https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_ORO.png" />
@@ -73,7 +77,9 @@
                     </div>
                     <div class="col-9 d-flex align-items-center" style="padding-left: 5px">
                         <p style="color: #FFFFFF; margin: 0" class="ribbonString">
-                            {% if referral_race_position == 1  %}
+                            {% if referral_count < 1 %}
+                                Refiere a una persona para entrar en el ranking.
+                            {% elif referral_race_position == 1  %}
                                 Eres el <strong>usuario #1</strong> que más ha recomendado El Tinto.
                             {% elif referral_race_position == 2  %}
                                 Eres el <strong>usuario #2</strong> que más ha recomendado El Tinto.
@@ -98,7 +104,7 @@
                 {% elif referral_count < 5 %}
                     Estás a solamente {{ 5|sub:referral_count }} referidos de conseguir acceso a <strong>La Cafeteria (Comunidad).</strong>
                 {% elif referral_count < 10 %}
-                    Estás a solamente {{ 10|sub:referral_count }} referidos de conseguir ser <strong>Embajador de El Tinto.</strong>
+                    Estás a solamente {{ 10|sub:referral_count }} referidos de conseguir <strong>Charlas con El Tinto.</strong>
                 {% elif referral_count < 17 %}
                     Estás a solamente {{ 17|sub:referral_count }} referidos de conseguir un <strong>Mug.</strong>
                 {% elif referral_count < 25 %}
@@ -183,10 +189,10 @@
     </div>
     <div class="row justify-content-center mt-4 p-4 shadow" style="background-color: #f8f4f4; border-radius: 12px">
         <div class="col-12">
-            <h2 class="strong-text" style="font-size: 20px">Comparte por redes sociales</h2>
+            <h2 class="strong-text" style="font-size: 20px">Comparte tu link por redes</h2>
         </div>
         <div class="col-12">
-            <p>Suma referidos compartiendo tu link personalizado</p>
+            <p>Haz click en los botones de redes para compartir tu link personalizado</p>
         </div>
         <div class="col-12">
             <div class="row" style="padding: 0 12px;">
@@ -237,9 +243,6 @@
             <h2 class="strong-text" style="font-size: 20px">O copia y pega tu link personalizado</h2>
         </div>
         <div class="col-12">
-            <p>Combate la desinformación y salva un bebé panda (ok, no) compartiendo El Tinto con los demás.</p>
-        </div>
-        <div class="col-12">
             <div class="row">
                 <div class="col-md-8 col-12">
                     <div class="mb-3">
@@ -278,13 +281,19 @@
 
 {% block script %}
 <script>
-   const copyButton = document.getElementById('share_link_button');
+    const copyButton = document.getElementById('share_link_button');
     copyButton.addEventListener('click', (event) => {
         // getting the text content that we want to copy
         const content = document.getElementById('share_link_value').value;
         console.log(content)
         // loading the content into our clipboard
         navigator.clipboard.writeText(content);
+
+        Swal.fire(
+          '¡Has copiado tu link!',
+          'Ahora pégalo donde quieras y consigue nuevos referidos.',
+          'success'
+        )
     })
 </script>
 {% endblock %}

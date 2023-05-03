@@ -83,6 +83,29 @@ class User(AbstractUser):
         """
         return self.sentemails_set.exclude(opened_date=None).count()
 
+    @property
+    def referred_users_count(self):
+        """
+        Calculate referred users invited by current user.
+        Referred users are those who have been referred by someone and have opened at least
+        one email. They can be active or inactive
+
+        :params:
+        user: User object
+
+        :return:
+        referred_users_count: int
+        """
+        referred_users = User.objects.filter(referred_by=self)
+
+        referred_users_count = 0
+
+        for referred_user in referred_users:
+            if referred_user.sentemails_set.exclude(opened_date=None).count() > 0:
+                referred_users_count += 1
+
+        return referred_users_count
+
     def save(self, *args, **kwargs):
         from el_tinto.utils.users import create_user_referral_code
 

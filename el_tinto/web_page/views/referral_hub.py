@@ -37,7 +37,7 @@ def get_referral_hub_context(user):
 
     referral_hub_context = {
         'referral_code': user.referral_code,
-        'referral_count': user.referred_users.count(),
+        'referral_count': user.referred_users_count,
         'referral_percentage': referral_percentage,
         'referral_race_position': referral_race_position,
         'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',

@@ -6,29 +6,6 @@ from django.db import connection
 from el_tinto.users.models import User
 
 
-def calculate_referred_users(user):
-    """
-    Calculate referred users invited by current user.
-    Referred users are those who have been referred by someone and have opened at least
-    one email. They can be active or inactive
-
-    :params:
-    user: User object
-
-    :return:
-    referred_users_count: int
-    """
-    referred_users = User.objects.filter(referred_by=user)
-
-    referred_users_count = 0
-
-    for referred_user in referred_users:
-        if referred_user.sentemails_set.exclude(opened_date=None).count() > 0:
-            referred_users_count += 1
-
-    return referred_users_count
-
-
 def create_user_referral_code(user):
     """
     Create a unique user referral code base on its email name without punctuation marks
@@ -91,23 +68,19 @@ def calculate_referral_race_parameters(user):
 
     user_referral_count = user.referred_users.count()
 
-    total_users = User.objects.filter(is_active=True).count()
+    users_gte_current_user = 0
+    user_referral_race_position = 1
+    total_users = 0
 
-    if user_referral_count > 0:
-        users_gte_current_user = 0
-        user_referral_race_position = 1
+    for referred_users_count in referred_users_count_list:
 
-        for referred_users_count in referred_users_count_list:
+        if referred_users_count[0] >= user_referral_count:
+            users_gte_current_user += referred_users_count[1]
 
-            if referred_users_count[0] >= user_referral_count:
-                users_gte_current_user += referred_users_count[1]
+        if referred_users_count[0] > user_referral_count:
+            user_referral_race_position += 1
 
-            if referred_users_count[0] > user_referral_count:
-                user_referral_race_position += 1
-
-    else:
-        users_gte_current_user = total_users
-        user_referral_race_position = total_users
+        total_users += referred_users_count[1]
 
     # calculate percentile
     percentile = (users_gte_current_user / total_users) * 100

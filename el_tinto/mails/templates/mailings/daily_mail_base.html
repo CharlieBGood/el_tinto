@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Tinto</title>
+  <style>
+    body {
+      font-family: Arial;
+    }
+    {#This targets gmail html and allows to change default gmail behavior for links#}
+    u + #body a {
+        color: #fca311;
+    }
+    h1 {
+      font-size: 46px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 400
+    }
+    p {
+        line-height: 150%;
+        font-size: 16px;
+    }
+    li {
+        font-size: 16px;
+    }
+    a div {
+      background-color: #5044e4;
+      border-radius: 12px;
+      height: 45px;
+      color: #FFFFFF;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    .logo-subtitle{
+      text-align: center;
+      font-size: 23px;
+      font-family: 'Gill Sans MT';
+      margin: 10px auto 30px auto;
+    }
+    .logo-title{
+      display: block;
+      margin: 20px auto;
+      width: 60%
+    }
+    .main {
+      padding: 20px 0;
+    }
+    @media only screen and (min-width: 768px) {
+      .main {
+        padding: 20px 20%;
+      }
+      .logo-title{
+        display: block;
+        margin: 40px auto 20px auto;
+        width: 40%
+      }
+      .logo-subtitle{
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body id="body">
+  <div class="main">
+    <span style="color: transparent; width: 1px; height: 1px; display: none">{{ subject_message }}</span>
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 50%">
+                        <img src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png" width="54" class="d-inline-block" style="vertical-align: 0">
+                    </td>
+                    <td>
+                        <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                        <a
+                          style="text-decoration: none !important;"
+                          href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                        >
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <hr style="width: 100%; border-top: 2px solid #eaeaea; margin-top: 0">
+        <tr>
+            <table style="margin: 0 auto">
+                <tr>
+                    <td>
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
+                          class="logo-title"
+                          style="margin: 20px auto 0 auto; width: 60%"
+                        >
+                        <p class="logo-subtitle">
+                            <span style="color: #fca311">-</span><i> {{ email_type }} </i><span style="color: #fca311">-</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        {% block days_reminder %}{% endblock %}
+        <tr>
+          <td>
+            <h3 style="text-align:justify">
+              <strong>
+                {% if name %}
+                  Buenos días {{ name }}, este es El Tinto de hoy.
+                {% else %}
+                  Buenos días, este es El Tinto de hoy.
+                {% endif %}
+              </strong>
+            </h3>
+              {{html}}
+              {% block referral_hub %}
+              {% endblock %}
+              <h3 style="text-align: center; margin-top: 30px;">
+                <strong>¿Te gustó el Tinto de hoy y quieres compartirlo?</strong>
+              </h3>
+              <table style="width: 40%; margin: 30px auto 60px auto;">
+                <tbody>
+                  <tr>
+                    <td style="padding: 0">
+                      <a
+                        ses:tags="type:WBP"
+                        href="https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}" class="" target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
+                          style="display: block;"
+                          height="40px"
+                        >
+                      </a>
+                    </td>
+                    <td style="padding: 0">
+                      <a
+                        ses:tags="type:FB"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}"
+                        target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
+                          style="display: block;"
+                          height="40px"
+                        >
+                      </a>
+                    </td>
+                    <td style="padding: 0">
+                      <a
+                        ses:tags="type:TW"
+                        href="https://twitter.com/intent/tweet?text={{tweet}}%20@ElTinto_%20https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}"
+                        target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
+                          style="display: block;"
+                          height="40px"
+                        >
+                      </a>
+                    </td>
+                    <td>
+                      <a
+                        ses:tags="type:WP"
+                        href="https://api.whatsapp.com/send?text={{tweet}}%20https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}"
+                        target="_blank"
+                      >
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
+                          style="display: block;"
+                          height="40px"
+                        >
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+{#            <h2 style="text-align:center;">#}
+{#              ¿Te reenviaron este correo?#}
+{#            </h2>#}
+{#            <p style="text-align:center;">#}
+{#              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!#}
+{#            </p>#}
+{#            <a ses:no-track#}
+{#               href="https://{{ env }}eltinto.xyz/suscribirse/"#}
+{#               target="_blank"#}
+{#               style="color: #FFFFFF; text-decoration: none !important;"#}
+{#            >#}
+{#              <div style="background-color: #8884fc; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">#}
+{#                <p style="text-align: center;">Suscribirse</p>#}
+{#              </div>#}
+{#            </a>#}
+            {% block footer %}
+            {% endblock %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

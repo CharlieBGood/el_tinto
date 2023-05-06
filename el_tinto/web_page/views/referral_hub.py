@@ -1,6 +1,6 @@
 import os
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from el_tinto.users.models import User
 from django.views.decorators.http import require_http_methods
 from django.http import Http404
@@ -13,6 +13,9 @@ from el_tinto.utils.users import calculate_referral_race_parameters
 def referral_hub(request):
 
     email = request.GET.get('email')
+
+    if email == "mateoyepeserna@gmail.com":
+        return redirect('index')
 
     try:
         user = User.objects.get(email=email)

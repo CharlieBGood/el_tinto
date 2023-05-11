@@ -1,10 +1,11 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.db.models import Deferrable
+from django.utils.text import slugify
 
 from tinymce.models import HTMLField
 
-from el_tinto.utils.html_constants import LINE_BREAKER, SHARE_NEWS
+from el_tinto.utils.html_constants import LINE_BREAKER, SHARE_NEWS, INTERNAL_HYPERLINK
 from el_tinto.utils.utils import replace_info_in_share_news_buttons
 
 
@@ -74,7 +75,12 @@ class TintoBlocksEntries(models.Model):
         Create TintoBlockEntry html based on the configuration
         defined in its parameters
         """
-        tinto_block_html = self.tinto_block.html
+        html = self.tinto_block.html
+
+        tinto_block_html = INTERNAL_HYPERLINK.format(
+            tag=slugify(self.tinto_block.title),
+            html=html
+        )
 
         if self.show_share_buttons:
             tinto_block_html += replace_info_in_share_news_buttons(SHARE_NEWS, self)

@@ -64,7 +64,7 @@ SHARE_NEWS = """
 """
 
 INTERNAL_HYPERLINK = """
-    <a id={tag} style='color: inherit; font-size: inherit; text-decoration: none'>{html}</a>
+    <a id={tag} style='color: inherit !important; font-size: inherit !important; text-decoration: none !important'>{html}</a>
 """
 
 INVITE_USERS_MESSAGE = """

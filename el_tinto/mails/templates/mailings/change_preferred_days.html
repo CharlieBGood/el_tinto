@@ -1,49 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends "mailings/base_mail.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Tinto</title>
-  <style>
-    body {
-      font-family: Arial;
-    }
-    h1 {
-      font-size: 46px;
-    }
-    h2 {
-      font-size: 20px;
-    }
-    h3 {
-      font-size: 18px;
-    }
-    a {
-      color: #fca311;
-    }
-    a div {
-      background-color: #5044e4;
-      border-radius: 12px;
-      height: 45px;
-      color: #FFFFFF;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-    }
-    .main {
-      padding: 20px 0;
-    }
-    @media only screen and (min-width: 768px) {
-      .main {
-        padding: 20px 26%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="main">
+{% block mail %}
     <table style="width: 100%">
       <tbody>
         <tr>
@@ -114,7 +71,4 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</body>
-
-</html>
+{% endblock %}

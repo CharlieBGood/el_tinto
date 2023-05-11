@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use
+from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value
 
 logger = logging.getLogger("mails")
 
@@ -41,20 +41,12 @@ def send_several_mails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
 
-            html_version = get_mail_template(mail, user)
-
             week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
 
             send_today = True if len(user.preferred_email_days) == 0 or week_day in user.preferred_email_days else False
 
             if send_today:
-                send_mail(
-                    mail,
-                    html_version,
-                    get_mail_template_data(mail, user),
-                    [user.email],
-                    user=user
-                )
+                send_mail(mail, [user.email], user=user)
                 mail.recipients.add(user)
                 mail.save()
 
@@ -76,23 +68,23 @@ def send_several_mails(mail, users):
     mail.save()
 
 
-def send_mail(mail, html_file, mail_data, mail_address, user=None, reply_to=None):
+def send_mail(mail, mail_address, user=None, reply_to=None):
     """
     Send mail from template.
 
     :params:
     mail: Mail object
-    html_file: str
-    mail_data: dict
     mail_address: [str]
     user: User object
     reply_to: str
     """
+    html_file = get_mail_template(mail, user)
+
     template = loader.get_template(f'../templates/mailings/{html_file}')
 
     send_email_address = get_sending_mail_address(mail)
 
-    mail_data['env'] = ('dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '')
+    mail_data = get_mail_template_data(mail, user)
 
     html = template.render(mail_data)
 
@@ -128,13 +120,8 @@ def send_warning_mail(mail_id):
     """
     mail = Mail.objects.get(pk=mail_id)
     if not mail.sent_datetime:
-        error_mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩')
-        send_mail(
-            error_mail,
-            'mail_not_sent.html',
-            {},
-            [user.email for user in User.objects.filter(is_active=True, is_staff=True)]
-        )
+        error_mail = Mail(subject='🚩🚩🚩 El correo de hoy no ha sido enviado!!! 🚩🚩🚩', type=Mail.DAILY_MAIL_NOT_SENT)
+        send_mail(error_mail, [user.email for user in User.objects.filter(is_active=True, is_staff=True)])
 
         now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
@@ -157,6 +144,12 @@ def get_mail_template(mail, user):
     elif mail.type == Mail.MILESTONE:
         return 'milestones.html'
 
+    elif mail.type == Mail.WELCOME:
+        return 'onboarding.html'
+
+    elif mail.type == Mail.DAILY_MAIL_NOT_SENT:
+        return 'mail_not_sent.html'
+
     else:
         return 'daily_mail_with_days.html' if 0 < len(user.preferred_email_days) < 7 else 'daily_mail.html'
 
@@ -175,14 +168,16 @@ def get_mail_template_data(mail, user):
     mail_data = {
         'html': mark_safe(replace_words_in_sentence(mail.html, user=user)),
         'date': get_string_date(mail.dispatch_date.date()),
-        'name': user.first_name,
+        'name': user.user_name if user else '',
         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
-        'email': user.email,
+        'email': user.email if user else '',
         'tweet': replace_special_characters_for_url_use(mail.tweet),
         'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
         'subject_message': mail.subject_message,
-        'referred_users_count': user.referred_users_count,
-        'referral_code': user.referral_code
+        'referred_users_count': user.referred_users_count if user else 0,
+        'referral_code': user.referral_code if user else '',
+        'mail_version': True,
+        'env': get_env_value()
     }
 
     return mail_data

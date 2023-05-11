@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Local(Common):
-    DEBUG = True
+    DEBUG = False
 
     # Testing
     CORS_ALLOW_ALL_ORIGINS = True

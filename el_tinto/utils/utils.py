@@ -2,6 +2,13 @@ import os
 import re
 
 
+def get_env_value():
+    """
+    Returns the environment on which the code is being executed.
+    """
+    return 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else ''
+
+
 def replace_words_in_sentence(sentence, user=None):
     """
     Replace all the words from sentence that match the replacement structure with user info.
@@ -259,4 +266,10 @@ MILESTONES = {
     17: {"price": "mug", "mail_id": 1566},
     25: {"price": "hat", "mail_id": 1567},
     50: {"price": "coffee", "mail_id": 1568},
+}
+
+ONBOARDING_EMAIL_NAME = 'onboarding'
+
+UTILITY_MAILS = {
+    ONBOARDING_EMAIL_NAME: 1912
 }

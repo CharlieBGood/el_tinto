@@ -1,54 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends "mailings/base_mail.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Tinto</title>
-  <style>
-    body {
-      font-family: Arial;
-    }
-    h1 {
-      font-size: 46px;
-    }
-    h2 {
-      font-size: 20px;
-    }
-    h3 {
-      font-size: 18px;
-    }
-    a {
-      color: #fca311;
-    }
-    p {
-        line-height: 150%;
-        font-size: 16px;
-    }
-    a div {
-      background-color: #5044e4; 
-      border-radius: 12px; 
-      height: 45px;
-      color: #FFFFFF;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-    }
-    .main {
-      padding: 20px 0;
-    }
-    @media only screen and (min-width: 768px) {
-      .main {
-        padding: 20px 26%;
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="main">
-    <table style="width: 100%">
+{% block mail %}
       <tbody>
         <tr>
           <td>
@@ -58,37 +10,7 @@
             />
             <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
             <div style="padding: 0 5%; margin: 10px 0 20px 0;">
-              <p>
-                  {% if name %}
-                  <strong>Hola {{ name }}, ¡gracias por suscribirte a El Tinto!</strong>
-                  {% else %}
-                  <strong>¡Gracias por suscribirte a El Tinto!</strong>
-                  {% endif %}
-                  <br>
-                  <br>
-                  <br>
-                  Para asegurarte de recibir El Tinto, por favor haz lo siguiente:
-                  <br>
-                  <br>
-                  <br>
-                  <strong>1) Responde</strong> a este correo con “quiero recibir El Tinto”.
-                  <br>
-                  <br>
-                  <br>
-                  Todos los días recibirás un correo a las 6 a.m. que te ayudará a entender las historias más
-                  importantes del momento en Colombia. Es breve y tiene fuentes diversas y rigurosas, para que no te
-                  pierdas en el océano de información que puede ser internet.
-                  <br>
-                  <br>
-                  <br>
-                  Escríbenos a <a href='mailto:info@eltinto.xyz'>info@eltinto.xyz</a>  si tienes cualquier
-                  duda, sugerencia o saludo. Y <a href='https://{{ env }}eltinto.xyz/faq/'>aquí</a>  puedes encontrar
-                  respuestas a las preguntas más frecuentes que nos llegan.
-                  <br>
-                  <br>
-                  <br>
-                  <strong>☕ El Tinto</strong>
-              </p>
+                {{ html }}
             </div>
             <div style="background-color: #5044e4; padding: 5px 5%;">
               <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
@@ -108,7 +30,4 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</body>
-
-</html>
+{% endblock %}

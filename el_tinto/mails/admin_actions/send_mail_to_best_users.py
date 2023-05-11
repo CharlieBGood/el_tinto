@@ -24,29 +24,19 @@ def send_email_to_best_users(_, request, queryset):
     mail = queryset.first()
     users = User.objects.filter(best_user=True)
 
-    n = 13
+    n = 79
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
     for users_list in users_chunked_list:
         for user in users_list:
-            html_version = 'survey.html'
 
             mail.subject = (
                 f'{user.first_name}, confirmamos tu invitación a diseñar El Tinto'
                 if user.first_name and user.first_name != ''
                 else 'Confirmamos tu invitación a diseñar El Tinto'
             )
-            html = mail.html
 
-            send_mail(
-                mail,
-                html_version,
-                {
-                    'html': mark_safe(replace_words_in_sentence(html, user=user)),
-                },
-                [user.email],
-                user=user
-            )
+            send_mail(mail, [user.email], user=user)
             mail.recipients.add(user)
             mail.save()
 

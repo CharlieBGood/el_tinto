@@ -6,8 +6,8 @@ from el_tinto.users.models import User
 class CreateRegisterSerializer(serializers.ModelSerializer):
     """Mails serializer."""
     email = serializers.EmailField()
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
+    first_name = serializers.CharField(required=False, max_length=25)
+    last_name = serializers.CharField(required=False, max_length=25)
     referred_by = serializers.SerializerMethodField(required=False)
 
     class Meta:
@@ -20,13 +20,19 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
         """
         referral_code = obj
 
-        return User.objects.filter(referral_code__iexact=referral_code).first()
+        print(referral_code)
+
+        try:
+            User.objects.filter(referral_code__iexact=referral_code).first().id
+
+        except User.DoesNotExist:
+            return None
 
     def validate_email(self, obj):
         """
         Validate that emails is not already registered.
         """
         if User.objects.filter(email=obj).exists():
-            raise serializers.ValidationError({'email': 'This email already exists in our database.'})
+            raise serializers.ValidationError('Este correo ya está registrado en nuestra base de datos.')
 
         return obj

@@ -5,48 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="922d1dae-8d05-4987-b6f4-d5b0fb37e1d2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/base_mail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/el_tinto/users/test/test_register_viewset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/el_tinto/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/el_tinto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/el_tinto.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/config/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/common.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/config/development.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/development.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/config/local.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/local.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/config/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/production.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/admin_actions/send_mail_to_best_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/admin_actions/send_mail_to_best_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/admin_actions/test_send_daily_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/admin_actions/test_send_daily_mail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/mails/fixtures/mails.json" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/fixtures/mails.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/mails/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/change_preferred_days.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/change_preferred_days.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/default.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/mail_not_sent.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/mail_not_sent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/milestones.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/milestones.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/onboarding.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/onboarding.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/survey.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/survey.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/test/test_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/test/test_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/test/test_views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/utils/notifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/notifications.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/utils/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/views/suscribe.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/views/suscribe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/views/who_are_we.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/views/who_are_we.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news_types.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +33,13 @@
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
     <option name="myUseModuleSdk" value="true" />
     <option name="myModuleName" value="el_tinto" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -234,11 +217,25 @@
       <workItem from="1683759897809" duration="2351000" />
       <workItem from="1683762458220" duration="885000" />
       <workItem from="1683763349256" duration="32000" />
+      <workItem from="1683775225212" duration="35000" />
+      <workItem from="1683827254144" duration="8365000" />
+      <workItem from="1683846738170" duration="16698000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -248,16 +245,11 @@
           <line>20</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/el_tinto/users/views.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/el_tinto$views.coverage" NAME="views Coverage Results" MODIFIED="1683763103923" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/el_tinto/users" />
+    <SUITE FILE_PATH="coverage/el_tinto$views.coverage" NAME="views Coverage Results" MODIFIED="1683775241438" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/el_tinto/users" />
     <SUITE FILE_PATH="coverage/el_tinto$wsgi.coverage" NAME="wsgi Coverage Results" MODIFIED="1683762190160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/el_tinto" />
     <SUITE FILE_PATH="coverage/el_tinto$Test__el_tinto_users_test_test_register_viewset_RegisterViewsetTest.coverage" NAME="Test: el_tinto.users.test.test_register_viewset.RegisterViewsetTest Coverage Results" MODIFIED="1683763098060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>

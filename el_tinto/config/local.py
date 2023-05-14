@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Local(Common):
-    DEBUG = False
+    DEBUG = True
 
     # Testing
     CORS_ALLOW_ALL_ORIGINS = True
@@ -31,6 +31,7 @@ class Local(Common):
     EMAIL_BACKEND = 'django_ses.SESBackend'
 
     LA_CAFETERA_URL = 'http://localhost:3000'
+    WEB_APP_URL = 'http://localhost:3000'
 
     # TINY MCE CONFIGURATIONS
     TINYMCE_DEFAULT_CONFIG = {

@@ -11,7 +11,8 @@ from django.utils.safestring import mark_safe
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value
+from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value, \
+    get_string_days
 
 logger = logging.getLogger("mails")
 
@@ -68,7 +69,7 @@ def send_several_mails(mail, users):
     mail.save()
 
 
-def send_mail(mail, mail_address, user=None, reply_to=None):
+def send_mail(mail, mail_address, user=None, reply_to=None, extra_mail_data=None):
     """
     Send mail from template.
 
@@ -84,7 +85,7 @@ def send_mail(mail, mail_address, user=None, reply_to=None):
 
     send_email_address = get_sending_mail_address(mail)
 
-    mail_data = get_mail_template_data(mail, user)
+    mail_data = get_mail_template_data(mail, user, extra_mail_data)
 
     html = template.render(mail_data)
 
@@ -150,17 +151,21 @@ def get_mail_template(mail, user):
     elif mail.type == Mail.DAILY_MAIL_NOT_SENT:
         return 'mail_not_sent.html'
 
+    elif mail.type == Mail.CHANGE_PREFERRED_DAYS:
+        return 'change_preferred_days.html'
+
     else:
         return 'daily_mail_with_days.html' if 0 < len(user.preferred_email_days) < 7 else 'daily_mail.html'
 
 
-def get_mail_template_data(mail, user):
+def get_mail_template_data(mail, user, extra_mail_data):
     """
     Get the dictionary with all the mail data used to replace in template
 
     :params:
     mail: Mail object
     user: User object
+    extra_mail_data: dict
 
     :return:
     mail_data: dict
@@ -179,6 +184,9 @@ def get_mail_template_data(mail, user):
         'mail_version': True,
         'env': get_env_value()
     }
+
+    if extra_mail_data:
+        mail_data.update(extra_mail_data)
 
     return mail_data
 

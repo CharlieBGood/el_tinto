@@ -108,3 +108,7 @@ venv.bak/
 
 # pem file
 *.pem
+
+# IDE
+.vscode
+.idea

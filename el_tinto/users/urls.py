@@ -1,9 +1,13 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 
-from el_tinto.users.views import RegisterViewset
+from el_tinto.users.views import RegisterView, UpdatePreferredDaysView, ConfirmUpdatePreferredDaysView, \
+    UnsuscribeView, ReferralHubView
 
-register_router = DefaultRouter()
+urlpatterns = [
+    path('suscribe/', RegisterView.as_view()),
+    path('update_preferred_days/', UpdatePreferredDaysView.as_view()),
+    path('update_preferred_days/confirm/', ConfirmUpdatePreferredDaysView.as_view()),
+    path('unsuscribe/', UnsuscribeView.as_view()),
+    path('referral_hub/', ReferralHubView.as_view())
+]
 
-register_router.register(r'register', RegisterViewset, basename='register')
-
-urlpatterns = register_router.urls

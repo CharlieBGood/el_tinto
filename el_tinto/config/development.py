@@ -53,6 +53,7 @@ class Development(Common):
     # )
 
     LA_CAFETERA_URL = 'https://www.dev.lacafetera.eltinto.xyz'
+    WEB_APP_URL = 'https://www.dev.eltinto.xyz'
 
     # TINY MCE CONFIGURATIONS
     TINYMCE_DEFAULT_CONFIG = {

@@ -4,54 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="922d1dae-8d05-4987-b6f4-d5b0fb37e1d2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/base_mail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/el_tinto/users/test/test_register_viewset.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/el_tinto/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+    <list default="true" id="922d1dae-8d05-4987-b6f4-d5b0fb37e1d2" name="Changes" comment="react changes">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/el_tinto.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/el_tinto.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/config/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/common.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/config/development.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/development.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/config/local.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/local.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/config/production.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/config/production.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/admin_actions/send_mail_to_best_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/admin_actions/send_mail_to_best_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/admin_actions/test_send_daily_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/admin_actions/test_send_daily_mail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/fixtures/mails.json" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/fixtures/mails.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/change_preferred_days.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/change_preferred_days.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/default.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/default.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/mail_not_sent.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/mail_not_sent.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/milestones.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/milestones.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/onboarding.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/onboarding.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/survey.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/survey.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/test/test_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/test/test_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/test/test_views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/utils/notifications.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/notifications.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/utils/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/views/suscribe.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/views/suscribe.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/web_page/views/who_are_we.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/web_page/views/who_are_we.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/news_types.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/setup.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/mails/fixtures/templates.json" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/fixtures/templates.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,8 +205,16 @@
       <workItem from="1683775225212" duration="35000" />
       <workItem from="1683827254144" duration="8365000" />
       <workItem from="1683846738170" duration="16698000" />
-      <workItem from="1684195258127" duration="318000" />
+      <workItem from="1684195258127" duration="3622000" />
     </task>
+    <task id="LOCAL-00001" summary="react changes">
+      <created>1684195756794</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1684195756794</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,6 +230,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="react changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="react changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

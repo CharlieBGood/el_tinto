@@ -1,1 +1,20 @@
-[{"model": "mails.templates", "pk": 1, "fields": {"name": "Daily", "label": "Correo Diario", "file_name": "daily_mail.html"}}]
+[
+   {
+      "model":"mails.templates",
+      "pk":1,
+      "fields":{
+         "name":"Daily",
+         "label":"Correo Diario",
+         "file_name":"daily_mail.html"
+      }
+   },
+  {
+    "model":"mails.templates",
+    "pk":2,
+    "fields":{
+       "name":"Base Daily",
+       "label":"Base Diario",
+       "file_name":"daily_mail_base.html"
+    }
+  }
+]

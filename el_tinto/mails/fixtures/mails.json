@@ -160,7 +160,7 @@
          "type":"Preferred days",
          "test_email":"carlosbueno1196@gmail.com",
          "version":"A",
-         "created_by":18,
+         "created_by":null,
          "created_at":"2023-05-13T18:00:26.964Z",
          "dispatch_date":"2023-05-13T18:00:11Z",
          "programmed":false,

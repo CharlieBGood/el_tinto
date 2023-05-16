@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from phonenumber_field.modelfields import PhoneNumberField
 
+from el_tinto.utils.utils import get_env_value
+
 
 class UserManager(BaseUserManager):
     """
@@ -72,7 +74,10 @@ class User(AbstractUser):
     @property
     def user_name(self):
         """
-        returns the first name of the user if it exists else returns the email of the user
+        returns the first name of the user if it exists else returns the email of the user.
+
+        :return:
+        user_name: str
         """
         return self.first_name if self.first_name and self.first_name != '' else self.email.split('@')[0]
 
@@ -80,6 +85,9 @@ class User(AbstractUser):
     def opened_mails(self):
         """
         returns how many emails the user has opened
+
+        :return:
+        opened_mails: int
         """
         return self.sentemails_set.exclude(opened_date=None).count()
 
@@ -89,9 +97,6 @@ class User(AbstractUser):
         Calculate referred users invited by current user.
         Referred users are those who have been referred by someone and have opened at least
         one email. They can be active or inactive
-
-        :params:
-        user: User object
 
         :return:
         referred_users_count: int
@@ -105,6 +110,16 @@ class User(AbstractUser):
                 referred_users_count += 1
 
         return referred_users_count
+
+    @property
+    def env(self):
+        """
+        Returns the environment on which the code is being executed.
+
+        :return:
+        env: str
+        """
+        return get_env_value()
 
     def save(self, *args, **kwargs):
         from el_tinto.utils.users import create_user_referral_code

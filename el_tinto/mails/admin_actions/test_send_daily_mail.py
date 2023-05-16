@@ -24,12 +24,4 @@ def test_send_daily_email(_, request, queryset):
     except User.DoesNotExist:
         return messages.error(request, "Test email does not exist in the database")
 
-    html_version = get_mail_template(mail, user)
-
-    send_mail(
-        mail,
-        html_version,
-        get_mail_template_data(mail, user),
-        [mail.test_email],
-        user=user
-    )
+    send_mail(mail, [mail.test_email], user=user)

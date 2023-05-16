@@ -1,95 +1,37 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends "mailings/base_mail.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Tinto</title>
-  <style>
-    body {
-      font-family: Arial;
-    }
-    {#This targets gmail html and allows to change default gmail behavior for links#}
-    u + #body a {
-        color: #fca311;
-    }
-    h1 {
-      font-size: 46px;
-    }
-    h2 {
-      font-size: 20px;
-    }
-    h3 {
-      font-size: 18px;
-      line-height: 150%;
-      font-weight: 400
-    }
-    p {
-        line-height: 150%;
-        font-size: 16px;
-    }
-    li {
-        font-size: 16px;
-    }
-    a div {
-      background-color: #5044e4;
-      border-radius: 12px;
-      height: 45px;
-      color: #FFFFFF;
-      font-size: 18px;
-      border: none;
-      cursor: pointer;
-    }
-    .logo-subtitle{
-      text-align: center;
-      font-size: 23px;
-      font-family: 'Gill Sans MT';
-      margin: 10px auto 30px auto;
-    }
-    .logo-title{
-      display: block;
-      margin: 20px auto;
-      width: 60%
-    }
-    .main {
-      padding: 20px 0;
-    }
-    @media only screen and (min-width: 768px) {
-      .main {
-        padding: 20px 20%;
-      }
-      .logo-title{
-        display: block;
-        margin: 40px auto 20px auto;
-        width: 40%
-      }
-      .logo-subtitle{
-        font-size: 28px;
-      }
-    }
-  </style>
-</head>
-
-<body id="body">
-  <div class="main">
-    <span style="color: transparent; width: 1px; height: 1px; display: none">{{ subject_message }}</span>
+{% block mail %}
     <table style="width: 100%">
       <tbody>
         <tr>
             <table style="width: 100%">
                 <tr>
-                    <td style="width: 50%">
-                        <img src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png" width="54" class="d-inline-block" style="vertical-align: 0">
-                    </td>
-                    <td>
-                        <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
-                        <a
-                          style="text-decoration: none !important;"
-                          href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
-                        >
-                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
-                        </a>
+                    {% if mail_version %}
+                        <td style="width: 50%">
+                            <img src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png" width="54" class="d-inline-block" style="vertical-align: 0">
+                        </td>
+                        <td>
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                            <a
+                              style="text-decoration: none !important;"
+                              href="https://{{ env }}eltinto.xyz/el-tinto/?date={{social_media_date}}" class="" target="_blank"
+                            >
+                                <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td style="width: 50%;">
+                            <img
+                                src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png"
+                                width="54"
+                                class="d-inline-block"
+                                style="vertical-align: bottom;"
+                            >
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                        </td>
+                    {% endif %}
                     </td>
                 </tr>
             </table>
@@ -102,7 +44,7 @@
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
                           class="logo-title"
-                          style="margin: 20px auto 0 auto; width: 60%"
+                          style="margin: 20px auto 0 auto;"
                         >
                         <p class="logo-subtitle">
                             <span style="color: #fca311">-</span><i> {{ email_type }} </i><span style="color: #fca311">-</span>
@@ -137,18 +79,20 @@
               <table style="width: 40%; margin: 30px auto 60px auto;">
                 <tbody>
                   <tr>
-                    <td style="padding: 0">
-                      <a
-                        ses:tags="type:WBP"
-                        href="https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}" class="" target="_blank"
-                      >
-                        <img
-                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
-                          style="display: block;"
-                          height="40px"
+                    {% if email_version %}
+                      <td style="padding: 0">
+                        <a
+                          ses:tags="type:WBP"
+                          href="https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}" class="" target="_blank"
                         >
-                      </a>
-                    </td>
+                          <img
+                            src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
+                            style="display: block;"
+                            height="40px"
+                          >
+                        </a>
+                      </td>
+                    {% endif %}
                     <td style="padding: 0">
                       <a
                         ses:tags="type:FB"
@@ -212,7 +156,4 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</body>
-
-</html>
+{% endblock %}

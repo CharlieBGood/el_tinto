@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Tinto</title>
+  <style>
+    body {
+      font-family: Arial;
+    }
+    {#This targets gmail html and allows to change default gmail behavior for links#}
+    u + #body a {
+        color: #fca311;
+    }
+    h1 {
+      font-size: 46px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+    h3 {
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 400
+    }
+    p {
+        line-height: 150%;
+        font-size: 16px;
+    }
+    a {
+        color: #fca311;
+        text-decoration: none;
+    }
+    li {
+        font-size: 16px;
+    }
+    a div {
+      background-color: #5044e4;
+      border-radius: 12px;
+      height: 45px;
+      color: #FFFFFF;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+    }
+    .logo-subtitle{
+      text-align: center;
+      font-size: 23px;
+      font-family: 'Gill Sans MT';
+      margin: 10px auto 20px auto;
+    }
+    .logo-title{
+      display: block;
+      margin: 20px auto;
+      width: 40%
+    }
+    .main {
+      padding: 20px 0;
+    }
+    @media only screen and (min-width: 768px) {
+      .main {
+        padding: 20px 20%;
+      }
+      .logo-title{
+        display: block;
+        margin: 40px auto 20px auto;
+        width: 60%
+      }
+      .logo-subtitle{
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body id="body">
+  <div class="main">
+    <span style="color: transparent; width: 1px; height: 1px; display: none">{{ subject_message }}</span>
+    {% block mail %}
+    {% endblock %}
+  </div>
+</body>
+
+</html>

@@ -19,13 +19,17 @@ class Mail(models.Model):
     PROMOTION = 'Promotion'
     WELCOME = 'Welcome'
     MILESTONE = 'Milestone'
+    DAILY_MAIL_NOT_SENT = 'Daily not sent'
+    CHANGE_PREFERRED_DAYS = 'Preferred days'
 
     TYPE_OPTIONS = [
         (DAILY, 'Diario'),
         (TEST, 'Testeo'),
         (PROMOTION, 'Promoción'),
         (WELCOME, 'Bienvenida'),
-        (MILESTONE, 'Meta de referidos')
+        (MILESTONE, 'Meta de referidos'),
+        (DAILY_MAIL_NOT_SENT, 'No enviado'),
+        (CHANGE_PREFERRED_DAYS, 'Cambiar días preferidos')
     ]
 
     # Version constants

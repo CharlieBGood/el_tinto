@@ -4,6 +4,9 @@ LABEL maintainer='eltinto.xyz'
 # Prints python outputs directly to the console
 ENV PYTHONUNBUFFERED 1 
 
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
 # Allows docker to cache installed dependencies between builds
 COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt

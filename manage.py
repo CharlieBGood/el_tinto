@@ -6,7 +6,10 @@ import sys
 from dotenv import load_dotenv
 
 load_dotenv()
-
+#
+# if sys.argv[0] and sys.argv[0].find('django_test_manage.py'):
+#     import configurations
+#     configurations.setup()
 
 def main():
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "el_tinto.config")

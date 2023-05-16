@@ -5,6 +5,7 @@ import string
 from django.db import connection
 
 from el_tinto.users.models import User
+from el_tinto.utils.utils import MILESTONES
 
 
 def create_user_referral_code(user):
@@ -83,8 +84,37 @@ def calculate_referral_race_parameters(user):
 
         total_users += referred_users_count[1]
 
+    total_users = total_users if total_users != 0 else 1
+
     # calculate percentile
     percentile = (users_gte_current_user / total_users) * 100
 
     return math.ceil(percentile), user_referral_race_position
 
+
+def get_next_price_info(user):
+    """
+    Get the information about the next price in the referral hub.
+
+    :params:
+    user: User obj
+
+    :retyrn:
+    price_description: str
+    pre_price_string: str
+    missing_referred_users_for_next_price: int
+
+    """
+    referral_count = user.referred_users_count
+
+    milestones_list = list(MILESTONES)
+    milestones_list.sort()
+
+    for milestone in milestones_list:
+        if milestone > referral_count:
+            next_milestone = MILESTONES[milestone]
+            return (
+                next_milestone['price_description'],
+                next_milestone['pre_price_string'],
+                milestone - referral_count
+            )

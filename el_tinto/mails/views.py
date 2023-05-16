@@ -1,11 +1,13 @@
 from datetime import datetime
 
+from django.shortcuts import redirect
 from rest_framework import mixins, viewsets
 from rest_framework.exceptions import ValidationError, NotFound
 
 from el_tinto.mails.models import Templates, Mail
 from el_tinto.mails.serializers import TemplatesSerializer, MailsSerializer
 from el_tinto.utils.tintos import generate_tinto_html
+from el_tinto.utils.utils import get_env_value
 
 
 class TemplatesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -35,10 +37,15 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
             mails = Mail.objects.filter(type=Mail.DAILY, dispatch_date__date=date_obj)
 
             if not mails:
-                raise NotFound(detail="There's no email for the current date")
+                last_mail = Mail.objects.filter(type=Mail.DAILY).order_by('-dispatch_date').first()
+                date = last_mail.dispatch_date.strftime("%d-%m-%Y")
+
+                env = get_env_value()
+
+                return redirect(f"www.{env}eltinto.xyz?date={date}")
 
         else:
-            mails = Mail.objects.all()
+            mails = Mail.objects.filter(type=Mail.DAILY).order_by('-dispatch_date').first()
 
         return mails
 

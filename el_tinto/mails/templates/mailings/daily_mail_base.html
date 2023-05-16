@@ -135,6 +135,16 @@
                   </tr>
                 </tbody>
               </table>
+              {% if not mail_version %}
+                <h3 style="text-align: center; margin-top: 30px;">
+                  <strong>También te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
+                </h3>
+                <a class="suscribeLink" href="/suscribirse/" style="color: #FFFFFF; text-decoration: none;">
+                  <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 0 auto;">
+                    <p style="text-align: center; margin: 1rem !important">Suscribirse</p>
+                  </div>
+                </a>
+              {% endif %}
 {#            <h2 style="text-align:center;">#}
 {#              ¿Te reenviaron este correo?#}
 {#            </h2>#}

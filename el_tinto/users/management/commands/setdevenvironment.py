@@ -17,14 +17,16 @@ class Command(BaseCommand):
 
         # Create groups
         Group.objects.get_or_create(name='Editor')
-        founder_group = Group.objects.get_or_create(name='Founder')
+        founder_group, _ = Group.objects.get_or_create(name='Founder')
 
         # Set up admin user
         if options.get("email", False):
             if not options.get("password") or options.get("password") == "":
                 raise CommandError("If you provide an email you also have to provide a password.")
 
-            user = User.objects.get_or_create(email=options.get("email"))
+            user, _ = User.objects.get_or_create(
+                email=options.get("email"), is_staff=True, is_superuser=True
+            )
 
             user.set_password(options.get("password"))
 

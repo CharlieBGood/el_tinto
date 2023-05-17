@@ -45,27 +45,6 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
 
         return mails
 
-    def list(self, request, *args, **kwargs):
-        basic_queryset = self.get_queryset()
-
-        if not basic_queryset:
-            last_mail = Mail.objects.filter(type=Mail.DAILY).order_by('-dispatch_date').first()
-            date = last_mail.dispatch_date.strftime("%d-%m-%Y")
-
-            env = get_env_value()
-
-            return redirect(f"www.{env}eltinto.xyz?date={date}")
-
-        queryset = self.filter_queryset(basic_queryset)
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
     def perform_create(self, serializer):
         serializer.validated_data['html'] = generate_tinto_html(serializer.validated_data['tinto'])
         serializer.save()

@@ -16,7 +16,6 @@ class MailsAdmin(admin.ModelAdmin):
     actions = [send_daily_mail, test_send_daily_email, cancel_send_daily_email, edit_tinto_in_cms, send_email_to_best_users]
 
     def get_queryset(self, request):
-        print('here')
         qs = super(MailsAdmin, self).get_queryset(request)
         # return qs.exclude(type=Mail.WELCOME)
         return qs

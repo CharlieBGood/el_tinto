@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="922d1dae-8d05-4987-b6f4-d5b0fb37e1d2" name="Changes" comment="react changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/templates/mailings/daily_mail_base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/mails/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/mails/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/send_mail.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +211,8 @@
       <workItem from="1683827254144" duration="8365000" />
       <workItem from="1683846738170" duration="16698000" />
       <workItem from="1684195258127" duration="3622000" />
-      <workItem from="1684276456804" duration="9293000" />
+      <workItem from="1684276456804" duration="10316000" />
+      <workItem from="1684361188887" duration="7461000" />
     </task>
     <task id="LOCAL-00001" summary="react changes">
       <created>1684195756794</created>

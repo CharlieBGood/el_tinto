@@ -154,6 +154,9 @@ def get_mail_template(mail, user):
     elif mail.type == Mail.CHANGE_PREFERRED_DAYS:
         return 'change_preferred_days.html'
 
+    elif not user:
+        return 'daily_mail_base.html'
+
     else:
         return 'daily_mail_with_days.html' if 0 < len(user.preferred_email_days) < 7 else 'daily_mail.html'
 

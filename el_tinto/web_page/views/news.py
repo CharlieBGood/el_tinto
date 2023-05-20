@@ -28,7 +28,7 @@ def news(request, news_id):
         raise Http404()
 
     else:
-        return render(request, 'web_news.html', context=get_news_context(tinto_block_entry))
+        return render(request, 'news.html', context=get_news_context(tinto_block_entry))
 
 
 def get_news_context(tinto_block_entry):

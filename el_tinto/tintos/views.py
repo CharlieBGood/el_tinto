@@ -149,7 +149,7 @@ class TintoBlocksEntriesViewSet(
         try:
             tinto_block_entry = TintoBlocksEntries.objects.get(
                 id=pk,
-                tinto_block_entry__tinto__mail__type=Mail.DAILY
+                tinto__mail__type=Mail.DAILY
             )
 
         except TintoBlocksEntries.DoesNotExist:

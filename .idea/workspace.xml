@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="922d1dae-8d05-4987-b6f4-d5b0fb37e1d2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/tintos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/tintos/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/users/management/commands/create_referred_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/management/commands/create_referred_users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/el_tinto/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/users/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/utils/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/el_tinto/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/el_tinto/utils/utils.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

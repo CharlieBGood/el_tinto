@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
+from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
+from el_tinto.utils.utils import MILESTONES
 
 
 class CreateRegisterSerializer(serializers.ModelSerializer):
@@ -132,3 +134,38 @@ class GetReferralHubInfoParams(serializers.Serializer):
             raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
 
         return user
+
+
+class SendMilestoneMailSerializer(serializers.Serializer):
+    """Send milestone mail serializer."""
+    email = serializers.EmailField()
+    milestone = serializers.ChoiceField(choices=list(MILESTONES.keys()))
+
+    def validate_email(self, obj):
+        """
+        Validate that emails already exists and is active.
+        Return the user.
+
+        :return:
+        user: User obj
+        """
+        try:
+            user = User.objects.get(email=obj, is_active=True)
+
+        except User.DoesNotExist:
+            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+
+        return user
+
+    def validate_milestone(self, obj):
+        """
+        Validate that the milestone has an existing mail associated
+
+        :return:
+        mail: Mail obj
+        """
+        try:
+            return Mail.objects.get(id=MILESTONES[obj]['mail_id'])
+
+        except Mail.DoesNotExist:
+            raise serializers.ValidationError('El premio no existe.')

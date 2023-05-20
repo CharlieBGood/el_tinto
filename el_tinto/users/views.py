@@ -4,17 +4,18 @@ import os
 from django.conf import settings
 from django.core.cache import cache
 from django.shortcuts import redirect
-from rest_framework import viewsets, mixins, status
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User, Unsuscribe
 from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferredDaysSerializer, \
-    ConfirmUpdatePreferredDaysSerializer, DestroyRegisterSerializer, GetReferralHubInfoParams
+    ConfirmUpdatePreferredDaysSerializer, DestroyRegisterSerializer, GetReferralHubInfoParams, \
+    SendMilestoneMailSerializer
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
 from el_tinto.utils.send_mail import send_mail
-from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info
+from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status
 from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME, get_email_provider, get_email_provider_link, \
     CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES
 
@@ -207,7 +208,47 @@ class ReferralHubView(APIView):
             'price_description': price_description,
             'pre_price_string': pre_price_string,
             'missing_referred_users_for_next_price': missing_referred_users_for_next_price,
-            'milestones': MILESTONES
+            'milestones': MILESTONES,
+            'milestone_status': get_milestones_status(user)
+        }
+
+        return Response(status=status.HTTP_200_OK, data=referral_hub_data)
+
+
+class SendMilestoneMailView(APIView):
+    """Send milestone email view."""
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        """Send milestone email"""
+        serializer = SendMilestoneMailSerializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user = serializer.validated_data['email']
+
+        milestone_mail = serializer.validated_data['milestone']
+
+        send_mail(milestone_mail, [user.email], user=user)
+
+        milestone_mail.recipients.add(user)
+
+        referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
+
+        price_description, pre_price_string, missing_referred_users_for_next_price = get_next_price_info(user)
+
+        referral_hub_data = {
+            'referral_code': user.referral_code,
+            'referral_count': user.referred_users_count,
+            'referral_percentage': referral_percentage,
+            'referral_race_position': referral_race_position,
+            'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
+            'invite_users_message': INVITE_USERS_MESSAGE,
+            'user_name': user.user_name,
+            'price_description': price_description,
+            'pre_price_string': pre_price_string,
+            'missing_referred_users_for_next_price': missing_referred_users_for_next_price,
+            'milestones': MILESTONES,
+            'milestone_status': get_milestones_status(user)
         }
 
         return Response(status=status.HTTP_200_OK, data=referral_hub_data)

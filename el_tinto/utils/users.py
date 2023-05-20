@@ -4,6 +4,7 @@ import string
 
 from django.db import connection
 
+from el_tinto.mails.models import SentEmails
 from el_tinto.users.models import User
 from el_tinto.utils.utils import MILESTONES
 
@@ -118,3 +119,25 @@ def get_next_price_info(user):
                 next_milestone['pre_price_string'],
                 milestone - referral_count
             )
+
+
+def get_milestones_status(user):
+    """
+    Get the status of each milestone. Show whether it has been already obtained or claimed. 
+    
+    :params:
+    user: User obj
+
+    :retyrn:
+    milestone_status: dict
+    
+    """
+    milestones_status = dict()
+
+    for milestone in MILESTONES.keys():
+        milestones_status[milestone] = {
+            "obtained": user.referred_users_count >= milestone,
+            "claimed": SentEmails.objects.filter(user=user, mail_id=MILESTONES[milestone]['mail_id']).exists()
+        }
+
+    return milestones_status

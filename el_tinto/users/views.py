@@ -148,7 +148,7 @@ class UpdatePreferredDaysView(APIView):
 
         change_preferred_email_days_mail.recipients.add(user)
 
-        return Response(status=status.HTTP_200_OK, data={})
+        return redirect(settings.WEB_APP_URL + f'/desuscribirse/personalizar/confirmacion?user_name={user.user_name}')
 
 
 class ConfirmUpdatePreferredDaysView(APIView):

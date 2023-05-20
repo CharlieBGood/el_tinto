@@ -17,8 +17,7 @@ class MailsAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(MailsAdmin, self).get_queryset(request)
-        # return qs.exclude(type=Mail.WELCOME)
-        return qs
+        return qs.exclude(type=Mail.WELCOME)
 
     def save_model(self, request, obj, form, change):
         obj.created_by = request.user

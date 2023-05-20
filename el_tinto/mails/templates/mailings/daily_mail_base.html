@@ -79,7 +79,7 @@
               <table style="width: 40%; margin: 30px auto 60px auto;">
                 <tbody>
                   <tr>
-                    {% if email_version %}
+                    {% if mail_version %}
                       <td style="padding: 0">
                         <a
                           ses:tags="type:WBP"
@@ -145,21 +145,6 @@
                   </div>
                 </a>
               {% endif %}
-{#            <h2 style="text-align:center;">#}
-{#              ¿Te reenviaron este correo?#}
-{#            </h2>#}
-{#            <p style="text-align:center;">#}
-{#              Te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!#}
-{#            </p>#}
-{#            <a ses:no-track#}
-{#               href="https://{{ env }}eltinto.xyz/suscribirse/"#}
-{#               target="_blank"#}
-{#               style="color: #FFFFFF; text-decoration: none !important;"#}
-{#            >#}
-{#              <div style="background-color: #8884fc; height: 60px; width: 30%; vertical-align: middle; margin: 40px auto 100px auto; display: table;">#}
-{#                <p style="text-align: center;">Suscribirse</p>#}
-{#              </div>#}
-{#            </a>#}
             {% block footer %}
             {% endblock %}
           </td>

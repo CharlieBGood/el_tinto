@@ -1,8 +1,11 @@
 from django.db import transaction
+from django.template import loader
+from django.utils.safestring import mark_safe
 from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
+from el_tinto.mails.models import Mail
 from el_tinto.mails.serializers import MailsSerializer
 from el_tinto.tintos.models import TintoBlocks, Tinto, TintoBlocksEntries, NewsType, TintoBlockType
 from el_tinto.tintos.serializers.tintos import TintoSerializer
@@ -18,6 +21,7 @@ from el_tinto.tintos.serializers.tinto_blocks_entries import (
 )
 from el_tinto.tintos.serializers.tinto_block_entry_types import TintoBlockTypeSerializer
 from el_tinto.tintos.serializers.news_types import NewsTypeSerializer
+from el_tinto.utils.date_time import get_string_date
 
 
 class TintoViewSet(
@@ -139,6 +143,28 @@ class TintoBlocksEntriesViewSet(
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         return Response(status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=["GET"])
+    def get_web_news(self, request, pk=None):
+        try:
+            tinto_block_entry = TintoBlocksEntries.objects.get(
+                id=pk,
+                tinto_block_entry__tinto__mail__type=Mail.DAILY
+            )
+
+        except TintoBlocksEntries.DoesNotExist:
+            return Response(data={}, status=status.HTTP_404_NOT_FOUND)
+
+        template = loader.get_template('../templates/web_news.html')
+
+        mail_data = {
+            "html": mark_safe(tinto_block_entry.display_html),
+            'date': get_string_date(tinto_block_entry.tinto.mail.dispatch_date.date())
+        }
+
+        html = template.render(mail_data)
+
+        return Response(data={"html": html}, status=status.HTTP_200_OK)
 
 
 class TintoBlockTypeViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

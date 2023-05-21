@@ -16,11 +16,15 @@ class TintoBlocks(models.Model):
     type = models.ForeignKey('TintoBlockType', on_delete=models.SET_NULL, null=True)
     news_type = models.ForeignKey('NewsType', on_delete=models.SET_NULL, default=None, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    title_slug = models.CharField(max_length=256, default='', blank=True)
 
     def __str__(self):
-        return f'{self.created_at} - {self.type} - {self.title}'
+        return f'{self.created_at.date()} - {self.type} - {self.title}'
 
     def save(self, *args, **kwargs):
+        if not self.title_slug:
+            self.title_slug = slugify(self.title)
+
         super(TintoBlocks, self).save(*args, **kwargs)
 
         # Update TintoBlockEntries related
@@ -77,18 +81,19 @@ class TintoBlocksEntries(models.Model):
         """
         html = self.tinto_block.html
 
-        tinto_block_html = INTERNAL_HYPERLINK.format(
-            tag=slugify(self.tinto_block.title),
-            html=html
-        )
+        if self.tinto_block.type.name != "Intro":
+            html = INTERNAL_HYPERLINK.format(
+                tag=self.tinto_block.title_slug,
+                html=self.tinto_block.html
+            )
 
         if self.show_share_buttons:
-            tinto_block_html += replace_info_in_share_news_buttons(SHARE_NEWS, self)
+            html += replace_info_in_share_news_buttons(SHARE_NEWS, self)
 
         if self.break_line:
-            tinto_block_html += LINE_BREAKER
+            html += LINE_BREAKER
 
-        self.display_html = tinto_block_html
+        self.display_html = html
 
     def save(self, *args, **kwargs):
         # Add extra features to display html

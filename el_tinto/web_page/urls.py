@@ -23,4 +23,5 @@ urlpatterns = [
     path('personalizar/dias/', customize_days, name='customize_days'),
     path('noticias/<int:news_id>/', news, name='news'),
     path('referidos/', referral_hub, name='referral_hub'),
+    path('el-tinto-de-hoy-react/', index, name='el_tinto_de_hoy_react'),
 ]

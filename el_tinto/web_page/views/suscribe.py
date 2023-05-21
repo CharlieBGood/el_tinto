@@ -67,9 +67,7 @@ def suscribe(request):
 
             mail.recipients.add(user)
 
-            send_mail(
-                mail, 'onboarding.html', {'name': user.first_name}, [user.email],
-            )
+            send_mail(mail, [user.email])
             
             return render(
                 request,

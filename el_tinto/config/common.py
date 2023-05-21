@@ -172,10 +172,10 @@ class Common(Configuration):
                 'class': 'logging.StreamHandler',
                 'formatter': 'simple'
             },
-            'mail_admins': {
-                'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler'
-            },
+            # 'mail_admins': {
+            #     'level': 'ERROR',
+            #     'class': 'django.utils.log.AdminEmailHandler'
+            # },
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
@@ -194,7 +194,8 @@ class Common(Configuration):
                 'propagate': False,
             },
             'django.request': {
-                'handlers': ['mail_admins', 'console'],
+                # 'handlers': ['mail_admins', 'console'],
+                'handlers': ['console'],
                 'level': 'ERROR',
                 'propagate': False,
             },

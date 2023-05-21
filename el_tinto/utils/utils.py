@@ -2,6 +2,13 @@ import os
 import re
 
 
+def get_env_value():
+    """
+    Returns the environment on which the code is being executed.
+    """
+    return 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else ''
+
+
 def replace_words_in_sentence(sentence, user=None):
     """
     Replace all the words from sentence that match the replacement structure with user info.
@@ -252,11 +259,19 @@ URL_SPECIAL_CHARACTERS = {
 }
 
 MILESTONES = {
-    1: {"price": "stickers", "mail_id": 1562},
-    3: {"price": "sunday_email", "mail_id": 1563},
-    5: {"price": "coffee_shop", "mail_id": 1564},
-    10: {"price": "talks", "mail_id": 1565},
-    17: {"price": "mug", "mail_id": 1566},
-    25: {"price": "hat", "mail_id": 1567},
-    50: {"price": "coffee", "mail_id": 1568},
+    1: {"price": "stickers", "price_description": "Stickers de Whatsapp", "pre_price_string": "acceso a", "mail_id": 1562},
+    3: {"price": "sunday_email", "price_description": "El Tinto Dominguero", "pre_price_string": "acceso a", "mail_id": 1563},
+    5: {"price": "coffee_shop", "price_description": "La Cafeteria (Comunidad)", "pre_price_string": "acceso a", "mail_id": 1564},
+    10: {"price": "talks", "price_description": "Charlas con El Tinto", "pre_price_string": "acceso a", "mail_id": 1565},
+    17: {"price": "mug", "price_description": "Mug", "pre_price_string": "un", "mail_id": 1566},
+    25: {"price": "hat", "price_description": "Gorra", "pre_price_string": "una", "mail_id": 1567},
+    50: {"price": "coffee", "price_description": "Bolsa de Café", "pre_price_string": "una", "mail_id": 1568},
+}
+
+ONBOARDING_EMAIL_NAME = 'onboarding'
+CHANGE_PREFERRED_DAYS = 'change_preferred_days'
+
+UTILITY_MAILS = {
+    ONBOARDING_EMAIL_NAME: 1912,
+    CHANGE_PREFERRED_DAYS: 1962
 }

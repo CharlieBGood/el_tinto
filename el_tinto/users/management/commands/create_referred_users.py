@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 
 from el_tinto.users.models import User
 from el_tinto.mails.models import Mail, SentEmails
+from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME
 
 
 class Command(BaseCommand):
@@ -43,10 +44,7 @@ class Command(BaseCommand):
 
                 self.stdout.write('Previous users successfully deleted')
 
-                mail = Mail.objects.last()
-
-                if not mail:
-                    mail = Mail.objects.create(subject='Ejemplo para el testeo')
+                mail = Mail.objects.get(id=UTILITY_MAILS[ONBOARDING_EMAIL_NAME])
 
                 user_base_name = user.email.split('@')[0]
 

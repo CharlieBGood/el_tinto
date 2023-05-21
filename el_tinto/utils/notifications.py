@@ -47,17 +47,9 @@ def send_milestone_email(user):
         if milestone:
             mail = Mail.objects.get(id=milestone.get('mail_id'))
 
-            html_version = get_mail_template(mail, user)
-
             if not SentEmails.objects.filter(user=referral_user, mail=mail).exists():
 
-                send_mail(
-                    mail,
-                    html_version,
-                    get_mail_template_data(mail, referral_user),
-                    [referral_user.email],
-                    user=referral_user
-                )
+                send_mail(mail, [referral_user.email], user=referral_user)
 
                 mail.recipients.add(referral_user)
                 mail.save()

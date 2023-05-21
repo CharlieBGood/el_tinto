@@ -1,1 +1,42 @@
-[{"model": "tintos.newstype", "pk": 1, "fields": {"name": "National Politics", "label": "Política nacional"}}, {"model": "tintos.newstype", "pk": 2, "fields": {"name": "International Politics", "label": "Política internacional"}}, {"model": "tintos.newstype", "pk": 3, "fields": {"name": "Economics", "label": "Económica"}}, {"model": "tintos.newstype", "pk": 4, "fields": {"name": "Sports", "label": "Deportes"}}, {"model": "tintos.newstype", "pk": 5, "fields": {"name": "Culture", "label": "Cultural"}}]
+[
+   {
+      "model":"tintos.newstype",
+      "pk":1,
+      "fields":{
+         "name":"National Politics",
+         "label":"Política nacional"
+      }
+   },
+   {
+      "model":"tintos.newstype",
+      "pk":2,
+      "fields":{
+         "name":"International Politics",
+         "label":"Política internacional"
+      }
+   },
+   {
+      "model":"tintos.newstype",
+      "pk":3,
+      "fields":{
+         "name":"Economics",
+         "label":"Económica"
+      }
+   },
+   {
+      "model":"tintos.newstype",
+      "pk":4,
+      "fields":{
+         "name":"Sports",
+         "label":"Deportes"
+      }
+   },
+   {
+      "model":"tintos.newstype",
+      "pk":5,
+      "fields":{
+         "name":"Culture",
+         "label":"Cultural"
+      }
+   }
+]

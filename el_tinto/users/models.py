@@ -58,7 +58,7 @@ class User(AbstractUser):
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
     best_user = models.BooleanField(default=False)
     referral_code = models.CharField(max_length=6, blank=True, default='')
-    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=None, null=True)
     referred_by = models.ForeignKey(
         'users.User',
         default=None,

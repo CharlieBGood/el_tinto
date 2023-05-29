@@ -82,7 +82,7 @@ class UnsuscribeView(APIView):
         serializer = DestroyRegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data.pop('email')
+        user = serializer.validated_data.pop('uuid')
 
         self.perform_destroy(user, serializer.validated_data)
 
@@ -107,7 +107,7 @@ class UpdatePreferredDaysView(APIView):
         serializer = UpdatePreferredDaysSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data.pop('email')
+        user = serializer.validated_data.pop('uuid')
 
         # This works because validated_data is an ordered dict
         days_values = serializer.validated_data.values()
@@ -191,7 +191,7 @@ class ReferralHubView(APIView):
         serializer = GetReferralHubInfoParams(data=self.request.GET)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data['email']
+        user = serializer.validated_data['uuid']
 
         referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
 

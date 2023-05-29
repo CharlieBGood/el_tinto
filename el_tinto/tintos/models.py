@@ -34,7 +34,7 @@ class TintoBlocks(models.Model):
     class Meta:
         verbose_name = "Bloque de Tinto"
         verbose_name_plural = "Bloques de Tinto"
-        ordering = ('created_at', 'type', 'news_type', 'title')
+        ordering = ('-created_at', 'type', 'news_type', 'title')
 
 
 class Tinto(models.Model):

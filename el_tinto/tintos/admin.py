@@ -28,7 +28,7 @@ class TintoBlocksAdmin(admin.ModelAdmin):
         """
         Return empty perms dict thus hiding the model from admin index.
         """
-        if request.user.groups.filter(name__in=['Founder']):
+        if request.user.groups.filter(name__in=['Editor', 'Founder']):
             return super(TintoBlocksAdmin, self).get_model_perms(request)
         else:
             return {}

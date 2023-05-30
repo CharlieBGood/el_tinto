@@ -48,7 +48,7 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
 
 class DestroyRegisterSerializer(serializers.Serializer):
     """Destroy register serializer."""
-    email = serializers.EmailField()
+    uuid = serializers.UUIDField()
     boring = serializers.BooleanField(required=False)
     invasive = serializers.BooleanField(required=False)
     variety = serializers.BooleanField(required=False)
@@ -56,16 +56,16 @@ class DestroyRegisterSerializer(serializers.Serializer):
     other_email = serializers.BooleanField(required=False)
     recommendation = serializers.CharField(required=False, allow_blank=True)
 
-    def validate_email(self, obj):
+    def validate_uuid(self, obj):
         """
-        Validate that emails already exists and is active.
+        Validate that user with uuid already exists and is active.
         Return the user.
 
         :return:
         user: User obj
         """
         try:
-            user = User.objects.get(email=obj, is_active=True)
+            user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
             raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
@@ -82,18 +82,18 @@ class UpdatePreferredDaysSerializer(serializers.Serializer):
     friday = serializers.BooleanField(required=False)
     saturday = serializers.BooleanField(required=False)
     sunday = serializers.BooleanField(required=False)
-    email = serializers.EmailField()
+    uuid = serializers.UUIDField()
 
-    def validate_email(self, obj):
+    def validate_uuid(self, obj):
         """
-        Validate that emails already exists and is active.
+        Validate that user with uuid already exists and is active.
         Return the user.
 
         :return:
         user: User obj
         """
         try:
-            user = User.objects.get(email=obj, is_active=True)
+            user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
             raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
@@ -117,18 +117,18 @@ class ConfirmUpdatePreferredDaysSerializer(serializers.Serializer):
 
 class GetReferralHubInfoParams(serializers.Serializer):
     """Get referral hub info params serializer."""
-    email = serializers.EmailField()
+    uuid = serializers.UUIDField()
 
-    def validate_email(self, obj):
+    def validate_uuid(self, obj):
         """
-        Validate that emails already exists and is active.
+        Validate that user with uuid already exists and is active.
         Return the user.
 
         :return:
         user: User obj
         """
         try:
-            user = User.objects.get(email=obj, is_active=True)
+            user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
             raise serializers.ValidationError('El usuario no existe en nuestro sistema.')

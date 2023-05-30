@@ -185,7 +185,8 @@ def get_mail_template_data(mail, user, extra_mail_data):
         'referred_users_count': user.referred_users_count if user else 0,
         'referral_code': user.referral_code if user else '',
         'mail_version': True,
-        'env': get_env_value()
+        'env': get_env_value(),
+        'uuid': user.uuid if user else '',
     }
 
     if extra_mail_data:

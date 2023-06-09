@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from el_tinto.mails.models import Templates, Mail
 from el_tinto.mails.serializers import TemplatesSerializer, MailsSerializer
 from el_tinto.utils.send_mail import get_mail_template_data, get_mail_template
-from el_tinto.utils.tintos import generate_tinto_html
+from el_tinto.utils.tintos import generate_tinto_html, generate_tinto_html_sunday_no_prize
 
 
 class TemplatesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
@@ -48,7 +48,20 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
 
     def perform_create(self, serializer):
         serializer.validated_data['html'] = generate_tinto_html(serializer.validated_data['tinto'])
-        serializer.save()
+        instance = serializer.save()
+
+        if instance.type == Mail.SUNDAY:
+
+            html = generate_tinto_html_sunday_no_prize(instance.tinto)
+
+            Mail.objects.create(
+                html=html,
+                subject=instance.subject,
+                type=instance.type,
+                version=Mail.SUNDAY_NO_REFERRALS_PRIZE,
+                tweet=instance.tweet,
+                subject_message=instance.subject_message
+            )
 
     @action(detail=False, methods=['get'])
     def get_todays_tinto(self, request):
@@ -73,6 +86,9 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
 
         if not mail:
             return Response(data={}, status=status.HTTP_404_NOT_FOUND)
+
+        if mail.sent_datetime.date().weekday() == 6:
+            return Response(data={'mail': 'Sunday mail is not available'}, status=status.HTTP_400_BAD_REQUEST)
 
         html_file = get_mail_template(mail, None)
 

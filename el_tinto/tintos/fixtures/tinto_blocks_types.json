@@ -38,5 +38,13 @@
          "name":"Others",
          "label":"Otros"
       }
+   },
+   {
+      "model":"tintos.tintoblocktype",
+      "pk":6,
+      "fields":{
+         "name":"Colombianism",
+         "label":"Colombianismo"
+      }
    }
 ]

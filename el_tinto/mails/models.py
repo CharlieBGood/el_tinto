@@ -21,6 +21,7 @@ class Mail(models.Model):
     MILESTONE = 'Milestone'
     DAILY_MAIL_NOT_SENT = 'Daily not sent'
     CHANGE_PREFERRED_DAYS = 'Preferred days'
+    SUNDAY = 'Sunday'
 
     TYPE_OPTIONS = [
         (DAILY, 'Diario'),
@@ -29,17 +30,20 @@ class Mail(models.Model):
         (WELCOME, 'Bienvenida'),
         (MILESTONE, 'Meta de referidos'),
         (DAILY_MAIL_NOT_SENT, 'No enviado'),
-        (CHANGE_PREFERRED_DAYS, 'Cambiar días preferidos')
+        (CHANGE_PREFERRED_DAYS, 'Cambiar días preferidos'),
+        (SUNDAY, 'Dominguero')
     ]
 
     # Version constants
     A = 'A'
     B = 'B'
+    SUNDAY_NO_REFERRALS_PRIZE = 'SUNDAY NO PRIZE'
     DEFAULT_TESTING = 'DEFAULT'
 
     VERSION_OPTIONS = [
         (A, 'A'),
         (B, 'B'),
+        (SUNDAY_NO_REFERRALS_PRIZE, 'Dominguero sin premios'),
         (DEFAULT_TESTING, 'Testeo en blanco')
     ]
 

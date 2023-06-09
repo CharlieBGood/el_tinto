@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import random
 import time
 
 from django.core.mail import EmailMessage
@@ -11,8 +12,7 @@ from django.utils.safestring import mark_safe
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value, \
-    get_string_days
+from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value
 
 logger = logging.getLogger("mails")
 
@@ -37,19 +37,23 @@ def send_several_mails(mail, users):
     # Split total users into chunks of length n to send at most those emails per second
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
+    week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
+
     logger.info(f"For today's Email {string_dispatch_beginning} the dispatch times for every 79 emails is:")
 
     for users_list in users_chunked_list:
         for user in users_list:
 
-            week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
-
-            send_today = True if len(user.preferred_email_days) == 0 or week_day in user.preferred_email_days else False
+            send_today = send_todays_mail(mail, user, week_day)
 
             if send_today:
                 send_mail(mail, [user.email], user=user)
                 mail.recipients.add(user)
                 mail.save()
+
+                if mail.dispatch_date.date().weekday() == 6 and user.missing_sunday_mails > 0:
+                    user.missing_sunday_mails -= 1
+                    user.save()
 
         time.sleep(1)
 
@@ -157,6 +161,9 @@ def get_mail_template(mail, user):
     elif not user:
         return 'daily_mail_base.html'
 
+    elif mail.dispatch_date.date().weekday() == 6:
+        return 'sunday_mail.html'
+
     else:
         return 'daily_mail_with_days.html' if 0 < len(user.preferred_email_days) < 7 else 'daily_mail.html'
 
@@ -180,13 +187,14 @@ def get_mail_template_data(mail, user, extra_mail_data):
         'social_media_date': mail.dispatch_date.date().strftime("%d-%m-%Y"),
         'email': user.email if user else '',
         'tweet': replace_special_characters_for_url_use(mail.tweet),
-        'email_type': 'Dominguero' if mail.dispatch_date.date().weekday() == 6 else 'Diario',
         'subject_message': mail.subject_message,
         'referred_users_count': user.referred_users_count if user else 0,
         'referral_code': user.referral_code if user else '',
         'mail_version': True,
         'env': get_env_value(),
         'uuid': user.uuid if user else '',
+        'missing_sunday_mails': user.missing_sunday_mails if user else 0,
+        'has_sunday_mails_prize': user.has_sunday_mails_prize if user else True
     }
 
     if extra_mail_data:
@@ -218,3 +226,32 @@ def get_sending_mail_address(mail):
             if os.getenv('DJANGO_CONFIGURATION') == 'Production'
             else '☕ El Tinto Pruebas <info@dev.eltinto.xyz>'
         )
+
+
+def send_todays_mail(mail, user, week_day):
+    """
+    Define if the specific mail should be sent for the user.
+
+    :params:
+    mail: Mail object
+    user: User object
+    week_day: int
+
+    :return:
+    send_mail: dict
+    """
+    is_week_day_selected_by_user = week_day in user.preferred_email_days
+
+    if mail.type == Mail.SUNDAY and mail.version == Mail.SUNDAY_NO_REFERRALS_PRIZE and user.missing_sunday_mails == 0:
+        has_sunday_mails_prize = user.has_sunday_mails_prize
+        probability_is_positive = random.random() < user.open_rate
+
+        return is_week_day_selected_by_user and probability_is_positive and not has_sunday_mails_prize
+
+    elif mail.type == Mail.SUNDAY:
+        has_sunday_mails_prize = user.has_sunday_mails_prize
+
+        return is_week_day_selected_by_user and has_sunday_mails_prize
+
+    else:
+        return is_week_day_selected_by_user

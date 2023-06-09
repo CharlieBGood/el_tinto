@@ -1,4 +1,24 @@
-{% extends "mailings/daily_mail_base.html" %}
+{% extends "mailings/sunday_mail_base.html" %}
+
+{% block missing_emails_reminder %}
+    {% if not has_sunday_mails_prize %}
+        <div style="padding: 0 5%; margin: 0;">
+          <p style="margin: 0">
+              {% if missing_sunday_mails > 0 %}
+                  Te quedan {{ missing_sunday_mails }} tintos domingueros más por disfrutar. Pero no te preocupes,
+                  nuestro inigualable sabor siempre puede llegar de nuevo a tus manos para que ni siquiera los domingos
+                  nos extrañes. Solo debes aumentar tu número de referidos hasta un total de 3 y reclamar tu premio.
+              {% else %}
+                  Te has quedado sin el sabor de nuestro dominguero 😔. Tranquilo, entendemos lo difícil que es vivir sin un
+                  buen Tinto. Pero no te preocupes, nuestro inigualable sabor siempre puede llegar de nuevo a tus manos para
+                  que ni siquiera los domingos nos extrañes. Solo debes aumentar tu número de referidos hasta un total de
+                  3 y reclamar tu premio.
+              {% endif %}
+          </p>
+        </div>
+        <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
+    {% endif %}
+{% endblock %}
 
 {% block referral_hub %}
     <table>

@@ -48,7 +48,7 @@ class SNSNotification(models.Model):
 
                     headers = get_email_headers(mail_data['headers'])
                     
-                    if headers.get('email_type') in [Mail.DAILY, Mail.PROMOTION, Mail.WELCOME]:
+                    if headers.get('email_type') in [Mail.DAILY, Mail.PROMOTION, Mail.WELCOME, Mail.SUNDAY]:
                         user = User.objects.get(email=headers.get('user_email'))
                         mail = Mail.objects.get(id=headers.get('email_id'))
 

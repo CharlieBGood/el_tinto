@@ -6,7 +6,8 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from el_tinto.utils.utils import get_env_value
+from el_tinto.mails.models import SentEmails
+from el_tinto.utils.utils import get_env_value, MILESTONES
 
 
 class UserManager(BaseUserManager):
@@ -68,8 +69,7 @@ class User(AbstractUser):
         related_name='referred_users'
     )
 
-    # Extra parameters
-    # sunday_missing_emails = models.SmallIntegerField(default=4)
+    missing_sunday_mails = models.SmallIntegerField(default=4)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -95,6 +95,16 @@ class User(AbstractUser):
         return self.sentemails_set.exclude(opened_date=None).count()
 
     @property
+    def open_rate(self):
+        """
+        returns the open rate of the user.
+
+        :return:
+        open_rate: float
+        """
+        return self.opened_mails/self.sentemails_set.count()
+
+    @property
     def referred_users_count(self):
         """
         Calculate referred users invited by current user.
@@ -113,6 +123,16 @@ class User(AbstractUser):
                 referred_users_count += 1
 
         return referred_users_count
+
+    @property
+    def has_sunday_mails_prize(self):
+        """
+        Check if the user has received the email with the prize of the sunday mails
+
+        :return:
+        has_sunday_mails_prize: bool
+        """
+        return SentEmails.objects.filter(user=self, mail_id=MILESTONES[3]['mail_id']).exists()
 
     @property
     def env(self):

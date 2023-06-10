@@ -3,6 +3,8 @@ from django.dispatch import receiver
 
 from el_tinto.mails.models import Mail
 from el_tinto.tintos.models import TintoBlocksEntries
+from el_tinto.utils.utils import TINTO_BLOCK_TYPE_INTRO_ID, TINTO_BLOCK_TYPE_COLOMBIANISM_ID, TINTO_BLOCK_TYPE_NEWS_ID
+
 
 def generate_tinto_html(tinto):
     """
@@ -18,6 +20,26 @@ def generate_tinto_html(tinto):
 
     for tinto_block_entry in tinto.tintoblocksentries_set.all():
         html += tinto_block_entry.display_html
+
+    return html
+
+
+def generate_tinto_html_sunday_no_prize(tinto):
+    """
+    Generate html based on the TintoBlocks related to the passed Tinto
+    when user doesn't have the sundays mail prize unlocked.
+
+    :params:
+    tinto: Tinto object
+
+    :return:
+    html: str
+    """
+    intro_html = tinto.tintoblocksentries_set.filter(tinto_block__type__id=TINTO_BLOCK_TYPE_INTRO_ID).first()
+    colombianism = tinto.tintoblocksentries_set.filter(tinto_block__type__id=TINTO_BLOCK_TYPE_COLOMBIANISM_ID).first()
+    first_news = tinto.tintoblocksentries_set.filter(tinto_block__type__id=TINTO_BLOCK_TYPE_NEWS_ID).first()
+
+    html = intro_html.display_html + colombianism.display_html + first_news.display_html
 
     return html
 

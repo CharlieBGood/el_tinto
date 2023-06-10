@@ -1,0 +1,82 @@
+{% extends "mailings/base_mail.html" %}
+
+{% block mail %}
+    <table style="width: 100%">
+      <tbody>
+        <tr>
+            <table style="width: 100%">
+                <tr>
+                    {% if mail_version %}
+                        <td style="width: 50%">
+                            <img src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png" width="54" class="d-inline-block" style="vertical-align: 0">
+                        </td>
+                        <td>
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                            <a
+                              style="text-decoration: none !important;"
+                              href="https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}" class="" target="_blank"
+                            >
+                                <p style="text-align:right; margin:0; color: #696969; font-size: 14px;">Ver en navegador</p>
+                            </a>
+                        </td>
+                    {% else %}
+                        <td style="width: 50%;">
+                            <img
+                                src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagen_sin_espacios.png"
+                                width="54"
+                                class="d-inline-block"
+                                style="vertical-align: bottom;"
+                            >
+                        </td>
+                        <td style="vertical-align: bottom;">
+                            <p style="text-align:right; margin:0; color: #696969; font-size: 14px">{{date}}</p>
+                        </td>
+                    {% endif %}
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        <hr style="width: 100%; border-top: 2px solid #eaeaea; margin-top: 0">
+        <tr>
+            <table style="margin: 0 auto">
+                <tr>
+                    <td>
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
+                          class="logo-title"
+                          style="margin: 20px auto 0 auto;"
+                        >
+                        <p class="logo-subtitle">
+                            <span style="color: #fca311">-</span><i> Dominguero </i><span style="color: #fca311">-</span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
+                    </td>
+                </tr>
+            </table>
+        </tr>
+        {% block missing_emails_reminder %}{% endblock %}
+        <tr>
+          <td>
+            <h3 style="text-align:justify">
+              <strong>
+                {% if name %}
+                  Buenos días {{ name }}, este es El Tinto de hoy.
+                {% else %}
+                  Buenos días, este es El Tinto de hoy.
+                {% endif %}
+              </strong>
+            </h3>
+              {{html}}
+              {% block referral_hub %}
+              {% endblock %}
+            {% block footer %}
+            {% endblock %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+{% endblock %}

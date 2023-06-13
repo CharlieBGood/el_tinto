@@ -240,7 +240,7 @@ def send_todays_mail(mail, user, week_day):
     :return:
     send_mail: dict
     """
-    is_week_day_selected_by_user = week_day in user.preferred_email_days or len(user.preferred_email_days) == 0
+    is_week_day_selected_by_user = ((week_day in user.preferred_email_days) or (len(user.preferred_email_days) == 0))
 
     if mail.type == Mail.SUNDAY and mail.version == Mail.SUNDAY_NO_REFERRALS_PRIZE and user.missing_sunday_mails == 0:
         has_sunday_mails_prize = user.has_sunday_mails_prize

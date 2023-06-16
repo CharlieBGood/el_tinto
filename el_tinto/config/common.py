@@ -1,6 +1,8 @@
 import os
 from os.path import join
 from distutils.util import strtobool
+
+import boto3
 from configurations import Configuration
 from kombu.utils.url import safequote
 
@@ -105,6 +107,7 @@ class Common(Configuration):
     MEDIA_URL = '/media/'
 
     # AWS
+    AWS_REGION_NAME = "us-east-1"
     AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 
@@ -149,6 +152,8 @@ class Common(Configuration):
         },
     ]
 
+    boto3_logs_client = boto3.client("logs", region_name=AWS_REGION_NAME)
+
     # Logging
     LOGGING = {
         'version': 1,
@@ -191,6 +196,15 @@ class Common(Configuration):
                 'filename': os.path.join(BASE_DIR, 'mails.log'),
                 'formatter': 'simple'
             },
+            'watchtower': {
+                'class': 'watchtower.CloudWatchLogHandler',
+                'boto3_client': boto3_logs_client,
+                'log_group_name': 'el_tinto',
+                # Decrease the verbosity level here to send only those logs to watchtower,
+                # but still see more verbose logs in the console. See the watchtower
+                # documentation for other parameters that can be set here.
+                'level': 'DEBUG'
+            },
         },
         'loggers': {
             'django': {
@@ -214,11 +228,13 @@ class Common(Configuration):
             },
             'mails': {
                 'handlers': ['file'],
-                'level': 'INFO'
+                'level': 'INFO',
+                 'propagate': True,
             },
             'notifications': {
                 'handlers': ['file'],
-                'level': 'INFO'
+                'level': 'INFO',
+                'propagate': True,
             },
         }
     }

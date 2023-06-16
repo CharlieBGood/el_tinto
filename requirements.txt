@@ -46,6 +46,7 @@ phonenumbers==8.12.46
 
 # Debugging
 sentry-sdk==1.5.10
+watchtower==3.0.1
 
 # Schedualer
 APScheduler==3.9.1

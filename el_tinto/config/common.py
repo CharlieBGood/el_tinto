@@ -200,9 +200,6 @@ class Common(Configuration):
                 'class': 'watchtower.CloudWatchLogHandler',
                 'boto3_client': boto3_logs_client,
                 'log_group_name': 'el_tinto',
-                # Decrease the verbosity level here to send only those logs to watchtower,
-                # but still see more verbose logs in the console. See the watchtower
-                # documentation for other parameters that can be set here.
                 'level': 'DEBUG'
             },
         },

@@ -2,6 +2,7 @@ import os
 from os.path import join
 from distutils.util import strtobool
 from configurations import Configuration
+from kombu.utils.url import safequote
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
@@ -27,6 +28,7 @@ class Common(Configuration):
         'tinymce',  # WYSIWYG editor
         "corsheaders",  # CORS configuration
         'django_template_maths',  # Math in templates
+        'django_celery_beat',  # Celery database storage
 
         # Your apps
         'el_tinto.users',
@@ -101,6 +103,13 @@ class Common(Configuration):
     # Media files
     MEDIA_ROOT = join(os.path.dirname(BASE_DIR), 'media')
     MEDIA_URL = '/media/'
+
+    # AWS
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+    # Mail
+    EMAIL_BACKEND = 'django_ses.SESBackend'
 
     TEMPLATES = [
         {
@@ -265,3 +274,8 @@ class Common(Configuration):
         "show_ui_builder": False
     }
 
+    CELERY_accept_content = ['application/json']
+    CELERY_task_serializer = 'json'
+    CELERY_BROKER_URL = f"sqs://{safequote(AWS_ACCESS_KEY_ID)}:{safequote(AWS_SECRET_ACCESS_KEY)}@"
+    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+    CELERY_result_backend = None

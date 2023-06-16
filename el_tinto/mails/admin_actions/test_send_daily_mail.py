@@ -1,7 +1,8 @@
 from django.contrib import admin, messages
+
 from el_tinto.users.models import User
 from el_tinto.utils.decorators import only_one_instance
-from el_tinto.utils.send_mail import send_mail, get_mail_template, get_mail_template_data
+from el_tinto.utils.send_mail import send_mail
 
 
 @admin.action(description='Enviar correo de prueba')

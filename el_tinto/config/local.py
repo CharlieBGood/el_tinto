@@ -20,16 +20,6 @@ class Local(Common):
         '--cover-package=el_tinto'
     ]
 
-    # Mail
-    #EMAIL_HOST = 'localhost'
-    #EMAIL_PORT = 1025
-    #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-    AWS_ACCESS_KEY_ID = os.getenv('DJANGO_AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('DJANGO_AWS_SECRET_ACCESS_KEY')
-    # Mail
-    EMAIL_BACKEND = 'django_ses.SESBackend'
-
     LA_CAFETERA_URL = 'http://localhost:3000'
     WEB_APP_URL = 'http://localhost:3000'
 
@@ -106,3 +96,5 @@ class Local(Common):
             }
         """
     }
+
+    CELERY_TASK_DEFAULT_QUEUE = 'dev_mails'

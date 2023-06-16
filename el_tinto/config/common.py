@@ -208,31 +208,31 @@ class Common(Configuration):
         },
         'loggers': {
             'django': {
-                'handlers': ['console'],
+                'handlers': ['console', 'watchtower'],
                 'propagate': True,
             },
             'django.server': {
-                'handlers': ['django.server'],
+                'handlers': ['django.server', 'watchtower'],
                 'level': 'INFO',
                 'propagate': False,
             },
             'django.request': {
                 # 'handlers': ['mail_admins', 'console'],
-                'handlers': ['console'],
+                'handlers': ['console', 'watchtower'],
                 'level': 'ERROR',
                 'propagate': False,
             },
             'django.db.backends': {
-                'handlers': ['console'],
+                'handlers': ['console', 'watchtower'],
                 'level': 'INFO'
             },
             'mails': {
-                'handlers': ['file'],
+                'handlers': ['file', 'watchtower'],
                 'level': 'INFO',
                  'propagate': True,
             },
             'notifications': {
-                'handlers': ['file'],
+                'handlers': ['file', 'watchtower'],
                 'level': 'INFO',
                 'propagate': True,
             },

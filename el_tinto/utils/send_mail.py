@@ -40,10 +40,8 @@ def send_several_mails(mail, users):
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
     week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
-    logger.info("We're sending the email")
     for users_list in users_chunked_list:
         for user in users_list:
-            logger.info(f"{user}")
             # send_today = send_todays_mail(mail, user, week_day)
 
             if True:

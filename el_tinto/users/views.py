@@ -224,7 +224,7 @@ class SendMilestoneMailView(APIView):
         serializer = SendMilestoneMailSerializer(data=self.request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data['email']
+        user = serializer.validated_data['uuid']
 
         milestone_mail = serializer.validated_data['milestone']
 

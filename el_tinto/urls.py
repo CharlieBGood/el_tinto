@@ -13,7 +13,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('', include('el_tinto.web_page.urls')),
     path('sns/', include('el_tinto.ses_sns.urls')),
     path('', include('el_tinto.tintos.urls')),
     path('', include('el_tinto.advertisement.urls')),

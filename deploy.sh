@@ -7,3 +7,4 @@ python manage.py collectstatic
 celery --app=el_tinto.mails worker --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 sudo systemctl restart nginx
 sudo systemctl restart gunicorn
+sudo /etc/init.d/celeryd restart

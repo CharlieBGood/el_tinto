@@ -10,6 +10,7 @@ from django.utils import timezone
 from django.utils.safestring import mark_safe
 
 from el_tinto.mails.models import Mail
+from el_tinto.mails.tasks import send_mails_batch
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
 from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value
@@ -31,15 +32,14 @@ def send_several_mails(mail, users):
     string_dispatch_beginning = convert_utc_to_local_datetime(dispatch_beginning).strftime("%H:%M:%S of %m/%d/%Y")
 
     # This number is based on AWS SES limitations.
-    # Is calculated as the maximum number of mails/s - 1 to make sure never surpass AWS email sending capability
-    n = 79
+    # Is calculated based on the average sending time per email and the maximum number of mails/s - 1
+    # to make sure never surpass AWS email sending capability
+    n = 200
 
     # Split total users into chunks of length n to send at most those emails per second
     users_chunked_list = [users[i:i + n] for i in range(0, len(users), n)]
 
     week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
-
-    logger.info(f"For today's Email {string_dispatch_beginning} the dispatch times for every 79 emails is:")
 
     for users_list in users_chunked_list:
         for user in users_list:
@@ -63,6 +63,41 @@ def send_several_mails(mail, users):
         dispatch_beginning = dispatched_time
 
         logger.info(f"{delta_time} seconds")
+
+    now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
+    string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
+
+    logger.info(f'Mail {mail.id} was successfully sent at {string_now_datatime}')
+    mail.sent_datetime = now_datetime
+    mail.programmed = True
+    mail.save()
+
+
+def send_several_mails_new(mail, users_emails_list):
+    """
+    Send mail to several users
+
+    :params:
+    mail: Mail object
+    users_emails_list: [str]
+
+    :return: None
+    """
+    # This number is based on AWS SES limitations.
+    # Is calculated based on the average sending time per email and the maximum number of mails/s - 1
+    # to make sure never surpass AWS email sending capability
+    n = 200
+
+    # Split total users into chunks of length n to send at most those emails per second
+    users_chunked_list = [users_emails_list[i:i + n] for i in range(0, len(users_emails_list), n)]
+
+    week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
+
+    for i, users_list in enumerate(users_chunked_list):
+        send_mails_batch.apply_async(
+            (users_list, mail.id, week_day),
+            eta=mail.dispatch_date + datetime.timedelta(seconds=10 * i)
+        )
 
     now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
     string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")

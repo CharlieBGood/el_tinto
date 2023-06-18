@@ -9,15 +9,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from el_tinto.mails.models import Mail
-from el_tinto.users.models import User, Unsuscribe
+from el_tinto.users.models import User, Unsuscribe, UserVisits
 from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferredDaysSerializer, \
     ConfirmUpdatePreferredDaysSerializer, DestroyRegisterSerializer, GetReferralHubInfoParams, \
-    SendMilestoneMailSerializer
+    SendMilestoneMailSerializer, UserVisitsQueryParamsSerializer, UserVisitsSerializer, \
+    UserButtonsInteractionsSerializer
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
 from el_tinto.utils.send_mail import send_mail
 from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status
 from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME, get_email_provider, get_email_provider_link, \
-    CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES
+    CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES, get_env_value
 
 
 class RegisterView(APIView):
@@ -252,3 +253,46 @@ class SendMilestoneMailView(APIView):
         }
 
         return Response(status=status.HTTP_200_OK, data=referral_hub_data)
+
+
+class UserVisitsView(APIView):
+    """User visits view."""
+    permission_classes = []
+
+    def get(self, request, *args, **kwargs):
+        """Count user visits for referral hub."""
+
+        uuid = request.GET.get('user')
+
+        serializer = UserVisitsQueryParamsSerializer(data=request.GET)
+        serializer.is_valid(raise_exception=True)
+
+        user_visit = UserVisits.objects.create(**serializer.validated_data)
+
+        env = get_env_value()
+        return redirect(f"https://www.{env}eltinto.xyz/referidos/?user={uuid}&user_visit={user_visit.id}")
+
+    def post(self, request, *args, **kwargs):
+        """Count user visits."""
+
+        serializer = UserVisitsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        UserVisits.objects.create(**serializer.validated_data)
+
+        return Response(status=status.HTTP_201_CREATED)
+
+
+class UserButtonsInteractionsView(APIView):
+    """User buttons interactions."""
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        """Count user buttons interactions."""
+
+        serializer = UserButtonsInteractionsSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(status=status.HTTP_201_CREATED)

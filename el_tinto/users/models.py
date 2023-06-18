@@ -41,6 +41,16 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     
     objects = UserManager()
+
+    TWITTER = 'twitter'
+    FACEBOOK = 'facebook'
+    WHATSAPP = 'whatsapp'
+
+    UTM_SOURCE_TYPE = [
+        (TWITTER, 'Twitter'),
+        (FACEBOOK, 'Facebook'),
+        (WHATSAPP, 'Whatsapp'),
+    ]
     
     email = models.EmailField(
         'email address',
@@ -70,6 +80,8 @@ class User(AbstractUser):
     )
 
     missing_sunday_mails = models.SmallIntegerField(default=4)
+    utm_source = models.CharField(choices=UTM_SOURCE_TYPE, default='', blank=True, max_length=25)
+    medium = models.CharField(default='', blank=True, max_length=25)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -168,3 +180,38 @@ class Unsuscribe(models.Model):
     
     def __str__(self):
         return f'{self.user}'
+
+
+class UserVisits(models.Model):
+
+    SUBSCRIBE_PAGE = 'SP'
+    REFERRAL_HUB = 'RH'
+
+    VISIT_TYPES = [
+        (SUBSCRIBE_PAGE, 'Suscripción'),
+        (REFERRAL_HUB, 'Centro de referidos'),
+    ]
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE, null=True, default=None)
+    type = models.CharField(choices=VISIT_TYPES, max_length=4)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class UserButtonsInteractions(models.Model):
+
+    TWITTER = 'TW'
+    FACEBOOK = 'FB'
+    WHATSAPP = 'WP'
+    COPY_PASTE = 'CP'
+
+    INTERACTION_TYPE = [
+        (TWITTER, 'Twitter'),
+        (FACEBOOK, 'Facebook'),
+        (WHATSAPP, 'Whatsapp'),
+        (COPY_PASTE, 'Copy & paste')
+    ]
+
+    visit = models.ForeignKey('users.UserVisits', on_delete=models.CASCADE)
+    medium = models.CharField(default='', blank=True, max_length=25)
+    type = models.CharField(max_length=4, choices=INTERACTION_TYPE)
+    created_at = models.DateTimeField(auto_now_add=True)

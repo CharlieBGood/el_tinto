@@ -14,7 +14,7 @@ class MailsAdmin(admin.ModelAdmin):
 
     list_display = ['type', 'subject', 'created_at', 'created_by', 'programmed', 'sent_datetime']
     readonly_fields = ('sent_datetime', 'tinto')
-    actions = [test_send_daily_email, send_daily_mail_new, edit_tinto_in_cms, send_daily_mail, cancel_send_daily_email, send_email_to_best_users]
+    actions = [test_send_daily_email, send_daily_mail, edit_tinto_in_cms, cancel_send_daily_email, send_email_to_best_users]
 
     def get_queryset(self, request):
         qs = super(MailsAdmin, self).get_queryset(request)

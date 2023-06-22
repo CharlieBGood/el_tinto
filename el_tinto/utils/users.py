@@ -111,6 +111,13 @@ def get_next_price_info(user):
     milestones_list = list(MILESTONES)
     milestones_list.sort()
 
+    if referral_count >= 50:
+        return(
+            'Sorpresa',
+            'una',
+            100 - referral_count
+        )
+
     for milestone in milestones_list:
         if milestone > referral_count:
             next_milestone = MILESTONES[milestone]

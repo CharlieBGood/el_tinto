@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from el_tinto.mails.models import Mail
-from el_tinto.users.models import User
+from el_tinto.users.models import User, UserVisits, UserButtonsInteractions
 from el_tinto.utils.utils import MILESTONES
 
 
@@ -10,10 +10,12 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField()
     first_name = serializers.CharField(required=False, max_length=25)
     last_name = serializers.CharField(required=False, max_length=25)
+    utm_source = serializers.CharField(required=False, max_length=25, allow_blank=True)
+    medium = serializers.CharField(required=False, max_length=25, allow_blank=True)
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'referred_by']
+        fields = ['email', 'first_name', 'last_name', 'referred_by', 'utm_source', 'medium']
 
     def validate_email(self, obj):
         """
@@ -169,3 +171,74 @@ class SendMilestoneMailSerializer(serializers.Serializer):
 
         except Mail.DoesNotExist:
             raise serializers.ValidationError('El premio no existe.')
+
+
+class UserVisitsQueryParamsSerializer(serializers.Serializer):
+    """User visits query params serializer."""
+
+    user = serializers.UUIDField()
+    mail = serializers.IntegerField(required=False, allow_null=True)
+    type = serializers.ChoiceField(choices=UserVisits.VISIT_TYPES)
+
+    def validate_user(self, obj):
+        """
+        Validate that user with uuid already exists and is active.
+        Return the user.
+
+        :return:
+        user: User obj
+        """
+        try:
+            user = User.objects.get(uuid=obj, is_active=True)
+
+        except User.DoesNotExist:
+            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+
+        return user
+
+    def validate_mail(self, obj):
+        """
+        Validate that the mail exists.
+        Return the mail.
+
+        :return:
+        mail: Mail obj
+        """
+        try:
+            mail = Mail.objects.get(id=obj)
+
+        except Mail.DoesNotExist:
+            raise serializers.ValidationError('El correo no existe en nuestro sistema.')
+
+        return mail
+
+
+class UserVisitsSerializer(serializers.Serializer):
+    """User visits serializer."""
+
+    user = serializers.CharField()
+    type = serializers.ChoiceField(choices=UserVisits.VISIT_TYPES)
+
+    def validate_user(self, obj):
+        """
+        Validate that user with referral_code already exists and is active.
+        Return the user.
+
+        :return:
+        user: User obj
+        """
+        try:
+            user = User.objects.get(referral_code=obj, is_active=True)
+
+        except User.DoesNotExist:
+            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+
+        return user
+
+
+class UserButtonsInteractionsSerializer(serializers.ModelSerializer):
+    """User buttons interactions serializer."""
+
+    class Meta:
+        model = UserButtonsInteractions
+        fields = ('visit', 'medium', 'type')

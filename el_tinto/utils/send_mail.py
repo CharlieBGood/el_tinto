@@ -229,7 +229,8 @@ def get_mail_template_data(mail, user, extra_mail_data):
         'env': get_env_value(),
         'uuid': user.uuid if user else '',
         'missing_sunday_mails': user.missing_sunday_mails if user else 0,
-        'has_sunday_mails_prize': user.has_sunday_mails_prize if user else True
+        'has_sunday_mails_prize': user.has_sunday_mails_prize if user else True,
+        'mail_id': mail.id
     }
 
     if extra_mail_data:

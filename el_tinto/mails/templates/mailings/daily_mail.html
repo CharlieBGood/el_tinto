@@ -21,11 +21,12 @@
                 <h3 style="margin-top: 30px;">
                   <strong>Tu número de referidos: {{ referred_users_count }}</strong>
                 </h3>
-                <a ses:no-track
-                   href="https://www.{{ env }}eltinto.xyz/referidos/?user={{uuid}}"
-                   target="_blank"
-                   style="color: #FFFFFF; text-decoration: none !important;"
-                   class="suscribeLink"
+                <a
+                    ses:no-track
+                    href="https://{{ env }}api.eltinto.xyz/users/user_visits/?user={{ uuid }}&mail={{ mail_id }}&type=RH"
+                    target="_blank"
+                    style="color: #FFFFFF; text-decoration: none !important;"
+                    class="suscribeLink"
                 >
                   <div style="background-color: #8884fc; height: 60px; vertical-align: middle; margin: 0 0 40px 0; display: table; width: 60%; max-width: 250px">
                     <p style="text-align: center;">Haz click para compartir</p>

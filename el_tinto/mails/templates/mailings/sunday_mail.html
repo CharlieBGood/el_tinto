@@ -43,7 +43,7 @@
                   <strong>Tu número de referidos: {{ referred_users_count }}</strong>
                 </h3>
                 <a ses:no-track
-                   href="https://www.{{ env }}eltinto.xyz/referidos/?user={{uuid}}"
+                   href="https://{{ env }}api.eltinto.xyz/users/user_visits/?user={{ uuid }}&mail={{ mail_id }}&type=RH"
                    target="_blank"
                    style="color: #FFFFFF; text-decoration: none !important;"
                    class="suscribeLink"

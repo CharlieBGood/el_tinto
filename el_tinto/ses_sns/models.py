@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 NOTIFICATION_STATUSES = namedtuple('NOTIFICATION_STATUSES', 'new processed failed')._make(range(3))
 
+
 class SNSNotification(models.Model):
     """Stores incoming notifications from SNS for later processing of bounces and complaints"""
     STATE_CHOICES = (

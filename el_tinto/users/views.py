@@ -16,7 +16,8 @@ from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferred
     UserButtonsInteractionsSerializer
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
 from el_tinto.utils.send_mail import send_mail
-from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status
+from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status, \
+    create_user_referral_code
 from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME, get_email_provider, get_email_provider_link, \
     CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES, get_env_value
 
@@ -65,6 +66,10 @@ class RegisterView(APIView):
 
         else:
             user = serializer.save()
+
+        if not user.referral_code:
+            user.referral_code = create_user_referral_code(user)
+            user.save()
 
         onboarding_mail = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
 

@@ -156,13 +156,6 @@ class User(AbstractUser):
         """
         return get_env_value()
 
-    def save(self, *args, **kwargs):
-        from el_tinto.utils.users import create_user_referral_code
-
-        if not self.referral_code:
-            self.referral_code = create_user_referral_code(self)
-        super(User, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.email
 

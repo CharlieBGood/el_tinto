@@ -24,7 +24,9 @@ scheduler = BackgroundScheduler(
     jobstores=jobstores,
     executors=executors,
     job_defaults=job_defaults,
-    timezone=timezone('America/Bogota')
+    timezone=timezone('America/Bogota'),
+    misfire_grace_time=60*60*2,  # 60 s * 60 m * 2h
+    coalesce=True
 )
 
 scheduler.start()

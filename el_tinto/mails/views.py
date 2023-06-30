@@ -50,18 +50,18 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
         serializer.validated_data['html'] = generate_tinto_html(serializer.validated_data['tinto'])
         instance = serializer.save()
 
-        if instance.type == Mail.SUNDAY:
-
-            html = generate_tinto_html_sunday_no_prize(instance.tinto)
-
-            Mail.objects.create(
-                html=html,
-                subject=instance.subject,
-                type=instance.type,
-                version=Mail.SUNDAY_NO_REFERRALS_PRIZE,
-                tweet=instance.tweet,
-                subject_message=instance.subject_message
-            )
+        # if instance.type == Mail.SUNDAY:
+        #
+        #     html = generate_tinto_html_sunday_no_prize(instance.tinto)
+        #
+        #     Mail.objects.create(
+        #         html=html,
+        #         subject=instance.subject,
+        #         type=instance.type,
+        #         version=Mail.SUNDAY_NO_REFERRALS_PRIZE,
+        #         tweet=instance.tweet,
+        #         subject_message=instance.subject_message
+        #     )
 
     @action(detail=False, methods=['get'])
     def get_todays_tinto(self, request):

@@ -87,8 +87,8 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
         if not mail:
             return Response(data={}, status=status.HTTP_404_NOT_FOUND)
 
-        if mail.sent_datetime.date().weekday() == 6:
-            return Response(data={'mail': 'Sunday mail is not available'}, status=status.HTTP_400_BAD_REQUEST)
+        # if mail.sent_datetime.date().weekday() == 6:
+        #     return Response(data={'mail': 'Sunday mail is not available'}, status=status.HTTP_400_BAD_REQUEST)
 
         html_file = get_mail_template(mail, None)
 

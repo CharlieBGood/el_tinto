@@ -45,11 +45,13 @@ class User(AbstractUser):
     TWITTER = 'twitter'
     FACEBOOK = 'facebook'
     WHATSAPP = 'whatsapp'
+    INSTAGRAM = 'instagram'
 
     UTM_SOURCE_TYPE = [
         (TWITTER, 'Twitter'),
         (FACEBOOK, 'Facebook'),
         (WHATSAPP, 'Whatsapp'),
+        (INSTAGRAM, 'Instagram'),
     ]
     
     email = models.EmailField(

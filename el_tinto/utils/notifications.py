@@ -21,6 +21,7 @@ def update_sent_email_data(user, mail):
         sent_email = SentEmails.objects.get(
             user=user,
             mail=mail,
+            opened_date=None
         )
         sent_email.opened_date = timezone.now()
         sent_email.save()

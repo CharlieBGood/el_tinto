@@ -44,9 +44,9 @@ def send_several_mails(mail, users):
     for users_list in users_chunked_list:
         for user in users_list:
 
-            # send_today = send_todays_mail(mail, user, week_day)
+            send_today = send_todays_mail(mail, user, week_day)
 
-            if True:
+            if send_today:
                 send_mail(mail, [user.email], user=user)
                 mail.recipients.add(user)
                 mail.save()

@@ -37,7 +37,7 @@ def send_daily_mail(_, request, queryset):
     ):
         # if not mail.programmed:
         schedule_mail(mail, users)
-        schedule_mail_checking(mail)
+        # schedule_mail_checking(mail)
 
         now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")

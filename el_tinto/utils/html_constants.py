@@ -64,10 +64,14 @@ SHARE_NEWS = """
 """
 
 INTERNAL_HYPERLINK = """
-    <a id={tag} style='color: inherit !important; font-size: inherit !important; text-decoration: none !important'>{html}</a>
+    <a id={tag} style='color: inherit !important; font-size: inherit !important; text-decoration: none !important'>
+    {html}
+    </a>
 """
 
 INVITE_USERS_MESSAGE = """
-Suscríbete%20a%20El%20Tinto%20y%20ayúdame%20a%20aumentar%20mi%20número%20de%20recomendados%20😁%0A%0A*¡Recuerda%20que%20tienes%20que%20abrir%20por%20lo%20menos%20un%20correo%20para%20que%20cuentes%20como%20mi%20referido!*%0A%0AEl%20Tinto,%20historias%20importantes%20para%20gente%20ocupada.%20
+%C2%A1Hola%21%20Quer%C3%ADa%20recomendarte%20El%20Tinto%20%E2%98%95%EF%B8%8F%2C%20un%20newsletter%20diario%20curado%20
+con%20los%20medios%20m%C3%A1s%20rigurosos%20de%20Colombia%20y%20el%20mundo%20que%20te%20mantiene%20informado%20en%20
+s%C3%B3lo%205%20minutos.%20%0A%0ATe%20puedes%20suscribir%20ac%C3%A1%3A%0A
 """
 

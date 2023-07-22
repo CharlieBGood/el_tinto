@@ -39,7 +39,11 @@ def generate_tinto_html_sunday_no_prize(tinto):
     colombianism = tinto.tintoblocksentries_set.filter(tinto_block__type__id=TINTO_BLOCK_TYPE_COLOMBIANISM_ID).first()
     first_news = tinto.tintoblocksentries_set.filter(tinto_block__type__id=TINTO_BLOCK_TYPE_NEWS_ID).first()
 
-    html = intro_html.display_html + colombianism.display_html + first_news.display_html
+    html = (
+        (intro_html.display_html if intro_html else '') +
+        (colombianism.display_html if colombianism else '') +
+        (first_news.display_html if first_news else '')
+    )
 
     return html
 

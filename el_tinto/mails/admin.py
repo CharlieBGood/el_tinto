@@ -18,6 +18,7 @@ class MailsAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(MailsAdmin, self).get_queryset(request)
+        qs.exclude(version=Mail.SUNDAY_NO_REFERRALS_PRIZE)
         return qs
 
     def save_model(self, request, obj, form, change):

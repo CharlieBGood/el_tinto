@@ -4,6 +4,8 @@ import os
 
 from django.contrib import admin, messages
 from django.utils import timezone
+
+from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import convert_utc_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
@@ -35,16 +37,22 @@ def send_daily_mail(_, request, queryset):
         mail.dispatch_date > timezone.now() + timedelta(minutes=5) or
         os.getenv('DJANGO_CONFIGURATION') != 'Production'
     ):
-        # if not mail.programmed:
-        schedule_mail(mail, users)
-        # schedule_mail_checking(mail)
+        if not mail.programmed:
+            schedule_mail(mail, users)
 
-        now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
-        string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
-        logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
+            if mail.type == Mail.SUNDAY:
+                no_prize_mail = Mail.objects.get(
+                    dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE
+                )
 
-        # else:
-        #     messages.error(request, "You can not send an already programmed mail unless you cancel it")
+                schedule_mail(no_prize_mail, users)
+
+            now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
+            string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
+            logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
+
+        else:
+            messages.error(request, "You can not send an already programmed mail unless you cancel it")
 
     else:
         messages.error(request, "Programmed time must be at least 5 minutes greater than current time")

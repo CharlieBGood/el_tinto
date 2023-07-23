@@ -6,9 +6,6 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from el_tinto.mails.models import SentEmails
-from el_tinto.utils.utils import get_env_value, MILESTONES
-
 
 class UserManager(BaseUserManager):
     """
@@ -146,7 +143,9 @@ class User(AbstractUser):
         :return:
         has_sunday_mails_prize: bool
         """
-        return SentEmails.objects.filter(user=self, mail_id=MILESTONES[3]['mail_id']).exists()
+        from el_tinto.utils.utils import MILESTONES
+
+        return self.sentemails_set.filter(mail_id=MILESTONES[3]['mail_id']).exists()
 
     @property
     def env(self):
@@ -156,6 +155,8 @@ class User(AbstractUser):
         :return:
         env: str
         """
+        from el_tinto.utils.utils import get_env_value
+
         return get_env_value()
 
     def __str__(self):

@@ -15,7 +15,6 @@ from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferred
     SendMilestoneMailSerializer, UserVisitsQueryParamsSerializer, UserVisitsSerializer, \
     UserButtonsInteractionsSerializer
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
-from el_tinto.utils.send_mail import send_mail
 from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status, \
     create_user_referral_code
 from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME, get_email_provider, get_email_provider_link, \
@@ -71,11 +70,11 @@ class RegisterView(APIView):
             user.referral_code = create_user_referral_code(user)
             user.save()
 
-        onboarding_mail = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
+        onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
 
-        send_mail(onboarding_mail, [user.email], user=user)
+        mail = onboarding_mail_instance.get_mail_class()
 
-        onboarding_mail.recipients.add(user)
+        mail.send_mail(user)
 
         return user
 
@@ -149,11 +148,11 @@ class UpdatePreferredDaysView(APIView):
             'key': f'{user.email}_change_preferred_days'
         }
 
-        change_preferred_email_days_mail = Mail.objects.get(id=UTILITY_MAILS.get(CHANGE_PREFERRED_DAYS))
+        change_preferred_email_days_instance = Mail.objects.get(id=UTILITY_MAILS.get(CHANGE_PREFERRED_DAYS))
 
-        send_mail(change_preferred_email_days_mail, [user.email], user=user, extra_mail_data=extra_mail_data)
+        mail = change_preferred_email_days_instance.get_mail_class()
 
-        change_preferred_email_days_mail.recipients.add(user)
+        mail.send_mail(user=user, extra_data=extra_mail_data)
 
         return Response(status=status.HTTP_200_OK, data={})
 
@@ -232,11 +231,11 @@ class SendMilestoneMailView(APIView):
 
         user = serializer.validated_data['uuid']
 
-        milestone_mail = serializer.validated_data['milestone']
+        milestone_mail_instance = serializer.validated_data['milestone']
 
-        send_mail(milestone_mail, [user.email], user=user)
+        mail = milestone_mail_instance.get_mail_class()
 
-        milestone_mail.recipients.add(user)
+        mail.send_mail(user)
 
         referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
 

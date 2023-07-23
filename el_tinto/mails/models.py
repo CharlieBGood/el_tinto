@@ -5,6 +5,8 @@ from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
 from tinymce.models import HTMLField
 
+from el_tinto.mails.classes import DailyMail, SundayMail, SundayNoPrizeMail, MilestoneMail, OnboardingMail, \
+    ChangePreferredDaysMail
 from el_tinto.utils.date_time import get_string_date
 
 
@@ -94,8 +96,27 @@ class Mail(models.Model):
     def __str__(self):
         return f'{self.type} - {self.created_at.strftime("%d-%m-%Y")}'
 
-    def save(self, *args, **kwargs):
-        super(Mail, self).save(*args, **kwargs)
+    def get_mail_class(self):
+        """
+        Get mail class based on mail type
+        """
+
+        MAIL_CLASS_MAPPER = {
+            Mail.DAILY: DailyMail,
+            Mail.SUNDAY: SundayMail,
+            Mail.SUNDAY_NO_REFERRALS_PRIZE: SundayNoPrizeMail,
+            Mail.MILESTONE: MilestoneMail,
+            Mail.WELCOME: OnboardingMail,
+            Mail.CHANGE_PREFERRED_DAYS: ChangePreferredDaysMail
+        }
+
+        try:
+            mail_class = MAIL_CLASS_MAPPER[self.version]
+
+        except KeyError:
+            mail_class = MAIL_CLASS_MAPPER[self.type]
+
+        return mail_class(self)
 
 
 class SentEmails(models.Model):

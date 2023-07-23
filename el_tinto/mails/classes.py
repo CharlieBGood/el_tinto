@@ -1,15 +1,15 @@
 import logging
 import os
-from datetime import datetime, timezone
 
 from django.core.mail import EmailMessage
+from django.db.models import Q
 from django.template import loader
 from django.utils.safestring import mark_safe
 
 from el_tinto.users.models import User
-from el_tinto.utils.date_time import get_string_date, convert_utc_to_local_datetime
-from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value
-
+from el_tinto.utils.date_time import get_string_date
+from el_tinto.utils.utils import replace_words_in_sentence, replace_special_characters_for_url_use, get_env_value, \
+    MILESTONES
 
 logger = logging.getLogger("mails")
 
@@ -18,7 +18,7 @@ class Mail:
 
     def __init__(self, mail):
         self.mail = mail
-        self.mail_week_day = convert_utc_to_local_datetime(timezone.now()).date().weekday()
+        self.mail_week_day = self.mail.dispatch_date.date().weekday()
         self.template = None
         self.reply_to = None
         self.headers = None
@@ -28,18 +28,7 @@ class Mail:
         """
         Get dispatch users list.
         """
-        users = User.objects.filter(is_active=True)
-
-        return [user for user in users if self.send_mail_to_user(user)]
-
-    def send_mail_to_user(self, user):
-        """
-        Define whether the email should be sent to the user or not.
-
-        params:
-        user: User obj
-        """
-        return True
+        pass
 
     def get_mail_template_data(self, user=None):
         """
@@ -83,19 +72,7 @@ class Mail:
             'EMAIL-TYPE': self.mail.type
         }
 
-    def is_weekday_selected_by_user(self, user):
-        """
-        Define if the current week day is selected by the user
-        """
-        return (self.week_day in user.preferred_email_days) or (len(user.preferred_email_days) == 0)
-
-    def has_mail_already_been_sent_to_user(self, user):
-        """
-        Defines if the mail has already been sent to the user.
-        """
-        return self.mail.sentemails_set.filter(user=user).exists()
-
-    def send_mail(self, user=None, mail_address=None):
+    def send_mail(self, user=None, mail_address=None, extra_data=None):
         """
         Send mail.
         """
@@ -103,6 +80,9 @@ class Mail:
         self.set_sender_email()
 
         mail_data = self.get_mail_template_data()
+
+        if extra_data:
+            mail_data.update(extra_data)
 
         html = self.template.render(mail_data)
 
@@ -117,6 +97,8 @@ class Mail:
 
         message_user.content_subtype = 'html'
         message_user.send(fail_silently=True)
+
+        self.mail.recipients.add(user)
 
     def send_mail_batch(self, users_batch):
         """
@@ -148,17 +130,16 @@ class Mail:
 
 class DailyMail(Mail):
 
-    def send_mail_to_user(self, user):
+    def get_dispatch_users(self):
         """
-        Define whether the email should be sent to the user or not.
-
-        params:
-        user: User obj
+        Get dispatch users list.
         """
-        is_weekday_selected_by_user = self.is_weekday_selected_by_user(user)
-        has_mail_already_been_sent_to_user = self.has_mail_already_been_sent_to_user(user)
-
-        return is_weekday_selected_by_user and not has_mail_already_been_sent_to_user
+        return User.objects.filter(
+            (Q(preferred_email_days__contains=[self.mail_week_day]) | Q(preferred_email_days__len=0)),
+            sentemails__mail_id=self.mail.id,
+            sentemails__isnull=True,
+            is_active=True
+        ).distinct()
 
     def get_mail_template_data(self, user):
         """
@@ -198,18 +179,23 @@ class DailyMail(Mail):
 
 class SundayMail(Mail):
 
-    def send_mail_to_user(self, user):
+    def get_dispatch_users(self):
         """
-        Define whether the email should be sent to the user or not.
-
-        params:
-        user: User obj
+        Get dispatch users list.
         """
-        has_sunday_mails_prize = user.has_sunday_mails_prize
-        is_weekday_selected_by_user = self.is_weekday_selected_by_user(user)
-        has_mail_already_been_sent_to_user = self.has_mail_already_been_sent_to_user(user)
-
-        return has_sunday_mails_prize and is_weekday_selected_by_user and not has_mail_already_been_sent_to_user
+        return User.objects.filter(
+            # Filter day selected
+            (Q(preferred_email_days__contains=[self.mail_week_day]) | Q(preferred_email_days__len=0)),
+            # Filter mail not sent previously
+            (Q(sentemails__mail_id__in=self.mail.id), Q(sentemails__isnull=True)),
+            # Filter missing sunday emails
+            Q(
+                missing_sunday_mails__gt=0
+            ) |
+            # Filter has prize
+            (Q(sentemails__mail_id__in=MILESTONES[3]['mail_id']), Q(sentemails__isnull=False)),
+            is_active=True
+        ).distinct()
 
     def get_mail_template_data(self, user):
         """
@@ -240,3 +226,165 @@ class SundayMail(Mail):
         }
 
         return mail_data
+
+    def set_template(self, user):
+        """
+        Set mail template.
+        """
+        template_name = 'sunday_mail.html'
+
+        self.template = loader.get_template(f'../templates/mailings/{template_name}')
+
+
+class SundayNoPrizeMail(Mail):
+
+    def get_dispatch_users(self):
+        """
+        Get dispatch users list.
+        """
+        return User.objects.filter(
+            # Filter day selected
+            (Q(preferred_email_days__contains=[self.mail_week_day]) | Q(preferred_email_days__len=0)),
+            # Filter mail not sent previously
+            (Q(sentemails__mail_id__in=self.mail.id), Q(sentemails__isnull=True)),
+            # Filter missing sunday emails
+            Q(
+                missing_sunday_mails=0
+            ) |
+            # Filter has prize
+            (Q(sentemails__mail_id__in=MILESTONES[3]['mail_id']), Q(sentemails__isnull=True)),
+            is_active=True
+        ).distinct()
+
+    def get_mail_template_data(self, user):
+        """
+        Get mail template data.
+
+        params:
+        user: User obj
+
+        return:
+        mail_template_data = dict
+        """
+        mail_data = {
+            'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
+            'date': get_string_date(self.mail.dispatch_date.date()),
+            'name': user.user_name if user else '',
+            'social_media_date': self.mail.dispatch_date.date().strftime("%d-%m-%Y"),
+            'email': user.email if user else '',
+            'tweet': replace_special_characters_for_url_use(self.mail.tweet),
+            'subject_message': self.mail.subject_message,
+            'referred_users_count': user.referred_users_count if user else 0,
+            'referral_code': user.referral_code if user else '',
+            'mail_version': True,
+            'env': get_env_value(),
+            'uuid': user.uuid if user else '',
+            'missing_sunday_mails': user.missing_sunday_mails if user else 0,
+            'has_sunday_mails_prize': user.has_sunday_mails_prize if user else True,
+            'mail_id': self.mail.id
+        }
+
+        return mail_data
+
+    def set_template(self, user):
+        """
+        Set mail template.
+        """
+        template_name = 'sunday_mail.html'
+
+        self.template = loader.get_template(f'../templates/mailings/{template_name}')
+
+
+class MilestoneMail(Mail):
+
+    def get_mail_template_data(self, user=None):
+        """
+        Get mail template data.
+
+        params:
+        user: User obj
+
+        return:
+        mail_template_data = dict
+        """
+        mail_data = {
+            'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
+            'mail_id': self.mail.id
+        }
+
+        return mail_data
+
+    def set_template(self, user=None):
+        """
+        Set mail template.
+        """
+        template_name = 'milestones.html'
+
+        self.template = loader.get_template(f'../templates/mailings/{template_name}')
+
+    def set_sender_email(self):
+        """
+        Set sending mail address.
+        """
+        self.sender_email = (
+            '☕ El Tinto - CEO <alejandro@eltinto.xyz>'
+            if os.getenv('DJANGO_CONFIGURATION') == 'Production'
+            else '☕ El Tinto Pruebas - CEO <alejandro@dev.eltinto.xyz>'
+        )
+
+
+class OnboardingMail(Mail):
+
+    def get_mail_template_data(self, user=None):
+        """
+        Get mail template data.
+
+        params:
+        user: User obj
+
+        return:
+        mail_template_data = dict
+        """
+        mail_data = {
+            'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
+            'mail_id': self.mail.id
+        }
+
+        return mail_data
+
+    def set_template(self, user=None):
+        """
+        Set mail template.
+        """
+        template_name = 'onboarding.html'
+
+        self.template = loader.get_template(f'../templates/mailings/{template_name}')
+
+
+class ChangePreferredDaysMail(Mail):
+
+    #TODO: Review
+    def get_mail_template_data(self, user=None):
+        """
+        Get mail template data.
+
+        params:
+        user: User obj
+
+        return:
+        mail_template_data = dict
+        """
+        mail_data = {
+            'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
+            'mail_id': self.mail.id
+        }
+
+        return mail_data
+
+    def set_template(self, user=None):
+        """
+        Set mail template.
+        """
+        template_name = 'change_preferred_days.html'
+
+        self.template = loader.get_template(f'../templates/mailings/{template_name}')

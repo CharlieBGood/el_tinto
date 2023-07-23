@@ -1,12 +1,9 @@
-import datetime
 import os
 from pytz import timezone
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
-
-from el_tinto.utils.send_mail import send_several_mails, send_warning_mail
 
 
 jobstores = {
@@ -32,40 +29,23 @@ scheduler = BackgroundScheduler(
 scheduler.start()
 
 
-def schedule_mail(mail, users):
+def schedule_mail(instance):
     """
     schedule mail sending.
 
     :params:
-    mail: Mail object
-    users: User queryset
+    instance: Mail object
 
     :return: None
     """
+    mail = instance.get_mail_class()
+
     scheduler.add_job(
-        send_several_mails,
+        mail.send_several_mails,
         trigger='date',
-        run_date=mail.dispatch_date,
-        args=[mail, users],
-        id=str(mail.id)
+        run_date=instance.dispatch_date,
+        id=str(instance.id)
     )
-    mail.programmed = True
-    mail.save()
 
-
-def schedule_mail_checking(mail):
-    """
-    schedule mail notification to admins in case mail has not been sent.
-
-    :params:
-    mail: Mail object
-
-    :return: None
-    """
-    scheduler.add_job(
-        send_warning_mail,
-        trigger='date',
-        run_date=mail.dispatch_date + datetime.timedelta(minutes=10),
-        args=[mail.id],
-        id=f'{str(mail.id)}_check'
-    )
+    instance.programmed = True
+    instance.save()

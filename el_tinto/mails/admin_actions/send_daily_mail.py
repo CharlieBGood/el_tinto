@@ -9,7 +9,7 @@ from el_tinto.mails.models import Mail
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import convert_utc_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
-from el_tinto.utils.scheduler import schedule_mail, schedule_mail_checking
+from el_tinto.utils.scheduler import schedule_mail
 from datetime import timedelta
 
 logger = logging.getLogger("mails")
@@ -31,21 +31,20 @@ def send_daily_mail(_, request, queryset):
     :return: None
     """
     mail = queryset.first()
-    users = User.objects.filter(is_active=True)
 
     if (
         mail.dispatch_date > timezone.now() + timedelta(minutes=5) or
         os.getenv('DJANGO_CONFIGURATION') != 'Production'
     ):
         if not mail.programmed:
-            schedule_mail(mail, users)
+            schedule_mail(mail)
 
             if mail.type == Mail.SUNDAY:
                 no_prize_mail = Mail.objects.get(
                     dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE
                 )
 
-                schedule_mail(no_prize_mail, users)
+                schedule_mail(no_prize_mail)
 
             now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
             string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")

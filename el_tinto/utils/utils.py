@@ -192,22 +192,6 @@ def get_email_provider_link(email, is_mobile, device_family):
     return email_provider_link
 
 
-def replace_special_characters_for_url_use(tweet):
-    """
-    Replace special characters with their corresponding encoding for url use
-
-    :params:
-    tweet: str
-
-    :return:
-    tweet: str
-    """
-    for key, val in URL_SPECIAL_CHARACTERS.items():
-        tweet = tweet.replace(key, val)
-
-    return tweet
-
-
 # Constants
 
 EVENT_TYPE_CLICK = 'Click'
@@ -250,12 +234,6 @@ MOBILE_EMAIL_PROVIDERS = {
     'gmail': 'googlegmail://',
     'outlook': 'ms-outlook://',
     'yahoo': 'ymail://'
-}
-
-URL_SPECIAL_CHARACTERS = {
-    ' ': '%20',
-    '"': "%22",
-    '#': '%23'
 }
 
 MILESTONES = {

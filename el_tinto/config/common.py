@@ -27,7 +27,6 @@ class Common(Configuration):
         'django_user_agents',  # Allow device identification for requests
         'tinymce',  # WYSIWYG editor
         "corsheaders",  # CORS configuration
-        'django_template_maths',  # Math in templates
         'django_celery_beat',  # Celery database storage
 
         # Your apps
@@ -36,7 +35,8 @@ class Common(Configuration):
         'el_tinto.web_page',
         'el_tinto.ses_sns',
         'el_tinto.tintos',
-        'el_tinto.advertisement'
+        'el_tinto.advertisement',
+        'el_tinto.tests'
     )
 
     # https://docs.djangoproject.com/en/2.0/topics/http/middleware/

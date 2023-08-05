@@ -1,6 +1,5 @@
 from django.utils import timezone
 
-from el_tinto.mails.classes import MilestoneMail
 from el_tinto.mails.models import SentEmails, SentEmailsInteractions, Mail
 from el_tinto.tintos.models import TintoBlocksEntries
 from el_tinto.users.models import User
@@ -50,7 +49,7 @@ def send_milestone_email(user):
 
             if not SentEmails.objects.filter(user=referral_user, mail=mail_instance).exists():
 
-                mail = MilestoneMail(mail_instance)
+                mail = mail_instance.get_mail_class()
 
                 mail.send_mail(referral_user)
 

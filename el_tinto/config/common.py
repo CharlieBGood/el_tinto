@@ -79,6 +79,9 @@ class Common(Configuration):
         }
     }
 
+    # DATABASE FULL URL
+    DATABASE_FULL_URL = os.getenv('DATABASE_FULL_URL', "postgresql://postgres:local@postgres:5432/postgres")
+
     # General
     APPEND_SLASH = False
     TIME_ZONE = 'America/Bogota'

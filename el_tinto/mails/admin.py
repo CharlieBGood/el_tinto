@@ -1,5 +1,5 @@
 from django.contrib import admin
-from el_tinto.mails.admin_actions.cancel_send_daily_mail import cancel_send_daily_email
+from el_tinto.mails.admin_actions.cancel_send_daily_mail import cancel_send_daily_mail
 from el_tinto.mails.admin_actions.edit_tinto_in_cms import edit_tinto_in_cms
 from el_tinto.mails.admin_actions.send_daily_mail import send_daily_mail
 from el_tinto.mails.admin_actions.send_daily_mail_try import send_daily_mail_try
@@ -12,7 +12,7 @@ class MailsAdmin(admin.ModelAdmin):
 
     list_display = ['type', 'subject', 'created_at', 'created_by', 'programmed', 'sent_datetime']
     readonly_fields = ('sent_datetime', 'tinto')
-    actions = [send_daily_mail_try, send_daily_mail, edit_tinto_in_cms, cancel_send_daily_email]
+    actions = [send_daily_mail_try, send_daily_mail, edit_tinto_in_cms, cancel_send_daily_mail]
 
     def get_queryset(self, request):
         qs = super(MailsAdmin, self).get_queryset(request)

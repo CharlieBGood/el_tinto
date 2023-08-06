@@ -1,16 +1,16 @@
 import datetime
 import logging
-import os
+import sys
 
 from django.contrib import admin, messages
-from django.utils import timezone
 
 from el_tinto.mails.models import Mail
-from el_tinto.users.models import User
+from el_tinto.tests.utils import test_scheduler
 from el_tinto.utils.date_time import convert_utc_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
-from el_tinto.utils.scheduler import schedule_mail
-from datetime import timedelta
+
+from el_tinto.utils.scheduler import scheduler
+from el_tinto.utils.send_mail import schedule_mail
 
 logger = logging.getLogger("mails")
 
@@ -32,27 +32,25 @@ def send_daily_mail(_, request, queryset):
     """
     mail = queryset.first()
 
-    if (
-        mail.dispatch_date > timezone.now() + timedelta(minutes=5) or
-        os.getenv('DJANGO_CONFIGURATION') != 'Production'
-    ):
-        if not mail.programmed:
-            schedule_mail(mail)
+    # Define scheduler for testing
+    mail_scheduler = test_scheduler if 'test' in sys.argv else scheduler
 
-            if mail.type == Mail.SUNDAY:
-                no_prize_mail = Mail.objects.get(
-                    dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE
-                )
+    if not mail.programmed:
+        schedule_mail(mail, mail_scheduler)
 
-                schedule_mail(no_prize_mail)
+        try:
+            no_prize_mail = Mail.objects.get(
+                dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE
+            )
 
-            now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
-            string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
-            logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
+            schedule_mail(no_prize_mail, mail_scheduler)
 
-        else:
-            messages.error(request, "You can not send an already programmed mail unless you cancel it")
+        except Mail.DoesNotExist:
+            pass
+
+        now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
+        string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
+        logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
 
     else:
-        messages.error(request, "Programmed time must be at least 5 minutes greater than current time")
-
+        messages.error(request, "You can not send an already programmed mail unless you cancel it")

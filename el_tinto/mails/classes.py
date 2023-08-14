@@ -138,7 +138,7 @@ class DailyMail(Mail):
             is_active=True
         ).exclude(sentemails__mail_id=self.mail.id)
 
-    def get_mail_template_data(self, user):
+    def get_mail_template_data(self, user=None):
         """
         Get mail template data.
 
@@ -151,17 +151,17 @@ class DailyMail(Mail):
         mail_data = {
             'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
             'date': get_string_date(self.mail.dispatch_date.date()),
-            'name': user.user_name,
+            'name': user.user_name if user else '',
             'social_media_date': self.mail.dispatch_date.date().strftime("%d-%m-%Y"),
             'tweet': urllib.parse.quote(self.mail.tweet),
             'subject_message': self.mail.subject_message,
-            'referred_users_count': user.referred_users_count,
-            'referral_code': user.referral_code,
+            'referred_users_count': user.referred_users_count if user else 0,
+            'referral_code': user.referral_code if user else '',
             'mail_version': True,
             'env': get_env_value(),
-            'uuid': user.uuid,
+            'uuid': user.uuid if user else '',
             'mail_id': self.mail.id,
-            'days_reminder': True if 0 < len(user.preferred_email_days) < 7 else False
+            'days_reminder': True if user and 0 < len(user.preferred_email_days) < 7 else False
         }
 
         return mail_data

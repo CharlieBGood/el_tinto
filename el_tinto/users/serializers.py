@@ -30,7 +30,7 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
         """
         Get referral user from referral code.
         """
-        referral_code = data.pop('referral_code', None)
+        referral_code = data.get('referral_code', None)
 
         if referral_code:
 

@@ -3,7 +3,6 @@ from django.utils import timezone
 from el_tinto.mails.models import SentEmails, SentEmailsInteractions, Mail
 from el_tinto.tintos.models import TintoBlocksEntries
 from el_tinto.users.models import User
-from el_tinto.utils.send_mail import send_mail, get_mail_template, get_mail_template_data
 from el_tinto.utils.utils import MILESTONES
 
 
@@ -46,14 +45,13 @@ def send_milestone_email(user):
         milestone = MILESTONES.get(referral_user.referred_users.count())
 
         if milestone:
-            mail = Mail.objects.get(id=milestone.get('mail_id'))
+            mail_instance = Mail.objects.get(id=milestone.get('mail_id'))
 
-            if not SentEmails.objects.filter(user=referral_user, mail=mail).exists():
+            if not SentEmails.objects.filter(user=referral_user, mail=mail_instance).exists():
 
-                send_mail(mail, [referral_user.email], user=referral_user)
+                mail = mail_instance.get_mail_class()
 
-                mail.recipients.add(referral_user)
-                mail.save()
+                mail.send_mail(referral_user)
 
     except User.DoesNotExist:
         pass

@@ -1,71 +1,32 @@
-import datetime
-import os
+from django.conf import settings
 from pytz import timezone
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
 
-from el_tinto.utils.send_mail import send_several_mails, send_warning_mail
-
-
-jobstores = {
-    'default': SQLAlchemyJobStore(url=os.getenv('DATABASE_FULL_URL'))
+JOBSTORES = {
+    'default': SQLAlchemyJobStore(url=settings.DATABASE_FULL_URL)
 }
-executors = {
+EXECUTORS = {
     'default': ThreadPoolExecutor(20),
     'processpool': ProcessPoolExecutor(5)
 }
-job_defaults = {
+JOB_DEFAULTS = {
     'coalesce': False,
     'max_instances': 3
 }
+
+TIMEZONE = timezone('America/Bogota')
+
+MISFIRE_GRACE_TIME = 60*60*2,  # 60 s * 60 m * 2h
+
 scheduler = BackgroundScheduler(
-    jobstores=jobstores,
-    executors=executors,
-    job_defaults=job_defaults,
-    timezone=timezone('America/Bogota'),
-    misfire_grace_time=60*60*2,  # 60 s * 60 m * 2h
-    coalesce=True
+    jobstores=JOBSTORES,
+    executors=EXECUTORS,
+    job_defaults=JOB_DEFAULTS,
+    timezone=TIMEZONE,
+    misfire_grace_time=MISFIRE_GRACE_TIME
 )
 
 scheduler.start()
-
-
-def schedule_mail(mail, users):
-    """
-    schedule mail sending.
-
-    :params:
-    mail: Mail object
-    users: User queryset
-
-    :return: None
-    """
-    scheduler.add_job(
-        send_several_mails,
-        trigger='date',
-        run_date=mail.dispatch_date,
-        args=[mail, users],
-        id=str(mail.id)
-    )
-    mail.programmed = True
-    mail.save()
-
-
-def schedule_mail_checking(mail):
-    """
-    schedule mail notification to admins in case mail has not been sent.
-
-    :params:
-    mail: Mail object
-
-    :return: None
-    """
-    scheduler.add_job(
-        send_warning_mail,
-        trigger='date',
-        run_date=mail.dispatch_date + datetime.timedelta(minutes=10),
-        args=[mail.id],
-        id=f'{str(mail.id)}_check'
-    )

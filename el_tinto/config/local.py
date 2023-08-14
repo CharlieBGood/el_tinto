@@ -9,16 +9,6 @@ class Local(Common):
     # Testing
     CORS_ALLOW_ALL_ORIGINS = True
     INSTALLED_APPS = Common.INSTALLED_APPS
-    INSTALLED_APPS += ('django_nose',)
-    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-    NOSE_ARGS = [
-        BASE_DIR,
-        '-s',
-        '--nologcapture',
-        '--with-coverage',
-        #'--with-progressive',
-        '--cover-package=el_tinto'
-    ]
 
     LA_CAFETERA_URL = 'http://localhost:3000'
     WEB_APP_URL = 'http://localhost:3000'

@@ -2,14 +2,13 @@ from django.contrib import admin, messages
 
 from el_tinto.users.models import User
 from el_tinto.utils.decorators import only_one_instance
-from el_tinto.utils.send_mail import send_mail
 
 
 @admin.action(description='Enviar correo de prueba')
 @only_one_instance
-def test_send_daily_email(_, request, queryset):
+def send_daily_mail_try(_, request, queryset):
     """
-    Send a test email to the user in the email field defined as 'test_email'
+    Send a mails mail to the user in the email field defined as 'test_email'
     If tested email is not in db, returns error message.
 
     :params:
@@ -18,11 +17,13 @@ def test_send_daily_email(_, request, queryset):
 
     :return: None
     """
-    mail = queryset.first()
+    instance = queryset.first()
 
     try:
-        user = User.objects.get(email=mail.test_email)
+        user = User.objects.get(email=instance.test_email)
     except User.DoesNotExist:
         return messages.error(request, "Test email does not exist in the database")
 
-    send_mail(mail, [mail.test_email], user=user)
+    mail = instance.get_mail_class()
+
+    mail.send_mail(user)

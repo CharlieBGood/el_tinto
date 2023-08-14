@@ -8,7 +8,6 @@ from rest_framework.response import Response
 
 from el_tinto.mails.models import Templates, Mail
 from el_tinto.mails.serializers import TemplatesSerializer, MailsSerializer
-from el_tinto.utils.send_mail import get_mail_template_data, get_mail_template
 from el_tinto.utils.tintos import generate_tinto_html, generate_tinto_html_sunday_no_prize
 
 
@@ -60,8 +59,7 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
                 type=instance.type,
                 version=Mail.SUNDAY_NO_REFERRALS_PRIZE,
                 tweet=instance.tweet,
-                subject_message=instance.subject_message,
-                dispatch_date=instance.dispatch_date
+                subject_message=instance.subject_message
             )
 
     @action(detail=False, methods=['get'])
@@ -80,23 +78,20 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
             except ValueError:
                 raise ValidationError({'date': 'Datetime format is not allowed, use DD-MM-YYYYY'})
 
-            mail = Mail.objects.filter(type=Mail.DAILY, dispatch_date__date=date_obj).first()
+            instance = Mail.objects.filter(type=Mail.DAILY, dispatch_date__date=date_obj).first()
 
         else:
-            mail = Mail.objects.filter(type=Mail.DAILY).order_by('-dispatch_date').first()
+            instance = Mail.objects.filter(type=Mail.DAILY).order_by('-dispatch_date').first()
 
-        if not mail:
+        if not instance:
             return Response(data={}, status=status.HTTP_404_NOT_FOUND)
 
-        # if mail.sent_datetime.date().weekday() == 6:
-        #     return Response(data={'mail': 'Sunday mail is not available'}, status=status.HTTP_400_BAD_REQUEST)
+        mail = instance.get_mail_class()
 
-        html_file = get_mail_template(mail, None)
+        mail.set_template()
 
-        template = loader.get_template(f'../templates/mailings/{html_file}')
+        mail_data = mail.get_mail_template_data()
 
-        mail_data = get_mail_template_data(mail, None, {"mail_version": False})
-
-        html = template.render(mail_data)
+        html = mail.template.render(mail_data)
 
         return Response(data={"html": html}, status=status.HTTP_200_OK)

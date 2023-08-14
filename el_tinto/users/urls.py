@@ -4,7 +4,7 @@ from el_tinto.users.views import RegisterView, UpdatePreferredDaysView, ConfirmU
     UnsuscribeView, ReferralHubView, SendMilestoneMailView, UserVisitsView, UserButtonsInteractionsView
 
 urlpatterns = [
-    path('suscribe/', RegisterView.as_view()),
+    path('suscribe/', RegisterView.as_view(), name='register'),
     path('update_preferred_days/', UpdatePreferredDaysView.as_view()),
     path('update_preferred_days/confirm/', ConfirmUpdatePreferredDaysView.as_view()),
     path('unsuscribe/', UnsuscribeView.as_view()),

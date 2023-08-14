@@ -152,8 +152,10 @@
                   </div>
                 </a>
               {% endif %}
-            {% block footer %}
-            {% endblock %}
+            {% if mail_version %}
+                {% block footer %}
+                {% endblock %}
+            {% endif %}
           </td>
         </tr>
       </tbody>

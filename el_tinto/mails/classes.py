@@ -157,7 +157,7 @@ class DailyMail(Mail):
             'subject_message': self.mail.subject_message,
             'referred_users_count': user.referred_users_count if user else 0,
             'referral_code': user.referral_code if user else '',
-            'mail_version': True,
+            'mail_version': True if user else False,
             'env': get_env_value(),
             'uuid': user.uuid if user else '',
             'mail_id': self.mail.id,

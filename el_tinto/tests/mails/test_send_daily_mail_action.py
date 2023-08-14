@@ -21,6 +21,10 @@ class TestSendDailyMailAction(TestCase):
         if self.test_scheduler.running == False:
             self.test_scheduler.start()
 
+        # Clean old jobs
+        for job in self.test_scheduler.get_jobs():
+            job.remove()
+
         self.editor = EditorFactory()
         self.client.force_login(self.editor)
 

@@ -80,8 +80,10 @@
               </strong>
             </h3>
               {{html}}
-              {% block referral_hub %}
-              {% endblock %}
+                {% if mail_version %}
+                  {% block referral_hub %}
+                  {% endblock %}
+                {% endif %}
               <h3 style="text-align: center; margin-top: 30px;">
                 <strong>¿Te gustó el Tinto de hoy y quieres compartirlo?</strong>
               </h3>
@@ -89,20 +91,19 @@
                 <tbody>
                   <tr>
                     {% if mail_version %}
-                      <td style="padding: 0">
+                      <td style="padding: 0; text-align: center">
                         <a
                           ses:tags="type:WBP"
                           href="https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}" class="" target="_blank"
                         >
                           <img
                             src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WEB.png"
-                            style="display: block;"
                             height="40px"
                           >
                         </a>
                       </td>
                     {% endif %}
-                    <td style="padding: 0">
+                    <td style="padding: 0; text-align: center">
                       <a
                         ses:tags="type:FB"
                         href="https://www.facebook.com/sharer/sharer.php?u=https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}"
@@ -110,12 +111,11 @@
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_FB.png"
-                          style="display: block;"
                           height="40px"
                         >
                       </a>
                     </td>
-                    <td style="padding: 0">
+                    <td style="padding: 0; text-align: center">
                       <a
                         ses:tags="type:TW"
                         href="https://twitter.com/intent/tweet?text={{tweet}}%20@ElTinto_%20https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}"
@@ -123,12 +123,11 @@
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_TW.png"
-                          style="display: block;"
                           height="40px"
                         >
                       </a>
                     </td>
-                    <td>
+                    <td style="padding: 0; text-align: center">
                       <a
                         ses:tags="type:WP"
                         href="https://api.whatsapp.com/send?text={{tweet}}%20https://{{ env }}eltinto.xyz/el-tinto-de-hoy/?date={{social_media_date}}"
@@ -136,7 +135,6 @@
                       >
                         <img
                           src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/MENU_BG_WA.png"
-                          style="display: block;"
                           height="40px"
                         >
                       </a>
@@ -149,7 +147,7 @@
                   <strong>También te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
                 </h3>
                 <a class="suscribeLink" href="/suscribirse/" style="color: #FFFFFF; text-decoration: none;">
-                  <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 40px auto 0 auto;">
+                  <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 20px auto;">
                     <p style="text-align: center; margin: 1rem !important">Suscribirse</p>
                   </div>
                 </a>

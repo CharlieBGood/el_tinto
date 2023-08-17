@@ -113,7 +113,7 @@ class User(AbstractUser):
         :return:
         open_rate: float
         """
-        return self.opened_mails/self.sentemails_set.count()
+        return self.opened_mails/(self.sentemails_set.count() or 1)
 
     @property
     def referred_users_count(self):

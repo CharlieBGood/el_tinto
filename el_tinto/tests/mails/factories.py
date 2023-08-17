@@ -17,6 +17,7 @@ class DailyMailFactory(factory.django.DjangoModelFactory):
     tweet = factory.Faker('sentence', nb_words=5)
     subject_message = factory.Faker('sentence', nb_words=5)
     tinto = factory.SubFactory(TintoFactory)
+    html = factory.Faker('sentence', nb_words=200)  # TODO: Update to use actual html structure
 
 
 class SundayMailFactory(factory.django.DjangoModelFactory):

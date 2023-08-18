@@ -1,6 +1,6 @@
 import os
 import urllib.parse
-from datetime import timedelta
+from datetime import timedelta, time
 
 from django.core import mail
 from django.template import loader
@@ -97,12 +97,16 @@ class TestMailClass(TestCase):
         self.assertEqual(template_data['days_reminder'], False)
 
     def test_daily_mail_dispatch_users(self):
-        valid_users = self._create_daily_mail_users()
+        valid_users, specific_dispatch_time_users = self._create_daily_mail_users()
 
         self.assertEqual(self.daily_mail_class.get_dispatch_users().count(), len(valid_users))
+        self.assertEqual(
+            self.daily_mail_class.get_dispatch_users(dispatch_time=time(7, 0)).count(),
+            len(specific_dispatch_time_users)
+        )
 
     def test_send_daily_mail(self):
-        valid_users = self._create_daily_mail_users()
+        valid_users, _ = self._create_daily_mail_users()
 
         self.daily_mail_class.send_several_mails()
 
@@ -156,12 +160,16 @@ class TestMailClass(TestCase):
         self.assertEqual(template_data['has_sunday_mails_prize'], user.has_sunday_mails_prize)
 
     def test_sunday_mail_dispatch_users(self):
-        valid_users = self._create_sunday_mail_users()
+        valid_users, specific_dispatch_time_users = self._create_sunday_mail_users()
 
         self.assertEqual(self.sunday_mail_class.get_dispatch_users().count(), len(valid_users))
+        self.assertEqual(
+            self.sunday_mail_class.get_dispatch_users(dispatch_time=time(9, 0)).count(),
+            len(specific_dispatch_time_users)
+        )
 
     def test_send_sunday_mail(self):
-        valid_users = self._create_sunday_mail_users()
+        valid_users, _ = self._create_sunday_mail_users()
 
         self.sunday_mail_class.send_several_mails()
 
@@ -327,7 +335,11 @@ class TestMailClass(TestCase):
         for user_already_receive_mail in users_already_receive_mail:
             SentEmailsFactory(user=user_already_receive_mail, mail=self.daily_mail)
 
-        return regular_users + dispatch_day_preferred_days_users
+        # Users with specific dispatch time
+        dispatch_time = time(7, 0)
+        specific_dispatch_time_users = UserFactory.create_batch(size=5, dispatch_time=dispatch_time)
+
+        return regular_users + dispatch_day_preferred_days_users, specific_dispatch_time_users
 
     def _create_sunday_mail_users(self):
         users_with_missing_sunday_mails = UserFactory.create_batch(size=5, missing_sunday_mails=1)
@@ -336,6 +348,12 @@ class TestMailClass(TestCase):
 
         for user_with_prize in users_with_prize:
             SentEmailsFactory(user=user_with_prize, mail=self.sunday_mail_prize)
+
+        # Users with specific dispatch time
+        dispatch_time = time(9, 0)
+        specific_dispatch_time_users = UserFactory.create_batch(
+            size=5, missing_sunday_mails=1, dispatch_time=dispatch_time
+        )
 
         # Users with day not selected
         UserFactory.create_batch(size=5, preferred_email_days=[1, 2, 4])
@@ -349,4 +367,4 @@ class TestMailClass(TestCase):
         for user_already_receive_mail in users_already_receive_mail:
             SentEmailsFactory(user=user_already_receive_mail, mail=self.sunday_mail)
 
-        return users_with_missing_sunday_mails + users_with_prize
+        return users_with_missing_sunday_mails + users_with_prize, specific_dispatch_time_users

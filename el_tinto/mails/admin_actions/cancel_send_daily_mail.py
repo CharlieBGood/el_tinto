@@ -31,8 +31,13 @@ def cancel_send_daily_mail(_, request, queryset):
     mail_scheduler = test_scheduler if 'test' in sys.argv else scheduler
 
     if not mail.sent_datetime:
-        mail_scheduler.remove_job(str(mail.id))
 
+        # Remove all jobs for current mail
+        for job in mail_scheduler.get_jobs():
+            if str(mail.id) in job.id:
+                job.remove()
+
+        # Update mail programmed status
         mail.programmed = False
         mail.save()
 

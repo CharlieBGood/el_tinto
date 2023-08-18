@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import UserManager as BaseUserManager
@@ -44,12 +45,26 @@ class User(AbstractUser):
     WHATSAPP = 'whatsapp'
     INSTAGRAM = 'instagram'
 
-    UTM_SOURCE_TYPE = [
+    UTM_SOURCE_TYPE_CHOICES = (
         (TWITTER, 'Twitter'),
         (FACEBOOK, 'Facebook'),
         (WHATSAPP, 'Whatsapp'),
         (INSTAGRAM, 'Instagram'),
-    ]
+    )
+
+    TIER_REGULAR = 0
+    TIER_COFFEE_SEED = 1
+    TIER_COFFEE_BEAN = 2
+    TIER_TINTO = 3
+    TIER_EXPORTATION_COFFEE = 4
+
+    TIERS_CHOICES = (
+        (TIER_REGULAR, 'Regular'),
+        (TIER_COFFEE_SEED, 'Semilla de café'),
+        (TIER_COFFEE_BEAN, 'Grano de café'),
+        (TIER_TINTO, 'Tinto'),
+        (TIER_EXPORTATION_COFFEE, 'Café de exportación')
+    )
     
     email = models.EmailField(
         'email address',
@@ -78,8 +93,10 @@ class User(AbstractUser):
         related_name='referred_users'
     )
 
+    tier = models.SmallIntegerField(default=TIER_REGULAR, choices=TIERS_CHOICES)
+    dispatch_time = models.TimeField(default=None, null=True, blank=True)
     missing_sunday_mails = models.SmallIntegerField(default=4)
-    utm_source = models.CharField(choices=UTM_SOURCE_TYPE, default='', blank=True, max_length=25)
+    utm_source = models.CharField(choices=UTM_SOURCE_TYPE_CHOICES, default='', blank=True, max_length=25)
     medium = models.CharField(default='', blank=True, max_length=25)
 
     USERNAME_FIELD = 'email'
@@ -146,6 +163,13 @@ class User(AbstractUser):
         from el_tinto.utils.utils import MILESTONES
 
         return self.sentemails_set.filter(mail_id=MILESTONES[3]['mail_id']).exists()
+
+    @property
+    def recency(self):
+        """
+
+        """
+        return (datetime.now().date() - self.date_joined.date()).days
 
     @property
     def env(self):

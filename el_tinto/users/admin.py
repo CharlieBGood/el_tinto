@@ -4,16 +4,19 @@ from rest_framework.authtoken.models import TokenProxy
 from django.contrib.auth.admin import UserAdmin
 from .models import User
 
-
 @admin.register(User)
 class UserAdmin(UserAdmin):
     ordering = ('email', 'is_staff')
-    list_display = ['email', 'first_name', 'last_name', 'referred_users_count', 'open_rate', 'has_sunday_mails_prize']
-    search_fields = ('email', 'first_name', 'last_name')
     list_filter = ()
+    search_fields = ('email', 'first_name', 'last_name')
+
+    list_display = (
+        'email', 'first_name', 'last_name', 'referred_users_count',
+        'open_rate', 'has_sunday_mails_prize', 'is_active', 'recency'
+    )
 
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'first_name', 'last_name')}),
+        (None, {'fields': ('email', 'first_name', 'last_name', 'dispatch_time')}),
     )
 
     add_fieldsets = (

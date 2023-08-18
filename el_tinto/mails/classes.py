@@ -110,11 +110,14 @@ class Mail:
         for user in users_batch:
             self.send_mail(user)
 
-    def send_several_mails(self):
+    def send_several_mails(self, dispatch_time=None):
         """
         Send several mails.
+
+        params:
+        dispatch_time: time
         """
-        users = self.get_dispatch_users()
+        users = self.get_dispatch_users(dispatch_time)
 
         # This number is based on AWS SES limitations.
         # Is calculated based on the average sending time per email and the maximum number of mails/s - 1
@@ -130,13 +133,17 @@ class Mail:
 
 class DailyMail(Mail):
 
-    def get_dispatch_users(self):
+    def get_dispatch_users(self, dispatch_time=None):
         """
         Get dispatch users list.
+
+        params:
+        dispatch_time: time
         """
         return User.objects.filter(
             (Q(preferred_email_days__contains=[self.mail_week_day]) | Q(preferred_email_days__len=0)),
-            is_active=True
+            is_active=True,
+            dispatch_time=dispatch_time
         ).exclude(sentemails__mail_id=self.mail.id)
 
     def get_mail_template_data(self, user=None):
@@ -176,7 +183,7 @@ class DailyMail(Mail):
 
 class SundayMail(Mail):
 
-    def get_dispatch_users(self):
+    def get_dispatch_users(self, dispatch_time=None):
         """
         Get dispatch users list.
         """
@@ -187,8 +194,9 @@ class SundayMail(Mail):
             Q(missing_sunday_mails__gt=0) |
             # Filter has prize
             Q(sentemails__mail_id=MILESTONES[3]['mail_id']),
-            is_active=True
-        ).exclude(sentemails__mail_id=self.mail.id).distinct()
+            is_active=True,
+            dispatch_time=dispatch_time
+        ).exclude(sentemails__mail_id=self.mail.id)
 
     def get_mail_template_data(self, user):
         """

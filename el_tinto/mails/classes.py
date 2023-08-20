@@ -187,7 +187,7 @@ class SundayMail(Mail):
             # Filter has prize
             Q(sentemails__mail_id=MILESTONES[3]['mail_id']),
             is_active=True
-        ).exclude(sentemails__mail_id=self.mail.id)
+        ).exclude(sentemails__mail_id=self.mail.id).distinct()
 
     def get_mail_template_data(self, user):
         """
@@ -237,7 +237,7 @@ class SundayNoPrizeMail(Mail):
             # Filter missing sunday emails
             missing_sunday_mails=0,
             is_active=True
-        ).exclude(sentemails__mail_id__in=[self.mail.id, MILESTONES[3]['mail_id']])
+        ).exclude(sentemails__mail_id__in=[self.mail.id, MILESTONES[3]['mail_id']]).distinct()
 
     def get_mail_template_data(self, user):
         """

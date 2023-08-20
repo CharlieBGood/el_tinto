@@ -74,7 +74,7 @@ class Mail:
             'EMAIL-TYPE': self.mail.type
         }
 
-    def send_mail(self, user=None, mail_address=None, extra_data=None):
+    def send_mail(self, user=None, mail_address=None, extra_data=None, test=False):
         """
         Send mail.
         """
@@ -97,7 +97,8 @@ class Mail:
         message_user.content_subtype = 'html'
         message_user.send(fail_silently=True)
 
-        self.mail.recipients.add(user)
+        if not test:
+            self.mail.recipients.add(user)
 
     def send_mail_batch(self, users_batch):
         """

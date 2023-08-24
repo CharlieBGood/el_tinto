@@ -27,7 +27,6 @@ class Common(Configuration):
         'django_user_agents',  # Allow device identification for requests
         'tinymce',  # WYSIWYG editor
         "corsheaders",  # CORS configuration
-        'django_celery_beat',  # Celery database storage
 
         # Your apps
         'el_tinto.users',

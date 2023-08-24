@@ -88,8 +88,6 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
 
         mail = instance.get_mail_class()
 
-        mail.set_template()
-
         mail_data = mail.get_mail_template_data()
 
         html = mail.template.render(mail_data)

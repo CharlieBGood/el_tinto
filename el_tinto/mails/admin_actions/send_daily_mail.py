@@ -3,9 +3,11 @@ import logging
 import sys
 
 from django.contrib import admin, messages
+from django.db.models import Count
 
 from el_tinto.mails.models import Mail
 from el_tinto.tests.utils import test_scheduler
+from el_tinto.users.models import User
 from el_tinto.utils.date_time import convert_utc_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
 
@@ -36,12 +38,15 @@ def send_daily_mail(_, request, queryset):
     mail_scheduler = test_scheduler if 'test' in sys.argv else scheduler
 
     if not mail.programmed:
-        schedule_mail(mail, mail_scheduler)
 
+        dispatch_times = User.objects.values('dispatch_time').annotate(dcount=Count('dispatch_time'))
+
+        for dispatch_time in dispatch_times:
+            schedule_mail(mail, mail_scheduler, dispatch_time['dispatch_time'])
+
+        # Send no prize sunday mail
         try:
-            no_prize_mail = Mail.objects.get(
-                dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE
-            )
+            no_prize_mail = Mail.objects.get(dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE)
 
             schedule_mail(no_prize_mail, mail_scheduler)
 

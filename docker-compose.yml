@@ -18,14 +18,14 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
-  celery:
-    build: ./
-    command: celery --app=el_tinto.mails worker --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    volumes:
-      - ./:/code
-    env_file: .env
-    depends_on:
-      - django
+#  celery:
+#    build: ./
+#    command: celery --app=el_tinto.mails worker --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+#    volumes:
+#      - ./:/code
+#    env_file: .env
+#    depends_on:
+#      - django
 #  redis:
 #    image: redis:5.0.7
 #  documentation:

@@ -2,6 +2,7 @@ import logging
 import os
 import random
 import urllib.parse
+from datetime import datetime
 
 from django.core.mail import EmailMessage
 from django.db.models import Q
@@ -129,6 +130,9 @@ class Mail:
 
         for users_bach in users_chunked_list:
             self.send_mail_batch(users_bach)
+
+        self.mail.dispatch_date = datetime.now()
+        self.mail.save()
 
 
 class DailyMail(Mail):

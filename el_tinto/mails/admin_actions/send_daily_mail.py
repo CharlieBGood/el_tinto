@@ -57,5 +57,8 @@ def send_daily_mail(_, request, queryset):
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
         logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
 
+        mail.created_by = request.user
+        mail.save()
+
     else:
         messages.error(request, "You can not send an already programmed mail unless you cancel it")

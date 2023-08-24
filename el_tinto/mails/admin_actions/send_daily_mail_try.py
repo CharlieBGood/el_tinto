@@ -26,4 +26,4 @@ def send_daily_mail_try(_, request, queryset):
 
     mail = instance.get_mail_class()
 
-    mail.send_mail(user)
+    mail.send_mail(user, test=True)

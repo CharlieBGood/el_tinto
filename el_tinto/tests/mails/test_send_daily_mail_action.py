@@ -46,6 +46,7 @@ class TestSendDailyMailAction(TestCase):
         self.assertEqual(job.id, f"{self.daily_mail.id}_{self.daily_mail.dispatch_date.strftime('%H:%M:%S')}")
         self.assertEqual(job.next_run_time, self.daily_mail.dispatch_date)
         self.assertTrue(self.daily_mail.programmed)
+        self.assertEqual(self.daily_mail.created_by, self.editor)
 
     def test_send_daily_mail_several_user_dispatch_times(self):
         """

@@ -131,7 +131,7 @@ class Mail:
         for users_bach in users_chunked_list:
             self.send_mail_batch(users_bach)
 
-        self.mail.dispatch_date = datetime.now()
+        self.mail.sent_datetime = datetime.now()
         self.mail.save()
 
 
@@ -148,7 +148,7 @@ class DailyMail(Mail):
             (Q(preferred_email_days__contains=[self.mail_week_day]) | Q(preferred_email_days__len=0)),
             is_active=True,
             dispatch_time=dispatch_time
-        ).exclude(sentemails__mail_id=self.mail.id)
+        ).exclude(sentemails__mail_id=self.mail.id).distinct()
 
     def get_mail_template_data(self, user=None):
         """
@@ -200,7 +200,7 @@ class SundayMail(Mail):
             Q(sentemails__mail_id=MILESTONES[3]['mail_id']),
             is_active=True,
             dispatch_time=dispatch_time
-        ).exclude(sentemails__mail_id=self.mail.id)
+        ).exclude(sentemails__mail_id=self.mail.id).distinct()
 
     def get_mail_template_data(self, user):
         """

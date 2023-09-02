@@ -60,5 +60,10 @@ def send_daily_mail(_, request, queryset):
         mail.created_by = request.user
         mail.save()
 
+        mail_class = mail.get_mail_class()
+        dispatch_users_count = mail_class.get_dispatch_users().count()
+
+        messages.success(request, f"Correo programado para enviarse a {dispatch_users_count} usuarios")
+
     else:
         messages.error(request, "You can not send an already programmed mail unless you cancel it")

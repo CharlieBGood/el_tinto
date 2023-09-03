@@ -43,7 +43,7 @@ class TestMailClass(TestCase):
         self.sunday_mail_class = self.sunday_mail.get_mail_class()
         self.sunday_mail_prize = Mail.objects.get(id=MILESTONES[3]['mail_id'])
 
-        self.sunday_mail_no_prize = SundayMailFactory(version=Mail.SUNDAY_NO_REFERRALS_PRIZE)
+        self.sunday_mail_no_prize = SundayMailFactory(version=Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION)
         self.sunday_mail_no_prize_class = self.sunday_mail_no_prize.get_mail_class()
 
         self.regular_mail_sender_email = (
@@ -366,5 +366,12 @@ class TestMailClass(TestCase):
 
         for user_already_receive_mail in users_already_receive_mail:
             SentEmailsFactory(user=user_already_receive_mail, mail=self.sunday_mail)
+
+        # Old sunday emails sent to test uniqueness of ids
+        sunday_mails = SundayMailFactory.create_batch(size=5)
+
+        for sunday_mail in sunday_mails:
+            for user in users_with_prize:
+                SentEmailsFactory(user=user, mail=sunday_mail)
 
         return users_with_missing_sunday_mails + users_with_prize, specific_dispatch_time_users

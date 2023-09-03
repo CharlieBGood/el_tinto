@@ -17,7 +17,8 @@ urlpatterns = [
     path('', include('el_tinto.tintos.urls')),
     path('', include('el_tinto.advertisement.urls')),
     path('mails/', include('el_tinto.mails.urls')),
-    path('users/', include('el_tinto.users.urls'))
+    path('users/', include('el_tinto.users.urls')),
+    path('integrations/', include('el_tinto.integrations.urls'))
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -2,7 +2,7 @@ import os
 from os.path import join
 from distutils.util import strtobool
 from configurations import Configuration
-from kombu.utils.url import safequote
+# from kombu.utils.url import safequote
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 from dotenv import load_dotenv
@@ -35,6 +35,7 @@ class Common(Configuration):
         'el_tinto.ses_sns',
         'el_tinto.tintos',
         'el_tinto.advertisement',
+        'el_tinto.integrations.stripe',
         'el_tinto.tests'
     )
 
@@ -276,8 +277,8 @@ class Common(Configuration):
         "show_ui_builder": False
     }
 
-    CELERY_accept_content = ['application/json']
-    CELERY_task_serializer = 'json'
-    CELERY_BROKER_URL = f"sqs://{safequote(AWS_ACCESS_KEY_ID)}:{safequote(AWS_SECRET_ACCESS_KEY)}@"
-    CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-    CELERY_result_backend = None
+    # CELERY_accept_content = ['application/json']
+    # CELERY_task_serializer = 'json'
+    # CELERY_BROKER_URL = f"sqs://{safequote(AWS_ACCESS_KEY_ID)}:{safequote(AWS_SECRET_ACCESS_KEY)}@"
+    # CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+    # CELERY_result_backend = None

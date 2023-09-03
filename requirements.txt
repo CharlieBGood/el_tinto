@@ -58,6 +58,9 @@ django-user-agents==0.4.0
 django-tinymce==3.5.0
 django-jazzmin==2.6.0
 
+# Integrations
+stripe==6.2.0
+
 # Queues
-celery[sqs]==5.3.0
-django-celery-beat==2.5.0
+# celery[sqs]==5.3.0
+# django-celery-beat==2.5.0

@@ -37,16 +37,16 @@ class Mail(models.Model):
     ]
 
     # Version constants
-    A = 'A'
-    B = 'B'
-    SUNDAY_NO_REFERRALS_PRIZE = 'SUNDAY NO PRIZE'
-    DEFAULT_TESTING = 'DEFAULT'
+    A_VERSION = 'A'
+    B_VERSION = 'B'
+    SUNDAY_NO_REFERRALS_PRIZE_VERSION = 'SUNDAY NO PRIZE'
+    DEFAULT_TESTING_VERSION = 'DEFAULT'
 
     VERSION_OPTIONS = [
-        (A, 'A'),
-        (B, 'B'),
-        (SUNDAY_NO_REFERRALS_PRIZE, 'Dominguero sin premios'),
-        (DEFAULT_TESTING, 'Testeo en blanco')
+        (A_VERSION, 'A'),
+        (B_VERSION, 'B'),
+        (SUNDAY_NO_REFERRALS_PRIZE_VERSION, 'Dominguero sin premios'),
+        (DEFAULT_TESTING_VERSION, 'Testeo en blanco')
     ]
 
     html = HTMLField()
@@ -104,7 +104,7 @@ class Mail(models.Model):
         MAIL_CLASS_MAPPER = {
             Mail.DAILY: DailyMail,
             Mail.SUNDAY: SundayMail,
-            Mail.SUNDAY_NO_REFERRALS_PRIZE: SundayNoPrizeMail,
+            Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION: SundayNoPrizeMail,
             Mail.MILESTONE: MilestoneMail,
             Mail.WELCOME: OnboardingMail,
             Mail.CHANGE_PREFERRED_DAYS: ChangePreferredDaysMail

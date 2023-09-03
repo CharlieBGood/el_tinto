@@ -46,7 +46,14 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
         return mails
 
     def perform_create(self, serializer):
-        serializer.validated_data['html'] = generate_tinto_html(serializer.validated_data['tinto'])
+        validated_data = serializer.validated_data
+        validated_data['html'] = generate_tinto_html(validated_data['tinto'])
+
+        # Define mail type based on dispatch date if no value is provided
+        validated_data.setdefault(
+            'type', Mail.SUNDAY if validated_data['dispatch_date'].date().weekday() == 6 else Mail.DAILY
+        )
+
         instance = serializer.save()
 
         if instance.type == Mail.SUNDAY:
@@ -57,9 +64,10 @@ class MailsViewset(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.Retrie
                 html=html,
                 subject=instance.subject,
                 type=instance.type,
-                version=Mail.SUNDAY_NO_REFERRALS_PRIZE,
+                version=Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION,
                 tweet=instance.tweet,
-                subject_message=instance.subject_message
+                subject_message=instance.subject_message,
+                dispatch_date=instance.dispatch_date
             )
 
     @action(detail=False, methods=['get'])

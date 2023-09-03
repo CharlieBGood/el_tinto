@@ -2,6 +2,8 @@ from rest_framework.routers import DefaultRouter
 
 from el_tinto.mails.views import TemplatesViewSet, MailsViewset
 
+app_name = 'mails'
+
 mails_router = DefaultRouter()
 
 mails_router.register(r'templates', TemplatesViewSet, basename='templates')

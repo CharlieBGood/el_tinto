@@ -43,7 +43,7 @@ class TestMailClass(TestCase):
         self.sunday_mail_class = self.sunday_mail.get_mail_class()
         self.sunday_mail_prize = Mail.objects.get(id=MILESTONES[3]['mail_id'])
 
-        self.sunday_mail_no_prize = SundayMailFactory(version=Mail.SUNDAY_NO_REFERRALS_PRIZE)
+        self.sunday_mail_no_prize = SundayMailFactory(version=Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION)
         self.sunday_mail_no_prize_class = self.sunday_mail_no_prize.get_mail_class()
 
         self.regular_mail_sender_email = (

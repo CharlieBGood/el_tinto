@@ -46,7 +46,9 @@ def send_daily_mail(_, request, queryset):
 
         # Send no prize sunday mail
         try:
-            no_prize_mail = Mail.objects.get(dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE)
+            no_prize_mail = Mail.objects.get(
+                dispatch_date=mail.dispatch_date, version=Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION
+            )
 
             schedule_mail(no_prize_mail, mail_scheduler)
 
@@ -63,7 +65,7 @@ def send_daily_mail(_, request, queryset):
         mail_class = mail.get_mail_class()
         dispatch_users_count = mail_class.get_dispatch_users().count()
 
-        messages.success(request, f"Correo programado para enviarse a {dispatch_users_count} usuarios")
+        messages.success(request, f"Mail programmed to be sent to {dispatch_users_count} users")
 
     else:
         messages.error(request, "You can not send an already programmed mail unless you cancel it")

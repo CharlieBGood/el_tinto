@@ -35,7 +35,7 @@ class Common(Configuration):
         'el_tinto.ses_sns',
         'el_tinto.tintos',
         'el_tinto.advertisement',
-        'el_tinto.integrations',
+        'el_tinto.integrations.stripe',
         'el_tinto.tests'
     )
 

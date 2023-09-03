@@ -1,6 +1,10 @@
 import os
 import re
 
+from django.conf import settings
+
+from el_tinto.integrations.stripe.models import StripePayment
+
 
 def get_env_value():
     """
@@ -244,6 +248,13 @@ MILESTONES = {
     17: {"price": "mug", "price_description": "Mug", "pre_price_string": "un", "mail_id": 1566},
     25: {"price": "hat", "price_description": "Gorra", "pre_price_string": "una", "mail_id": 1567},
     50: {"price": "coffee", "price_description": "Bolsa de Café", "pre_price_string": "una", "mail_id": 1568},
+}
+
+TASTE_CLUB_PRODUCTS = {
+    settings.COFFEE_SEED_STRIPE_CODE: StripePayment.TIER_COFFEE_SEED,
+    settings.COFFEE_BEEN_STRIPE_CODE: StripePayment.TIER_COFFEE_BEAN,
+    settings.TINTO_STRIPE_CODE: StripePayment.TIER_TINTO,
+    settings.EXPORTATION_COFFEE_STRIPE_CODE: StripePayment.TIER_EXPORTATION_COFFEE
 }
 
 ONBOARDING_EMAIL_NAME = 'onboarding'

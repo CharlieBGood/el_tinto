@@ -87,4 +87,11 @@ class Local(Common):
         """
     }
 
-    CELERY_TASK_DEFAULT_QUEUE = 'dev_mails'
+    # Stripe products
+    COFFEE_SEED_STRIPE_CODE = 'prod_OZPWtHd1Ni7Ldv'
+    COFFEE_BEEN_STRIPE_CODE = 'prod_OZQYdJJny3qbgc'
+    TINTO_STRIPE_CODE = 'prod_OZQZS9HxRi5a4n'
+    EXPORTATION_COFFEE_STRIPE_CODE = 'prod_OZQaXRbIbt6w80'
+
+
+    # CELERY_TASK_DEFAULT_QUEUE = 'dev_mails'

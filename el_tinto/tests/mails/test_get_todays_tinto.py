@@ -16,7 +16,7 @@ class TestGetTodaysTinto(APITestCase):
         self.sunday_mail = SundayMailFactory()
         self.sunday_mail_class = self.sunday_mail.get_mail_class()
 
-        self.url = reverse('mails-get-todays-tinto')
+        self.url = reverse('mails:mails-get-todays-tinto')
 
     def test_get_daily_tinto(self):
         """

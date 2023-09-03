@@ -120,4 +120,11 @@ class Production(Common):
         """
     }
 
+    # Stripe products
+    #TODO: Add real codes
+    COFFEE_SEED_STRIPE_CODE = 'test_1'
+    COFFEE_BEEN_STRIPE_CODE = 'test_2'
+    TINTO_STRIPE_CODE = 'test_3'
+    EXPORTATION_COFFEE_STRIPE_CODE = 'test_4'
+
     CELERY_TASK_DEFAULT_QUEUE = 'mails'

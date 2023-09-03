@@ -367,4 +367,11 @@ class TestMailClass(TestCase):
         for user_already_receive_mail in users_already_receive_mail:
             SentEmailsFactory(user=user_already_receive_mail, mail=self.sunday_mail)
 
+        # Old sunday emails sent to test uniqueness of ids
+        sunday_mails = SundayMailFactory.create_batch(size=5)
+
+        for sunday_mail in sunday_mails:
+            for user in users_with_prize:
+                SentEmailsFactory(user=user, mail=sunday_mail)
+
         return users_with_missing_sunday_mails + users_with_prize, specific_dispatch_time_users

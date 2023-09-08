@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import TokenProxy
 from django.contrib.auth.admin import UserAdmin
 from .models import User
 
+
 @admin.register(User)
 class UserAdmin(UserAdmin):
     ordering = ('email', 'is_staff')

@@ -240,7 +240,7 @@ class SundayMail(Mail):
 
 class SundayNoPrizeMail(Mail):
 
-    def get_dispatch_users(self):
+    def get_dispatch_users(self, dispatch_time=None):
         """
         Get dispatch users list.
         """

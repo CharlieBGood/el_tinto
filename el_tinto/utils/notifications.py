@@ -6,13 +6,14 @@ from el_tinto.users.models import User
 from el_tinto.utils.utils import MILESTONES
 
 
-def update_sent_email_data(user, mail):
+def update_sent_email_data(user, mail, sns_object):
     """
     Update the opened date in the SentEmail instance if it exists.
 
     :params:
     user: User object
     mail: Mail object
+    sns_object: SNSNotification
 
     :return: None
     """
@@ -20,9 +21,10 @@ def update_sent_email_data(user, mail):
         sent_email = SentEmails.objects.get(
             user=user,
             mail=mail,
-            opened_date=None
+            opened_date=None,
         )
         sent_email.opened_date = timezone.now()
+        sent_email.sns_object = sns_object
         sent_email.save()
 
     except SentEmails.DoesNotExist:

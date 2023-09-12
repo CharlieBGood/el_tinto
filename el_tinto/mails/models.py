@@ -123,6 +123,7 @@ class SentEmails(models.Model):
     mail = models.ForeignKey('mails.Mail', on_delete=models.CASCADE)
     user = models.ForeignKey('users.User', on_delete=models.CASCADE)
     opened_date = models.DateTimeField(default=None, null=True)
+    sns_object = models.OneToOneField('ses_sns.SNSNotification', on_delete=models.SET_NULL, null=True)
 
 
 class SentEmailsInteractions(models.Model):

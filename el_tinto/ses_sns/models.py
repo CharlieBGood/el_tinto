@@ -54,7 +54,7 @@ class SNSNotification(models.Model):
                         mail = Mail.objects.get(id=headers.get('email_id'))
 
                         if event_type == EVENT_TYPE_OPEN:
-                            update_sent_email_data(user, mail)
+                            update_sent_email_data(user, mail, self)
                             send_milestone_email(user)
 
                         elif event_type == EVENT_TYPE_CLICK:

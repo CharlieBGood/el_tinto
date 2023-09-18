@@ -30,14 +30,14 @@ def create_user_referral_code(user):
     referral_code_exists = False
 
     while not referral_code_exists:
-        referral_code = base + complement
+        referral_code = (base + complement).upper()
 
         if User.objects.filter(referral_code=referral_code).exists():
             complement = ''.join(random.choices(string.ascii_letters + string.digits, k=6-len(base)))
         else:
             referral_code_exists = True
 
-    return referral_code.upper()
+    return referral_code
 
 
 def calculate_referral_race_parameters(user):

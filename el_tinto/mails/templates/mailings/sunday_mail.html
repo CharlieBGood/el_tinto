@@ -61,6 +61,23 @@
                 </h3>
             </td>
         </tr>
+        {% if user_tier %}
+            <tr>
+                <td>
+                    <h2 style="margin-top: 0">¡Administra los beneficios de tu suscripción!</h2>
+                    <p>
+                        Recuerda que siempre puedes administrar los beneficios de tu suscripción
+                        <a
+                            ses:no-track
+                            href="https://{{ env }}eltinto.xyz/mi-club-de-cata/{{ uuid }}/"
+                            target="_blank"
+                        >
+                            haciendo click en este link.
+                        </a>
+                    </p>
+                </td>
+            </tr>
+        {% endif %}
     </table>
 {% endblock %}
 

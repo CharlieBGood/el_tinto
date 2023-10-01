@@ -3,7 +3,7 @@ import re
 
 from django.conf import settings
 
-from el_tinto.integrations.stripe.models import StripePayment
+from el_tinto.users.models import UserTier
 
 
 def get_env_value():
@@ -64,7 +64,7 @@ def replace_word(sentence, word, model):
     except AttributeError:
         raise AttributeError(f'Attribute {attribute} does not exist on model {model._meta.model.__name__}')
 
-    return sentence.replace(word, str(model_attribute))
+    return sentence.replace(word, str(model_attribute), 2)
 
 
 def replace_info_in_share_news_buttons(html, tinto_block_entry):
@@ -241,20 +241,48 @@ MOBILE_EMAIL_PROVIDERS = {
 }
 
 MILESTONES = {
-    1: {"price": "stickers", "price_description": "Stickers de Whatsapp", "pre_price_string": "acceso a", "mail_id": 1562},
-    3: {"price": "sunday_email", "price_description": "El Tinto Dominguero", "pre_price_string": "acceso a", "mail_id": 1563},
-    5: {"price": "coffee_shop", "price_description": "La Cafeteria (Comunidad)", "pre_price_string": "acceso a", "mail_id": 1564},
-    10: {"price": "talks", "price_description": "Charlas con El Tinto", "pre_price_string": "acceso a", "mail_id": 1565},
-    17: {"price": "mug", "price_description": "Mug", "pre_price_string": "un", "mail_id": 1566},
-    25: {"price": "hat", "price_description": "Gorra", "pre_price_string": "una", "mail_id": 1567},
-    50: {"price": "coffee", "price_description": "Bolsa de Café", "pre_price_string": "una", "mail_id": 1568},
+    1: {"prize": "stickers", "prize_description": "Stickers de Whatsapp", "pre_prize_string": "acceso a", "mail_id": 1562},
+    3: {"prize": "sunday_email", "prize_description": "El Tinto Dominguero", "pre_prize_string": "acceso a", "mail_id": 1563},
+    5: {"prize": "coffee_shop", "prize_description": "La Cafeteria (Comunidad)", "pre_prize_string": "acceso a", "mail_id": 1564},
+    10: {"prize": "talks", "prize_description": "Charlas con El Tinto", "pre_prize_string": "acceso a", "mail_id": 1565},
+    17: {"prize": "mug", "prize_description": "Mug", "pre_prize_string": "un", "mail_id": 1566},
+    25: {"prize": "hat", "prize_description": "Gorra", "pre_prize_string": "una", "mail_id": 1567},
+    50: {"prize": "coffee", "prize_description": "Bolsa de Café", "pre_prize_string": "una", "mail_id": 1568},
 }
 
 TASTE_CLUB_PRODUCTS = {
-    settings.COFFEE_SEED_STRIPE_CODE: StripePayment.TIER_COFFEE_SEED,
-    settings.COFFEE_BEEN_STRIPE_CODE: StripePayment.TIER_COFFEE_BEAN,
-    settings.TINTO_STRIPE_CODE: StripePayment.TIER_TINTO,
-    settings.EXPORTATION_COFFEE_STRIPE_CODE: StripePayment.TIER_EXPORTATION_COFFEE
+    settings.COFFEE_SEED_STRIPE_CODE: UserTier.TIER_COFFEE_BEAN,
+    settings.COFFEE_BEEN_STRIPE_CODE: UserTier.TIER_GROUND_COFFEE,
+    settings.TINTO_STRIPE_CODE: UserTier.TIER_TINTO,
+    settings.EXPORTATION_COFFEE_STRIPE_CODE: UserTier.TIER_EXPORTATION_COFFEE
+}
+
+TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID = 2178
+TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID = 2179
+TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID = 2180
+TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID = 2181
+TASTE_CLUB_TIER_TINTO_INVITATION_MAIL = 2182
+TASTE_CLUB_TIER_EXPORTATION_COFFEE_INVITATION_MAIL = 2183
+TASTE_CLUB_BENEFICIARY_CANCELATION_MAIL = 2184
+TASTE_CLUB_OWNER_CANCELATION_MAIL = 2185
+
+TASTE_CLUB_TIER_UTILS = {
+    UserTier.TIER_COFFEE_BEAN: {
+        'welcome_mail': TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID, 'sunday_mails': 1, 'invitation_mail': None
+    },
+    UserTier.TIER_GROUND_COFFEE: {
+        'welcome_mail': TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID, 'sunday_mails': 2, 'invitation_mail': None
+    },
+    UserTier.TIER_TINTO: {
+        'welcome_mail': TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID,
+        'sunday_mails': 3,
+        'invitation_mail': TASTE_CLUB_TIER_TINTO_INVITATION_MAIL
+    },
+    UserTier.TIER_EXPORTATION_COFFEE: {
+        'welcome_mail': TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID,
+        'sunday_mails': 5,
+        'invitation_mail': TASTE_CLUB_TIER_EXPORTATION_COFFEE_INVITATION_MAIL
+    },
 }
 
 ONBOARDING_EMAIL_NAME = 'onboarding'

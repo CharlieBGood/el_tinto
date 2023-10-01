@@ -1,11 +1,6 @@
-from datetime import datetime
-
-from django.utils.dateparse import parse_datetime
-
 from rest_framework import serializers
 
 from el_tinto.mails.models import Templates, Mail
-from el_tinto.utils.date_time import convert_utc_to_local_datetime
 
 
 class TemplatesSerializer(serializers.ModelSerializer):

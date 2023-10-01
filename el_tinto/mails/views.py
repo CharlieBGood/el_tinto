@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from django.template import loader
 from rest_framework import mixins, viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError

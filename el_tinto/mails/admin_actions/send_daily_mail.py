@@ -8,7 +8,7 @@ from django.db.models import Count
 from el_tinto.mails.models import Mail
 from el_tinto.tests.utils import test_scheduler
 from el_tinto.users.models import User
-from el_tinto.utils.date_time import convert_utc_to_local_datetime
+from el_tinto.utils.date_time import convert_datetime_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
 
 from el_tinto.utils.scheduler import scheduler
@@ -55,7 +55,7 @@ def send_daily_mail(_, request, queryset):
         except Mail.DoesNotExist:
             pass
 
-        now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
+        now_datetime = convert_datetime_to_local_datetime(datetime.datetime.now())
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
         logger.info(f'Mail {mail.id} was programmed by {request.user.email} to be sent at {string_now_datatime}')
 

@@ -1,43 +1,17 @@
 import uuid
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import UserManager as BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from phonenumber_field.modelfields import PhoneNumberField
+from pytz import timezone
 
-
-class UserManager(BaseUserManager):
-    """
-    User Manager that knows how to create users via email instead of username
-    """
-    def _create_user(self, email, password, **extra_fields):
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-
-        if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True.")
-        if extra_fields.get("is_superuser") is not True:
-            raise ValueError("Superuser must have is_superuser=True.")
-
-        return self._create_user(email, password, **extra_fields)
-
-    def create_user(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault("is_staff", False)
-        extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
+from el_tinto.users.managers import UserManager
 
 
 class User(AbstractUser):
-    
     objects = UserManager()
 
     TWITTER = 'twitter'
@@ -52,20 +26,6 @@ class User(AbstractUser):
         (INSTAGRAM, 'Instagram'),
     )
 
-    TIER_REGULAR = 0
-    TIER_COFFEE_SEED = 1
-    TIER_COFFEE_BEAN = 2
-    TIER_TINTO = 3
-    TIER_EXPORTATION_COFFEE = 4
-
-    TIERS_CHOICES = (
-        (TIER_REGULAR, 'Regular'),
-        (TIER_COFFEE_SEED, 'Semilla de café'),
-        (TIER_COFFEE_BEAN, 'Grano de café'),
-        (TIER_TINTO, 'Tinto'),
-        (TIER_EXPORTATION_COFFEE, 'Café de exportación')
-    )
-    
     email = models.EmailField(
         'email address',
         unique=True,
@@ -75,10 +35,11 @@ class User(AbstractUser):
             'unique': 'A user with that email already exists.'
         }
     )
-    
+
     phone_number = PhoneNumberField(blank=True)
     first_name = models.CharField(max_length=25, blank=True, default='')
     last_name = models.CharField(max_length=25, blank=True, default='')
+    tzinfo = models.CharField(max_length=128, blank=True, default='')
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
     best_user = models.BooleanField(default=False)
@@ -93,7 +54,6 @@ class User(AbstractUser):
         related_name='referred_users'
     )
 
-    tier = models.SmallIntegerField(default=TIER_REGULAR, choices=TIERS_CHOICES)
     dispatch_time = models.TimeField(default=None, null=True, blank=True)
     missing_sunday_mails = models.SmallIntegerField(default=4)
     utm_source = models.CharField(choices=UTM_SOURCE_TYPE_CHOICES, default='', blank=True, max_length=25)
@@ -130,7 +90,7 @@ class User(AbstractUser):
         :return:
         open_rate: float
         """
-        return self.opened_mails/(self.sentemails_set.count() or 1)
+        return self.opened_mails / (self.sentemails_set.count() or 1)
 
     @property
     def referred_users_count(self):
@@ -167,9 +127,62 @@ class User(AbstractUser):
     @property
     def recency(self):
         """
+        Current time in days from the date the user joined.
 
+        :return:
+        recency: int
         """
         return (datetime.now().date() - self.date_joined.date()).days
+
+    @property
+    def current_tier(self):
+        """
+        Current tier.
+
+        :return:
+        user_tier: UserTier obj
+        """
+        user_tier = self.usertier_set.filter(valid_to__date__gte=datetime.now()).order_by('-valid_to').first()
+
+        return user_tier
+
+    @property
+    def user_tier_owner_email(self):
+        """
+        Email of the owner of the current tier.
+
+        :return:
+        user_tier_owner_email: str
+        """
+        tier = self.tiers.order_by('-valid_to').first()
+
+        if tier and tier.parent_tier:
+            return tier.parent_tier.user.email
+
+        else:
+            return self.email
+
+    @property
+    def timezone_aware_dispatch_time(self):
+        """
+        Dispatch time transformed from colombian time to user's timezone
+        """
+        from el_tinto.utils.date_time import convert_datetime_to_local_datetime
+
+        if not self.dispatch_time:
+            timezone_aware_dispatch_time = None
+
+        else:
+            colombian_dispatch_datetime = datetime.now(timezone(settings.TIME_ZONE)).replace(
+                hour=self.dispatch_time.hour,
+                minute=self.dispatch_time.minute,
+                second=0,
+                microsecond=0
+            )
+            timezone_aware_dispatch_time = convert_datetime_to_local_datetime(
+                colombian_dispatch_datetime, self.tzinfo).time()
+
+        return timezone_aware_dispatch_time
 
     @property
     def env(self):
@@ -197,13 +210,12 @@ class Unsuscribe(models.Model):
     recommendation = models.TextField(default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     edited_at = models.DateTimeField(auto_now=True)
-    
+
     def __str__(self):
         return f'{self.user}'
 
 
 class UserVisits(models.Model):
-
     SUBSCRIBE_PAGE = 'SP'
     REFERRAL_HUB = 'RH'
 
@@ -218,7 +230,6 @@ class UserVisits(models.Model):
 
 
 class UserButtonsInteractions(models.Model):
-
     TWITTER = 'TW'
     FACEBOOK = 'FB'
     WHATSAPP = 'WP'
@@ -235,3 +246,71 @@ class UserButtonsInteractions(models.Model):
     medium = models.CharField(default='', blank=True, max_length=25)
     type = models.CharField(max_length=4, choices=INTERACTION_TYPE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class UserTier(models.Model):
+    TIER_COFFEE_BEAN = 1
+    TIER_GROUND_COFFEE = 2
+    TIER_TINTO = 3
+    TIER_EXPORTATION_COFFEE = 4
+
+    TIERS_CHOICES = (
+        (TIER_COFFEE_BEAN, 'Grano de café'),
+        (TIER_GROUND_COFFEE, 'Café molido'),
+        (TIER_TINTO, 'Tinto'),
+        (TIER_EXPORTATION_COFFEE, 'Café de exportación')
+    )
+
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='tiers')
+    parent_tier = models.ForeignKey('users.UserTier', on_delete=models.CASCADE, null=True, related_name='children_tiers')
+    tier = models.SmallIntegerField(choices=TIERS_CHOICES)
+    missing_sunday_mails = models.PositiveSmallIntegerField(default=0)
+    will_renew = models.BooleanField(default=True)
+    valid_from = models.DateField(auto_now_add=True)
+    valid_to = models.DateField()
+
+    @property
+    def tier_name(self):
+        """
+        Return the tier as string.
+
+        :return:
+        tier_name: str
+        """
+        return dict(UserTier.TIERS_CHOICES).get(self.tier)
+
+    @property
+    def beneficiaries(self):
+        """
+        Return list of emails containing the beneficiaries of the current tier
+        if current account is not a beneficiary account. Else return empty list.
+
+        :return:
+        beneficiaries: [str]
+        """
+        beneficiaries = []
+
+        if not self.parent_tier:
+            for children_tier in self.children_tiers.filter(valid_to__gte=datetime.now().date()):
+                beneficiaries.append(children_tier.user.email)
+
+        return beneficiaries
+
+    @property
+    def max_beneficiaries(self):
+        """
+        Return the max amount of beneficiaries that can be assigned to this tier.
+
+        :return:
+        max_beneficiaries: int
+        """
+        if self.parent_tier or self.tier < UserTier.TIER_TINTO:
+            max_beneficiaries = 0
+
+        elif self.tier == UserTier.TIER_TINTO:
+            max_beneficiaries = 1
+
+        elif self.tier == UserTier.TIER_EXPORTATION_COFFEE:
+            max_beneficiaries = 3
+
+        return max_beneficiaries

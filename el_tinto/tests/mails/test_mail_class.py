@@ -77,7 +77,7 @@ class TestMailClass(TestCase):
 
         daily_mail_template_keys = [
             'html', 'date', 'name', 'social_media_date', 'tweet', 'subject_message', 'referred_users_count',
-            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'days_reminder'
+            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'days_reminder', 'user_tier'
         ]
 
         self.assertCountEqual(daily_mail_template_keys, template_data.keys())
@@ -139,7 +139,8 @@ class TestMailClass(TestCase):
 
         sunday_mail_template_keys = [
             'html', 'date', 'name', 'social_media_date', 'tweet', 'subject_message', 'referred_users_count',
-            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'has_sunday_mails_prize', 'missing_sunday_mails'
+            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'has_sunday_mails_prize', 'missing_sunday_mails',
+            'user_tier'
         ]
 
         self.assertCountEqual(sunday_mail_template_keys, template_data.keys())
@@ -203,7 +204,8 @@ class TestMailClass(TestCase):
 
         sunday_mail_template_keys = [
             'html', 'date', 'name', 'social_media_date', 'tweet', 'subject_message', 'referred_users_count',
-            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'has_sunday_mails_prize', 'missing_sunday_mails'
+            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'has_sunday_mails_prize', 'missing_sunday_mails',
+            'user_tier'
         ]
 
         self.assertCountEqual(sunday_mail_template_keys, template_data.keys())

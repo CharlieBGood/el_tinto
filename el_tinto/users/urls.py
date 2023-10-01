@@ -1,7 +1,8 @@
 from django.urls import path
 
 from el_tinto.users.views import RegisterView, UpdatePreferredDaysView, ConfirmUpdatePreferredDaysView, \
-    UnsuscribeView, ReferralHubView, SendMilestoneMailView, UserVisitsView, UserButtonsInteractionsView
+    UnsuscribeView, ReferralHubView, SendMilestoneMailView, UserVisitsView, UserButtonsInteractionsView, \
+    MyTasteClubView, MyTasteClubActionsView
 
 urlpatterns = [
     path('suscribe/', RegisterView.as_view(), name='register'),
@@ -12,5 +13,7 @@ urlpatterns = [
     path('send_milestone_mail/', SendMilestoneMailView.as_view()),
     path('user_visits/', UserVisitsView.as_view()),
     path('user_button_interaction/', UserButtonsInteractionsView.as_view()),
+    path('my_taste_club/<uuid>/', MyTasteClubView.as_view(), name='my_taste_club'),
+    path('my_taste_club/<id>/<action>/', MyTasteClubActionsView.as_view(), name='my_taste_club_actions'),
 ]
 

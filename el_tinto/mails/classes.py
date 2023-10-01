@@ -376,7 +376,12 @@ class TasteClubMail(Mail):
         else:
             return (
                 '☕ El Tinto Pruebas - CEO <alejandro@dev.eltinto.xyz>'
-                if self.mail.id in [1, 2, 3]
+                if self.mail.id in [
+                    TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID
+                ]
                 else '☕ El Tinto Pruebas <info@dev.eltinto.xyz>'
             )
 

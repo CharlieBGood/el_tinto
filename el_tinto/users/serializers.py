@@ -6,6 +6,7 @@ from rest_framework import serializers
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User, UserVisits, UserButtonsInteractions, UserTier
 from el_tinto.utils.date_time import convert_datetime_to_local_datetime
+from el_tinto.utils.errors import USER_DOES_NOT_EXIST_ERROR_MESSAGE
 from el_tinto.utils.utils import MILESTONES
 
 
@@ -26,7 +27,7 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
         Validate that emails is not already registered.
         """
         if User.objects.filter(email=obj, is_active=True).exists():
-            raise serializers.ValidationError('Este correo ya está registrado en nuestra base de datos.')
+            raise serializers.ValidationError('This email already exists on our database.')
 
         return obj
 
@@ -39,7 +40,7 @@ class CreateRegisterSerializer(serializers.ModelSerializer):
         if referral_code:
 
             if not (isinstance(referral_code, str) or len(referral_code) > 6):
-                raise ValueError('referral_code no es de tipo válido.')
+                raise ValueError('Referral code is not valid.')
 
             try:
                 referred_by = User.objects.get(referral_code=referral_code).id
@@ -74,7 +75,7 @@ class DestroyRegisterSerializer(serializers.Serializer):
             user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -102,7 +103,7 @@ class UpdatePreferredDaysSerializer(serializers.Serializer):
             user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -111,7 +112,7 @@ class UpdatePreferredDaysSerializer(serializers.Serializer):
         days_values = attrs.values()
 
         if not any(days_values):
-            raise ValueError('Debes seleccionar al menos un día.')
+            raise ValueError('You must select at least one day.')
 
         return attrs
 
@@ -137,7 +138,7 @@ class GetReferralHubInfoParams(serializers.Serializer):
             user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -159,7 +160,7 @@ class SendMilestoneMailSerializer(serializers.Serializer):
             user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -174,7 +175,7 @@ class SendMilestoneMailSerializer(serializers.Serializer):
             return Mail.objects.get(id=MILESTONES[obj]['mail_id'])
 
         except Mail.DoesNotExist:
-            raise serializers.ValidationError('El premio no existe.')
+            raise serializers.ValidationError('The prize does not exist.')
 
 
 class UserVisitsQueryParamsSerializer(serializers.Serializer):
@@ -196,7 +197,7 @@ class UserVisitsQueryParamsSerializer(serializers.Serializer):
             user = User.objects.get(uuid=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -212,7 +213,7 @@ class UserVisitsQueryParamsSerializer(serializers.Serializer):
             mail = Mail.objects.get(id=obj)
 
         except Mail.DoesNotExist:
-            raise serializers.ValidationError('El correo no existe en nuestro sistema.')
+            raise serializers.ValidationError('Mail does not exist on our database.')
 
         return mail
 
@@ -235,7 +236,7 @@ class UserVisitsSerializer(serializers.Serializer):
             user = User.objects.get(referral_code=obj, is_active=True)
 
         except User.DoesNotExist:
-            raise serializers.ValidationError('El usuario no existe en nuestro sistema.')
+            raise serializers.ValidationError(USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
         return user
 
@@ -253,7 +254,6 @@ class MyTasteClubActionSerializer(serializers.Serializer):
     email = serializers.EmailField(required=False)
     dispatch_time = serializers.TimeField(required=False)
     tzinfo = serializers.CharField(required=False)
-
 
     def _validate_add_user_action(self, email, user_tier):
         """

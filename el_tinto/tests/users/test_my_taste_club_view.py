@@ -8,6 +8,7 @@ from rest_framework.test import APITestCase
 from el_tinto.tests.users.factories import UserFactory, UserTierFactory
 from el_tinto.users.models import UserTier
 from el_tinto.utils.date_time import get_string_date
+from el_tinto.utils.errors import USER_DOES_NOT_EXIST_ERROR_MESSAGE
 
 
 class TestMyTasteClubView(APITestCase):
@@ -137,7 +138,7 @@ class TestMyTasteClubView(APITestCase):
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data['user'], 'User does not exist.')
+        self.assertEqual(response.data['user'], USER_DOES_NOT_EXIST_ERROR_MESSAGE)
 
     def test_get_my_taste_club_for_user_with_no_tier(self):
         """

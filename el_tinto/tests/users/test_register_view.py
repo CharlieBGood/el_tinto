@@ -91,4 +91,4 @@ class TestRegisterView(APITestCase):
 
         response = self.client.post(self.url, self.payload, format='json')
         self.assertEqual(response.status_code, HTTP_400_BAD_REQUEST)
-        self.assertEqual(response.data['email'][0], "Este correo ya está registrado en nuestra base de datos.")
+        self.assertEqual(response.data['email'][0], "This email already exists on our database.")

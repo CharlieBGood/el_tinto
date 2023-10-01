@@ -17,6 +17,7 @@ from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferred
     SendMilestoneMailSerializer, UserVisitsQueryParamsSerializer, UserVisitsSerializer, \
     UserButtonsInteractionsSerializer, MyTasteClubActionSerializer
 from el_tinto.utils.date_time import get_string_date
+from el_tinto.utils.errors import USER_DOES_NOT_EXIST_ERROR_MESSAGE, USER_NO_ACTIVE_TIER_ERROR_MESSAGE
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
 from el_tinto.utils.stripe import handle_unsuscribe
 from el_tinto.utils.users import calculate_referral_race_parameters, get_next_prize_info, get_milestones_status, \
@@ -335,10 +336,10 @@ class MyTasteClubView(APIView):
             }
 
         except (User.DoesNotExist, exceptions.ValidationError):
-            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User does not exist."})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': USER_DOES_NOT_EXIST_ERROR_MESSAGE})
 
         except UserTier.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User has no active tier."})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': USER_NO_ACTIVE_TIER_ERROR_MESSAGE})
 
         return Response(data=my_taste_club_data)
 
@@ -363,48 +364,43 @@ class MyTasteClubActionsView(APIView):
                 context={'action': action, 'user_tier': user_tier}, data=self.request.data
             )
 
-            if serializer.is_valid():
-                validated_data = serializer.validated_data
+            serializer.is_valid(raise_exception=True)
+            validated_data = serializer.validated_data
 
-                if action == 'add_user':
-                    self._add_user_action(user_tier, validated_data)
+            if action == 'add_user':
+                self._add_user_action(user_tier, validated_data)
 
-                elif action == 'remove_user':
-                    self._remove_user_action(user_tier, validated_data)
+            elif action == 'remove_user':
+                self._remove_user_action(user_tier, validated_data)
 
-                elif action == 'change_dispatch_time':
-                    self._change_dispatch_time_action(user_tier, validated_data)
+            elif action == 'change_dispatch_time':
+                self._change_dispatch_time_action(user_tier, validated_data)
 
-                elif action == 'unsuscribe':
-                    handle_unsuscribe(user_tier)
-
-                else:
-                    return Response(status=status.HTTP_400_BAD_REQUEST, data={'action': 'Invalid action.'})
-
-                available_beneficiaries_places = user_tier.max_beneficiaries - len(user_tier.beneficiaries)
-
-                response_dict = {
-                    'id': user_tier.id,
-                    'user_name': user_tier.user.user_name,
-                    'tier': user_tier.tier,
-                    'tier_name': user_tier.tier_name,
-                    'valid_to': get_string_date(user_tier.valid_to),
-                    'is_main_account': True if not user_tier.parent_tier else False,
-                    'beneficiaries': user_tier.beneficiaries,
-                    'plan_owner': user_tier.parent_tier.user.email if user_tier.parent_tier else None,
-                    'will_renew': user_tier.will_renew,
-                    'available_beneficiaries_places': (
-                        0 if available_beneficiaries_places < 0 else available_beneficiaries_places
-                    ),
-                    'dispatch_time': user_tier.user.timezone_aware_dispatch_time,
-                    'timezone': user_tier.user.tzinfo
-                }
+            elif action == 'unsuscribe':
+                handle_unsuscribe(user_tier)
 
             else:
-                return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+                return Response(status=status.HTTP_400_BAD_REQUEST, data={'action': 'Invalid action.'})
+
+            available_beneficiaries_places = user_tier.max_beneficiaries - len(user_tier.beneficiaries)
+
+            response_dict = {
+                'id': user_tier.id,
+                'user_name': user_tier.user.user_name,
+                'tier': user_tier.tier,
+                'tier_name': user_tier.tier_name,
+                'valid_to': get_string_date(user_tier.valid_to),
+                'is_main_account': True if not user_tier.parent_tier else False,
+                'beneficiaries': user_tier.beneficiaries,
+                'plan_owner': user_tier.parent_tier.user.email if user_tier.parent_tier else None,
+                'will_renew': user_tier.will_renew,
+                'available_beneficiaries_places': available_beneficiaries_places,
+                'dispatch_time': user_tier.user.timezone_aware_dispatch_time,
+                'timezone': user_tier.user.tzinfo
+            }
 
         except UserTier.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User has no active tier."})
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': USER_NO_ACTIVE_TIER_ERROR_MESSAGE})
 
         return Response(data=response_dict)
 
@@ -457,7 +453,7 @@ class MyTasteClubActionsView(APIView):
 
         # Create new tier
         new_user_tier = UserTier.objects.create(
-            user=User.objects.get(email=email),
+            user=user,
             parent_tier=user_tier,
             tier=user_tier.tier,
             valid_to=user_tier.valid_to,

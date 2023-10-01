@@ -169,14 +169,18 @@ class User(AbstractUser):
         """
         from el_tinto.utils.date_time import convert_datetime_to_local_datetime
 
-        colombian_dispatch_datetime = datetime.now(timezone(settings.TIME_ZONE)).replace(
-            hour=self.dispatch_time.hour,
-            minute=self.dispatch_time.minute,
-            second=0,
-            microsecond=0
-        )
-        timezone_aware_dispatch_time = convert_datetime_to_local_datetime(
-            colombian_dispatch_datetime, self.tzinfo).time()
+        if not self.dispatch_time:
+            timezone_aware_dispatch_time = None
+
+        else:
+            colombian_dispatch_datetime = datetime.now(timezone(settings.TIME_ZONE)).replace(
+                hour=self.dispatch_time.hour,
+                minute=self.dispatch_time.minute,
+                second=0,
+                microsecond=0
+            )
+            timezone_aware_dispatch_time = convert_datetime_to_local_datetime(
+                colombian_dispatch_datetime, self.tzinfo).time()
 
         return timezone_aware_dispatch_time
 

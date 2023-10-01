@@ -11,7 +11,9 @@ from django.utils.safestring import mark_safe
 
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date
-from el_tinto.utils.utils import replace_words_in_sentence, get_env_value, MILESTONES
+from el_tinto.utils.utils import replace_words_in_sentence, get_env_value, MILESTONES, \
+    TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID, TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID, \
+    TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID, TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID
 
 logger = logging.getLogger("mails")
 
@@ -173,7 +175,8 @@ class DailyMail(Mail):
             'env': get_env_value(),
             'uuid': user.uuid if user else '',
             'mail_id': self.mail.id,
-            'days_reminder': True if user and 0 < len(user.preferred_email_days) < 7 else False
+            'days_reminder': True if user and 0 < len(user.preferred_email_days) < 7 else False,
+            'user_tier': True if user and user.tiers.filter(valid_to__gte=datetime.today()).exists() else False
         }
 
         return mail_data
@@ -226,7 +229,8 @@ class SundayMail(Mail):
             'uuid': user.uuid,
             'missing_sunday_mails': user.missing_sunday_mails,
             'has_sunday_mails_prize': user.has_sunday_mails_prize,
-            'mail_id': self.mail.id
+            'mail_id': self.mail.id,
+            'user_tier': True if user.tiers.filter(valid_to__gte=datetime.today()).exists() else False
         }
 
         return mail_data
@@ -349,3 +353,35 @@ class ChangePreferredDaysMail(Mail):
         Set mail template.
         """
         return loader.get_template('../templates/mailings/change_preferred_days.html')
+
+
+class TasteClubMail(Mail):
+
+    def set_sender_email(self):
+        """
+        Set sending mail address.
+        """
+        if os.getenv('DJANGO_CONFIGURATION') == 'Production':
+            return (
+                '☕ El Tinto - CEO <alejandro@eltinto.xyz>'
+                if self.mail.id in [
+                    TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID,
+                    TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID
+                ]
+                else '☕ El Tinto <info@eltinto.xyz>'
+            )
+
+        else:
+            return (
+                '☕ El Tinto Pruebas - CEO <alejandro@dev.eltinto.xyz>'
+                if self.mail.id in [1, 2, 3]
+                else '☕ El Tinto Pruebas <info@dev.eltinto.xyz>'
+            )
+
+    def set_template(self):
+        """
+        Set mail template.
+        """
+        return loader.get_template('../templates/mailings/survey.html')

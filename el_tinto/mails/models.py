@@ -6,7 +6,7 @@ from django.template.exceptions import TemplateDoesNotExist
 from tinymce.models import HTMLField
 
 from el_tinto.mails.classes import DailyMail, SundayMail, SundayNoPrizeMail, MilestoneMail, OnboardingMail, \
-    ChangePreferredDaysMail
+    ChangePreferredDaysMail, TasteClubMail
 from el_tinto.utils.date_time import get_string_date
 
 
@@ -23,6 +23,7 @@ class Mail(models.Model):
     MILESTONE = 'Milestone'
     DAILY_MAIL_NOT_SENT = 'Daily not sent'
     CHANGE_PREFERRED_DAYS = 'Preferred days'
+    TASTE_CLUB = 'Taste club'
     SUNDAY = 'Sunday'
 
     TYPE_OPTIONS = [
@@ -33,6 +34,7 @@ class Mail(models.Model):
         (MILESTONE, 'Meta de referidos'),
         (DAILY_MAIL_NOT_SENT, 'No enviado'),
         (CHANGE_PREFERRED_DAYS, 'Cambiar días preferidos'),
+        (TASTE_CLUB, 'Club de Cata'),
         (SUNDAY, 'Dominguero')
     ]
 
@@ -107,7 +109,8 @@ class Mail(models.Model):
             Mail.SUNDAY_NO_REFERRALS_PRIZE_VERSION: SundayNoPrizeMail,
             Mail.MILESTONE: MilestoneMail,
             Mail.WELCOME: OnboardingMail,
-            Mail.CHANGE_PREFERRED_DAYS: ChangePreferredDaysMail
+            Mail.CHANGE_PREFERRED_DAYS: ChangePreferredDaysMail,
+            Mail.TASTE_CLUB: TasteClubMail
         }
 
         try:

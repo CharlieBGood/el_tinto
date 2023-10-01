@@ -1,6 +1,6 @@
 import factory
 
-from el_tinto.users.models import User
+from el_tinto.users.models import User, UserTier
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -12,7 +12,6 @@ class UserFactory(factory.django.DjangoModelFactory):
     email = factory.Faker('email')
 
 
-# Another, different, factory for the same object
 class EditorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = User
@@ -22,3 +21,12 @@ class EditorFactory(factory.django.DjangoModelFactory):
     email = factory.Faker('email')
     is_staff = True
     is_superuser = True
+
+
+class UserTierFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = UserTier
+
+    tier = UserTier.TIER_EXPORTATION_COFFEE
+    user = factory.SubFactory(UserFactory)
+    valid_to = factory.Faker('future_date')

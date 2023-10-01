@@ -5,7 +5,7 @@ import sys
 from django.contrib import admin, messages
 
 from el_tinto.tests.utils import test_scheduler
-from el_tinto.utils.date_time import convert_utc_to_local_datetime
+from el_tinto.utils.date_time import convert_datetime_to_local_datetime
 from el_tinto.utils.decorators import only_one_instance
 from el_tinto.utils.scheduler import scheduler
 
@@ -41,7 +41,7 @@ def cancel_send_daily_mail(_, request, queryset):
         mail.programmed = False
         mail.save()
 
-        now_datetime = convert_utc_to_local_datetime(datetime.datetime.now())
+        now_datetime = convert_datetime_to_local_datetime(datetime.datetime.now())
         string_now_datatime = now_datetime.strftime("%H:%M:%S of %m/%d/%Y")
         logger.info(f'Mail {mail.id} sending was canceled by {request.user.email} at {string_now_datatime}')
 

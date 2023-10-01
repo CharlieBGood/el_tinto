@@ -1,7 +1,11 @@
+from datetime import datetime, time, date
+
+from pytz import timezone
 from rest_framework import serializers
 
 from el_tinto.mails.models import Mail
-from el_tinto.users.models import User, UserVisits, UserButtonsInteractions
+from el_tinto.users.models import User, UserVisits, UserButtonsInteractions, UserTier
+from el_tinto.utils.date_time import convert_datetime_to_local_datetime
 from el_tinto.utils.utils import MILESTONES
 
 
@@ -242,3 +246,99 @@ class UserButtonsInteractionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserButtonsInteractions
         fields = ('visit', 'medium', 'type')
+
+
+class MyTasteClubActionSerializer(serializers.Serializer):
+    """My taste club actions serializer."""
+    email = serializers.EmailField(required=False)
+    dispatch_time = serializers.TimeField(required=False)
+    tzinfo = serializers.CharField(required=False)
+
+
+    def _validate_add_user_action(self, email, user_tier):
+        """
+        Validate fields for add_user action.
+
+        :params:
+        email: str
+        user_tier: UserTier obj
+        """
+        # Validate email field exists
+        if not email:
+            raise serializers.ValidationError('Email field can not be empty.')
+
+        # Validate parent tier user still can invite more beneficiaries
+        if len(user_tier.beneficiaries) >= user_tier.max_beneficiaries:
+            raise serializers.ValidationError('No more users allowed on this tier.')
+
+        # Validate beneficiary is not already registered in the program
+        user_already_in_program = UserTier.objects.filter(user__email=email, valid_to__gte=date.today()).exists()
+
+        if user_already_in_program:
+            raise serializers.ValidationError('User is already in our taste club program.')
+
+    def _validate_remove_user_action(self, email, user_tier):
+        """
+        Validate fields for remove_user action.
+
+        :params:
+        email: str
+        user_tier: UserTier obj
+        """
+        # Validate email field exists
+        if not email:
+            raise serializers.ValidationError('Email field can not be empty.')
+
+        # Validate email corresponds to beneficiary
+        try:
+            user_tier.children_tiers.get(user__email=email)
+
+        except UserTier.DoesNotExist:
+            raise serializers.ValidationError('Email does not correspond to any beneficiary.')
+
+    def _validate_change_dispatch_time_action(self, dispatch_time, tzinfo, attrs):
+        """
+        Validate fields for change_dispatch_time action.
+
+        :params:
+        dispatch_time: time
+        tzinfo: str
+        attrs: dict
+        """
+
+        if not (dispatch_time and tzinfo):
+            raise serializers.ValidationError('Dispatch time and Timezone fields can not be empty.')
+
+        datetime_object = datetime.now(timezone(tzinfo)).replace(
+            hour=dispatch_time.hour, minute=dispatch_time.minute, second=0, microsecond=0
+        )
+        local_datatime = convert_datetime_to_local_datetime(datetime_object).time()
+
+        if local_datatime < time(6, 0, 0):
+            raise serializers.ValidationError('Hour must be before 6 am colombian time.')
+
+        attrs.update({'dispatch_time': local_datatime})
+
+    def validate(self, attrs):
+        """
+        Validate that the respective field is present for each action.
+
+        remove_user, add_user = email
+        change_dispatch_time = time
+        """
+        action = self.context['action']
+        user_tier = self.context['user_tier']
+        dispatch_time = attrs.get('dispatch_time')
+        tzinfo = attrs.get('tzinfo')
+        email = attrs.get('email')
+
+        if action == 'add_user':
+            self._validate_add_user_action(email, user_tier)
+
+        if action == 'remove_user':
+            self._validate_remove_user_action(email, user_tier)
+
+        elif action == 'change_dispatch_time':
+            self._validate_change_dispatch_time_action(dispatch_time, tzinfo, attrs)
+
+        return attrs

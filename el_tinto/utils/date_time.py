@@ -1,21 +1,23 @@
-from dateutil.tz import gettz
+from django.conf import settings
+from pytz import timezone
 
 from el_tinto.utils.utils import SPANISH_MONTHS_DICT
 
 
-def convert_utc_to_local_datetime(utc_datetime):
+def convert_datetime_to_local_datetime(datetime, tzinfo=None):
     """
-    Convert a UTC datetime object to a datetime object in the Bogotá zone time.
+    Convert a datetime object to a datetime object in the provided
+    timezone, if no tzinfo is provided, system timezone is used.
 
     :params:
-    utc_datetime: datetime object
+    datetime: datetime object
+    tzinfo: str
 
     :return:
     local_datetime: datetime object
     """
-    zone = "America/Bogota"
-
-    local_datetime = utc_datetime.astimezone(gettz(zone))
+    zone = tzinfo or settings.TIME_ZONE
+    local_datetime = datetime.astimezone(timezone(zone))
 
     return local_datetime
 

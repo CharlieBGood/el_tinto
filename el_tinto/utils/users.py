@@ -93,17 +93,17 @@ def calculate_referral_race_parameters(user):
     return math.ceil(percentile), user_referral_race_position
 
 
-def get_next_price_info(user):
+def get_next_prize_info(user):
     """
-    Get the information about the next price in the referral hub.
+    Get the information about the next prize in the referral hub.
 
     :params:
     user: User obj
 
     :retyrn:
-    price_description: str
-    pre_price_string: str
-    missing_referred_users_for_next_price: int
+    prize_description: str
+    pre_prize_string: str
+    missing_referred_users_for_next_prize: int
 
     """
     referral_count = user.referred_users_count
@@ -122,8 +122,8 @@ def get_next_price_info(user):
         if milestone > referral_count:
             next_milestone = MILESTONES[milestone]
             return (
-                next_milestone['price_description'],
-                next_milestone['pre_price_string'],
+                next_milestone['prize_description'],
+                next_milestone['pre_prize_string'],
                 milestone - referral_count
             )
 

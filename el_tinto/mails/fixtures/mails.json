@@ -169,5 +169,157 @@
          "subject_message":"",
          "sent_datetime":null
       }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2178,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata de El Tinto ☕️!&nbsp;</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Su contribuci&oacute;n de una <span style=\"font-weight: bold;\">Grano de Caf&eacute;</span> significa que va a recibir:</p>\r\n<ul>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Un Tinto Dominguero el pr&oacute;ximo domingo y, a partir de ah&iacute;, un Tinto Dominguero la primera semana de cada mes.&nbsp;</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">El informe El Tinto cada mes impar.</p>\r\n</li>\r\n</ul>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Le aseguramos que su grano de caf&eacute; se usar&aacute; para seguir mejorando El Tinto. Muchas gracias por ayudarnos a ser sostenibles.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Nos leemos ma&ntilde;ana temprano en El Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Alejandro - CEO y cofundador.</p>",
+         "subject":"{user_name}, sus beneficios del Club de Cata ☕️",
+         "type":"Taste club",
+         "test_email":"carlosbueno1196@gmail.com",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:29:09.614Z",
+         "dispatch_date":"2023-09-27T19:28:57Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"¡Bienvenid@ al Club de Cata de El Tinto ☕️!",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2179,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola [nombre],</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata de El Tinto ☕️!&nbsp;</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Su contribuci&oacute;n de un <span style=\"font-weight: bold;\">Caf&eacute; Molido</span> significa que va a recibir:</p>\r\n<ul>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Dos Tintos Domingueros los dos pr&oacute;ximos domingos y, a partir de ah&iacute;, los Tintos Domingueros de las dos primeras semanas de cada mes.&nbsp;</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Un Tinto de edici&oacute;n especial.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">El informe El Tinto cada mes impar.</p>\r\n</li>\r\n</ul>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Le aseguramos que su caf&eacute; molido se usar&aacute; para seguir mejorando El Tinto. Muchas gracias por ayudarnos a ser sostenibles.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Nos leemos ma&ntilde;ana temprano en El Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Alejandro - CEO y cofundador.</p>",
+         "subject":"{user_name}, sus beneficios del Club de Cata ☕️",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:30:19.527Z",
+         "dispatch_date":"2023-09-27T19:29:56Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"¡Bienvenid@ al Club de Cata de El Tinto ☕️!",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2180,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata de El Tinto ☕️!&nbsp;</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Su contribuci&oacute;n de <span style=\"font-weight: bold;\">Un Tinto</span> significa que va a recibir:</p>\r\n<ul>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Tres Tintos Domingueros los tres pr&oacute;ximos domingos y, a partir de ah&iacute;, los Tintos Domingueros de las tres primeras semanas de cada mes.&nbsp;</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Tres Tintos de edici&oacute;n especial.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Acceso gratuito a un taller de El Tinto al a&ntilde;o. No se preocupe, nosotros le enviaremos toda la informaci&oacute;n por ac&aacute;.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">El informe El Tinto cada mes impar.</p>\r\n</li>\r\n</ul>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Adem&aacute;s de esto, puede compartir todos estos beneficios con otro Tintero o Tintera que usted escoja. <a href=\"https://{env}eltinto.xyz/mi-club-de-cata/{uuid}\">Inv&iacute;telo o inv&iacute;tela usando este link</a><span style=\"color: #ff0000;\"><span style=\"color: #000000;\">.</span></span></p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Le aseguramos que su tinto se usar&aacute; para seguir mejorando El Tinto. Muchas gracias por ayudarnos a ser sostenibles.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Nos leemos ma&ntilde;ana temprano en El Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Alejandro - CEO y cofundador.</p>",
+         "subject":"{user_name}, sus beneficios del Club de Cata ☕️",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:36:44.585Z",
+         "dispatch_date":"2023-09-27T19:36:37Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"¡Bienvenid@ al Club de Cata de El Tinto ☕️!",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2181,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata de El Tinto ☕️!&nbsp; Qu&eacute; honor que haya escogido el <span style=\"font-weight: bold;\">Caf&eacute; de Exportaci&oacute;n</span>.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Su contribuci&oacute;n significa que tiene acceso a:</p>\r\n<ul>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Todos los Tintos Domingueros del mes (4 o 5 seg&uacute;n el mes).</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Todos los Tintos de edici&oacute;n especial (son 6 cada a&ntilde;o).</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Acceso gratuito a dos talleres de El Tinto al a&ntilde;o. No se preocupe, nosotros le enviaremos toda la informaci&oacute;n por ac&aacute;.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Puede personalizar la hora de llegada de su Tinto, <a href=\"https://{env}eltinto.xyz/mi-club-de-cata/{uuid}\">haciendo click ac&aacute;</a>.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">Ser&aacute; el primero en tener acceso a desarrollos nuevos.</p>\r\n</li>\r\n<li dir=\"ltr\" aria-level=\"1\">\r\n<p dir=\"ltr\" role=\"presentation\">El informe El Tinto cada mes impar.</p>\r\n</li>\r\n</ul>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Adem&aacute;s de esto, usted puede compartir todos estos beneficios con otros tres Tinteros o Tinteras que escoja. <a href=\"https://{env}eltinto.xyz/mi-club-de-cata/{uuid}\">Administre a sus beneficiarios con este link</a><span style=\"color: #ff0000;\">.</span></p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Y lo &uacute;ltimo: este correo fue automatizado, pero si usted responde me llegar&aacute; a mi bandeja de entrada personal.<span style=\"color: #ff0000;\"> </span>No dude en ponerse en contacto conmigo si tiene alguna pregunta o recomendaci&oacute;n.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Le aseguramos que su caf&eacute; de exportaci&oacute;n se usar&aacute; para seguir mejorando El Tinto. Muchas gracias por ayudarnos a ser sostenibles.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Nos leemos ma&ntilde;ana temprano en El Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Alejandro - CEO y cofundador.</p>",
+         "subject":"{user_name}, sus beneficios del Club de Cata ☕️",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:39:36.847Z",
+         "dispatch_date":"2023-09-27T19:39:29Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"¡Bienvenid@ al Club de Cata de El Tinto ☕️!  Qué honor que haya escogido el Café de Exportación.",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2182,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata!</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">{user_tier_owner_email} lo ha invitado a unirse al Club de Cata y disfrutar los beneficios que le ofrece el nivel&nbsp;<span style=\"font-weight: bold;\">Un Tinto</span>.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">De ahora en adelante podr&aacute; disfrutar de 3 Tintos Domingueros al mes y 3 de los 6 Tintos de edici&oacute;n especial, tener acceso gratuito a 1 taller de El Tinto al a&ntilde;o y recibir el informe de El Tinto. {user_tier_owner_email} se encargar&aacute; de los pagos.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Disfrute su Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Equipo de El Tinto ☕️</p>",
+         "subject":"{user_name}, ¡lo han invitado al Club de Cata de El Tinto ☕️!",
+         "type":"Taste club",
+         "test_email":"carlosbueno1196@gmail.com",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:43:04.532Z",
+         "dispatch_date":"2023-09-27T19:42:55Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"{user_name}, ¡lo han invitado al Club de Cata de El Tinto ☕️!",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2183,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Bienvenid@ al Club de Cata!</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">{user_tier_owner_email} lo ha invitado a unirse al Club de Cata y disfrutar los beneficios que le ofrece el nivel&nbsp;<span style=\"font-weight: bold;\">Caf&eacute; de Exportaci&oacute;n</span>.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">De ahora en adelante podr&aacute; disfrutar de todos los Tintos Domingueros del mes y los Tintos de edici&oacute;n especial, tener acceso gratuito a 2 talleres de El Tinto al a&ntilde;o, personalizar la hora de llegada de su Tinto y recibir el informe de El Tinto. {user_tier_owner_email} se encargar&aacute; de los pagos.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">&iexcl;Disfrute su Tinto!</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Equipo de El Tinto☕️</p>",
+         "subject":"{user_name}, ¡lo han invitado al Club de Cata de El Tinto ☕️!",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:44:33.265Z",
+         "dispatch_date":"2023-09-27T19:44:26Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"{user_name}, ¡lo han invitado al Club de Cata de El Tinto ☕️!",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2184,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">{user_tier_owner_email} perdi&oacute; el acceso al Club de Cata o lo elimin&oacute; de su plan. Esto significa que usted cambi&oacute; al servicio gratuito de El Tinto.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Si quiere conocer m&aacute;s acerca del Club de Cata, haga click en el link a continuaci&oacute;n.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\"><a href=\"https://{env}eltinto.xyz/club-de-cata\">&iexcl;CONOZCA EL CLUB DE CATA!</a></p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Un saludo,</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Equipo de El Tinto ☕️</p>",
+         "subject":"{user_name}, ya no tiene acceso al Club de Cata de El Tinto.",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:47:34.636Z",
+         "dispatch_date":"2023-09-27T19:47:29Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"{user_name}, ya no tiene acceso al Club de Cata de El Tinto.",
+         "subject_message":"",
+         "sent_datetime":null
+      }
+   },
+   {
+      "model":"mails.mail",
+      "pk":2185,
+      "fields":{
+         "html":"<p dir=\"ltr\">Hola {user_name},</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Este correo confirma su cancelaci&oacute;n al acceso al Club de Cata. Seguir&aacute; obteniendo sus beneficios hasta el final del mes.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Nos encantar&iacute;a saber las razones por las que decidi&oacute; cancelar su acceso. &iquest;Nos hace un favorcito? Responda a este correo cont&aacute;ndonos por qu&eacute; tom&oacute; esta decisi&oacute;n as&iacute; sabemos c&oacute;mo podemos mejorar.</p>\r\n<p><strong style=\"font-weight: normal;\">&nbsp;</strong></p>\r\n<p dir=\"ltr\">Un saludo,</p>\r\n<p><!-- x-tinymce/html --></p>\r\n<p dir=\"ltr\">Equipo de El Tinto ☕️</p>",
+         "subject":"{user_name}, ya no tiene acceso al Club de Cata de El Tinto.",
+         "type":"Taste club",
+         "test_email":"",
+         "version":"A",
+         "created_by":null,
+         "created_at":"2023-09-27T19:48:36.419Z",
+         "dispatch_date":"2023-09-27T19:48:34Z",
+         "programmed":false,
+         "tinto":null,
+         "tweet":"{user_name}, ya no tiene acceso al Club de Cata de El Tinto.",
+         "subject_message":"",
+         "sent_datetime":null
+      }
    }
 ]

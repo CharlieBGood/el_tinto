@@ -1,7 +1,9 @@
 import json
 import os
+from datetime import date, timedelta
 
 from django.conf import settings
+from django.core import exceptions
 from django.core.cache import cache
 from django.shortcuts import redirect
 from rest_framework import status
@@ -9,16 +11,19 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from el_tinto.mails.models import Mail
-from el_tinto.users.models import User, Unsuscribe, UserVisits
+from el_tinto.users.models import User, Unsuscribe, UserVisits, UserTier
 from el_tinto.users.serializers import CreateRegisterSerializer, UpdatePreferredDaysSerializer, \
     ConfirmUpdatePreferredDaysSerializer, DestroyRegisterSerializer, GetReferralHubInfoParams, \
     SendMilestoneMailSerializer, UserVisitsQueryParamsSerializer, UserVisitsSerializer, \
-    UserButtonsInteractionsSerializer
+    UserButtonsInteractionsSerializer, MyTasteClubActionSerializer
+from el_tinto.utils.date_time import get_string_date
 from el_tinto.utils.html_constants import INVITE_USERS_MESSAGE
-from el_tinto.utils.users import calculate_referral_race_parameters, get_next_price_info, get_milestones_status, \
+from el_tinto.utils.stripe import handle_unsuscribe
+from el_tinto.utils.users import calculate_referral_race_parameters, get_next_prize_info, get_milestones_status, \
     create_user_referral_code
 from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME, get_email_provider, get_email_provider_link, \
-    CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES, get_env_value
+    CHANGE_PREFERRED_DAYS, get_string_days, MILESTONES, get_env_value, TASTE_CLUB_TIER_UTILS, \
+    TASTE_CLUB_BENEFICIARY_CANCELATION_MAIL
 
 
 class RegisterView(APIView):
@@ -70,10 +75,9 @@ class RegisterView(APIView):
             user.referral_code = create_user_referral_code(user)
             user.save()
 
+        # send onboarding email
         onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
-
         mail = onboarding_mail_instance.get_mail_class()
-
         mail.send_mail(user)
 
         return user
@@ -200,7 +204,7 @@ class ReferralHubView(APIView):
 
         referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
 
-        price_description, pre_price_string, missing_referred_users_for_next_price = get_next_price_info(user)
+        prize_description, pre_prize_string, missing_referred_users_for_next_prize = get_next_prize_info(user)
 
         referral_hub_data = {
             'referral_code': user.referral_code,
@@ -210,9 +214,9 @@ class ReferralHubView(APIView):
             'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
             'invite_users_message': INVITE_USERS_MESSAGE,
             'user_name': user.user_name,
-            'price_description': price_description,
-            'pre_price_string': pre_price_string,
-            'missing_referred_users_for_next_price': missing_referred_users_for_next_price,
+            'prize_description': prize_description,
+            'pre_prize_string': pre_prize_string,
+            'missing_referred_users_for_next_prize': missing_referred_users_for_next_prize,
             'milestones': MILESTONES,
             'milestone_status': get_milestones_status(user)
         }
@@ -239,7 +243,7 @@ class SendMilestoneMailView(APIView):
 
         referral_percentage, referral_race_position = calculate_referral_race_parameters(user)
 
-        price_description, pre_price_string, missing_referred_users_for_next_price = get_next_price_info(user)
+        prize_description, pre_prize_string, missing_referred_users_for_next_prize = get_next_prize_info(user)
 
         referral_hub_data = {
             'referral_code': user.referral_code,
@@ -249,9 +253,9 @@ class SendMilestoneMailView(APIView):
             'env': 'dev.' if os.getenv('DJANGO_CONFIGURATION') == 'Development' else '',
             'invite_users_message': INVITE_USERS_MESSAGE,
             'user_name': user.user_name,
-            'price_description': price_description,
-            'pre_price_string': pre_price_string,
-            'missing_referred_users_for_next_price': missing_referred_users_for_next_price,
+            'prize_description': prize_description,
+            'pre_prize_string': pre_prize_string,
+            'missing_referred_users_for_next_prize': missing_referred_users_for_next_prize,
             'milestones': MILESTONES,
             'milestone_status': get_milestones_status(user)
         }
@@ -300,3 +304,183 @@ class UserButtonsInteractionsView(APIView):
         serializer.save()
 
         return Response(status=status.HTTP_201_CREATED)
+
+
+class MyTasteClubView(APIView):
+    """My taste club view."""
+    permission_classes = []
+
+    def get(self, request, uuid, *args, **kwargs):
+        """Get user info for taste club"""
+
+        try:
+            user = User.objects.get(uuid=uuid)
+            user_tier = UserTier.objects.get(user=user, valid_to__gte=date.today())
+
+            available_beneficiaries_places = user_tier.max_beneficiaries - len(user_tier.beneficiaries)
+
+            my_taste_club_data = {
+                'id': user_tier.id,
+                'user_name': user.user_name,
+                'tier': user_tier.tier,
+                'tier_name': user_tier.tier_name,
+                'valid_to': get_string_date(user_tier.valid_to),
+                'is_main_account': True if not user_tier.parent_tier else False,
+                'beneficiaries': user_tier.beneficiaries,
+                'plan_owner': user_tier.parent_tier.user.email if user_tier.parent_tier else None,
+                'will_renew': user_tier.will_renew,
+                'available_beneficiaries_places': available_beneficiaries_places,
+                'dispatch_time': user.dispatch_time,
+                'timezone': user.tzinfo
+            }
+
+        except (User.DoesNotExist, exceptions.ValidationError):
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User does not exist."})
+
+        except UserTier.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User has no active tier."})
+
+        return Response(data=my_taste_club_data)
+
+
+class MyTasteClubActionsView(APIView):
+    """My taste club actions view."""
+    permission_classes = []
+
+    def patch(self, request, id, action, *args, **kwargs):
+        """
+        Execute action over taste club subscription.
+        Posible actions:
+
+        - remove_user
+        - add_user
+        - change_dispatch_time
+        """
+        try:
+            user_tier = UserTier.objects.get(id=id, valid_to__gte=date.today())
+
+            serializer = MyTasteClubActionSerializer(
+                context={'action': action, 'user_tier': user_tier}, data=self.request.data
+            )
+
+            if serializer.is_valid():
+                validated_data = serializer.validated_data
+
+                if action == 'add_user':
+                    self._add_user_action(user_tier, validated_data)
+
+                elif action == 'remove_user':
+                    self._remove_user_action(user_tier, validated_data)
+
+                elif action == 'change_dispatch_time':
+                    self._change_dispatch_time_action(user_tier, validated_data)
+
+                elif action == 'unsuscribe':
+                    handle_unsuscribe(user_tier)
+
+                else:
+                    return Response(status=status.HTTP_400_BAD_REQUEST, data={'action': 'Invalid action.'})
+
+                available_beneficiaries_places = user_tier.max_beneficiaries - len(user_tier.beneficiaries)
+
+                response_dict = {
+                    'id': user_tier.id,
+                    'user_name': user_tier.user.user_name,
+                    'tier': user_tier.tier,
+                    'tier_name': user_tier.tier_name,
+                    'valid_to': get_string_date(user_tier.valid_to),
+                    'is_main_account': True if not user_tier.parent_tier else False,
+                    'beneficiaries': user_tier.beneficiaries,
+                    'plan_owner': user_tier.parent_tier.user.email if user_tier.parent_tier else None,
+                    'will_renew': user_tier.will_renew,
+                    'available_beneficiaries_places': (
+                        0 if available_beneficiaries_places < 0 else available_beneficiaries_places
+                    ),
+                    'dispatch_time': user_tier.user.timezone_aware_dispatch_time,
+                    'timezone': user_tier.user.tzinfo
+                }
+
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
+        except UserTier.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND, data={'user': "User has no active tier."})
+
+        return Response(data=response_dict)
+
+    def _remove_user_action(self, user_tier, validated_data):
+        """
+        Remove user action
+
+        :params:
+        user_tier: UserTier obj
+        validated_data: dict
+        """
+        remove_user = User.objects.get(email=validated_data['email'])
+        remove_tier = user_tier.children_tiers.get(user=remove_user)
+        remove_tier.valid_to = date.today() - timedelta(days=1)
+        remove_tier.save()
+
+        # send confirmation email
+        instance = Mail.objects.get(id=TASTE_CLUB_BENEFICIARY_CANCELATION_MAIL)
+        mail = instance.get_mail_class()
+        mail.send_mail(user=remove_user)
+
+    def _add_user_action(self, user_tier, validated_data):
+        """
+        Add user action
+
+        :params:
+        user_tier: UserTier obj
+        validated_data: dict
+        """
+        email = validated_data['email']
+        user = User.objects.filter(email=email).first()
+
+        # active user if is inactive
+        if user and not user.is_active:
+            user.is_active = True
+            user.save()
+
+        # subscribe user if not already subscribed
+        if not user:
+            user = User.objects.create(email=email, referred_by=user_tier.user)
+
+            # set user referral code
+            user.referral_code = create_user_referral_code(user)
+            user.save()
+
+            # send onboarding email
+            onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
+            mail = onboarding_mail_instance.get_mail_class()
+            mail.send_mail(user)
+
+        # Create new tier
+        new_user_tier = UserTier.objects.create(
+            user=User.objects.get(email=email),
+            parent_tier=user_tier,
+            tier=user_tier.tier,
+            valid_to=user_tier.valid_to,
+            missing_sunday_mails=TASTE_CLUB_TIER_UTILS[user_tier.tier]['sunday_mails']
+        )
+
+        # send confirmation mail
+        tier_mail_id = TASTE_CLUB_TIER_UTILS[user_tier.tier]['invitation_mail']
+
+        if tier_mail_id:
+            instance = Mail.objects.get(id=tier_mail_id)
+            mail = instance.get_mail_class()
+
+            mail.send_mail(user=new_user_tier.user)
+
+    def _change_dispatch_time_action(self, user_tier, validated_data):
+        """
+        Add user action
+
+        :params:
+        user_tier: UserTier obj
+        validated_data: dict
+        """
+        user_tier.user.dispatch_time = validated_data['dispatch_time']
+        user_tier.user.tzinfo = validated_data['tzinfo']
+        user_tier.user.save()

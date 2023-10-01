@@ -1,10 +1,12 @@
 import uuid
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from phonenumber_field.modelfields import PhoneNumberField
+from pytz import timezone
 
 from el_tinto.users.managers import UserManager
 
@@ -37,6 +39,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField(blank=True)
     first_name = models.CharField(max_length=25, blank=True, default='')
     last_name = models.CharField(max_length=25, blank=True, default='')
+    tzinfo = models.CharField(max_length=128, blank=True, default='')
     username = None
     preferred_email_days = ArrayField(models.SmallIntegerField(), blank=True, default=list)
     best_user = models.BooleanField(default=False)
@@ -144,6 +147,40 @@ class User(AbstractUser):
         return user_tier
 
     @property
+    def user_tier_owner_email(self):
+        """
+        Email of the owner of the current tier.
+
+        :return:
+        user_tier_owner_email: str
+        """
+        tier = self.tiers.order_by('-valid_to').first()
+
+        if tier and tier.parent_tier:
+            return tier.parent_tier.user.email
+
+        else:
+            return self.email
+
+    @property
+    def timezone_aware_dispatch_time(self):
+        """
+        Dispatch time transformed from colombian time to user's timezone
+        """
+        from el_tinto.utils.date_time import convert_datetime_to_local_datetime
+
+        colombian_dispatch_datetime = datetime.now(timezone(settings.TIME_ZONE)).replace(
+            hour=self.dispatch_time.hour,
+            minute=self.dispatch_time.minute,
+            second=0,
+            microsecond=0
+        )
+        timezone_aware_dispatch_time = convert_datetime_to_local_datetime(
+            colombian_dispatch_datetime, self.tzinfo).time()
+
+        return timezone_aware_dispatch_time
+
+    @property
     def env(self):
         """
         Returns the environment on which the code is being executed.
@@ -208,20 +245,68 @@ class UserButtonsInteractions(models.Model):
 
 
 class UserTier(models.Model):
-    TIER_COFFEE_SEED = 1
-    TIER_COFFEE_BEAN = 2
+    TIER_COFFEE_BEAN = 1
+    TIER_GROUND_COFFEE = 2
     TIER_TINTO = 3
     TIER_EXPORTATION_COFFEE = 4
 
     TIERS_CHOICES = (
-        (TIER_COFFEE_SEED, 'Semilla de café'),
         (TIER_COFFEE_BEAN, 'Grano de café'),
+        (TIER_GROUND_COFFEE, 'Café molido'),
         (TIER_TINTO, 'Tinto'),
         (TIER_EXPORTATION_COFFEE, 'Café de exportación')
     )
 
-    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    payment = models.OneToOneField('stripe.StripePayment', on_delete=models.CASCADE)
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE, related_name='tiers')
+    parent_tier = models.ForeignKey('users.UserTier', on_delete=models.CASCADE, null=True, related_name='children_tiers')
     tier = models.SmallIntegerField(choices=TIERS_CHOICES)
-    valid_from = models.DateTimeField(auto_now_add=True)
-    valid_to = models.DateTimeField()
+    missing_sunday_mails = models.PositiveSmallIntegerField(default=0)
+    will_renew = models.BooleanField(default=True)
+    valid_from = models.DateField(auto_now_add=True)
+    valid_to = models.DateField()
+
+    @property
+    def tier_name(self):
+        """
+        Return the tier as string.
+
+        :return:
+        tier_name: str
+        """
+        return dict(UserTier.TIERS_CHOICES).get(self.tier)
+
+    @property
+    def beneficiaries(self):
+        """
+        Return list of emails containing the beneficiaries of the current tier
+        if current account is not a beneficiary account. Else return empty list.
+
+        :return:
+        beneficiaries: [str]
+        """
+        beneficiaries = []
+
+        if not self.parent_tier:
+            for children_tier in self.children_tiers.filter(valid_to__gte=datetime.now().date()):
+                beneficiaries.append(children_tier.user.email)
+
+        return beneficiaries
+
+    @property
+    def max_beneficiaries(self):
+        """
+        Return the max amount of beneficiaries that can be assigned to this tier.
+
+        :return:
+        max_beneficiaries: int
+        """
+        if self.parent_tier or self.tier < UserTier.TIER_TINTO:
+            max_beneficiaries = 0
+
+        elif self.tier == UserTier.TIER_TINTO:
+            max_beneficiaries = 1
+
+        elif self.tier == UserTier.TIER_EXPORTATION_COFFEE:
+            max_beneficiaries = 3
+
+        return max_beneficiaries

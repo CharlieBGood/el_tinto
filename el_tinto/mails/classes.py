@@ -180,7 +180,9 @@ class DailyMail(Mail):
             'uuid': user.uuid if user else '',
             'mail_id': self.mail.id,
             'days_reminder': True if user and 0 < len(user.preferred_email_days) < 7 else False,
-            'user_tier': True if user and user.tiers.filter(valid_to__gte=datetime.today()).exists() else False
+            'user_tier': True if user and user.tiers.filter(valid_to__gte=datetime.today()).exists() else False,
+            'sponsor_image_url': self.mail.sponsor_image_url,
+            'sponsor_web_url': self.mail.sponsor_web_url
         }
 
         return mail_data

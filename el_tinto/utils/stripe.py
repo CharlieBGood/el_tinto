@@ -49,7 +49,6 @@ def handle_payment_intent_succeeded(payment_intent):
     )
 
     if user:
-
         valid_to = (date.today() + timedelta(days=30) if recurrence == 'month' else date.today() + timedelta(days=365))
         missing_sunday_mails = TASTE_CLUB_TIER_UTILS[tier]['sunday_mails']
 
@@ -79,15 +78,15 @@ def handle_payment_intent_succeeded(payment_intent):
                 valid_to=valid_to
             )
 
+            # send confirmation mail
+            tier_mail_id = TASTE_CLUB_TIER_UTILS[tier]['welcome_mail']
+            instance = Mail.objects.get(id=tier_mail_id)
+            mail = instance.get_mail_class()
+
+            mail.send_mail(user=user)
+
         # add payment to tier
         user_tier.payments.add(payment)
-
-        # send confirmation mail
-        tier_mail_id = TASTE_CLUB_TIER_UTILS[tier]['welcome_mail']
-        instance = Mail.objects.get(id=tier_mail_id)
-        mail = instance.get_mail_class()
-
-        mail.send_mail(user=user)
 
 
 def handle_unsuscribe(user_tier):

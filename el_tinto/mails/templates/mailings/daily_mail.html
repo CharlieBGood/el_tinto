@@ -4,22 +4,21 @@
     <table>
         <tr>
             <td>
-                <h2 style="margin-top: 0">¡Refiere El Tinto!</h2>
+                <h2 style="margin-top: 0">¡Refiera y gane premios!</h2>
                 <p>
-                    Regálale al mundo la posibilidad de iniciar los días con el buen aroma y el delicioso sabor de
-                    las historias más importantes en solo cinco minutos.
+                    Si El Tinto lo ayuda a informarse, estamos seguros de que también podemos ayudarle a sus amigos y
+                    familiares. No nos tenga en secreto, comparta su enlace único.
                 </p>
                 <p>
-                    No nos tengas en secreto, ya es hora de que todo el mundo se entere. Y para que veas lo
-                    comprometidos que estamos, no solo te ayudamos a gritarlo a los cuatro vientos,
-                    ¡también te premiamos!
+                    Y para que vea lo comprometidos que estamos, no solo le ayudamos a gritarlo a los cuatro vientos,
+                    ¡también lo premiamos!
                 </p>
                 <img
                     src="https://el-tinto-utils.s3.amazonaws.com/referral_program/giff_premios_v2.gif"
                     style="display: block; width: 100%; margin: 0"
                 >
                 <h3 style="margin-top: 30px;">
-                  <strong>Tu número de referidos: {{ referred_users_count }}</strong>
+                  <strong>Su número de referidos: {{ referred_users_count }}</strong>
                 </h3>
                 <a
                     ses:no-track
@@ -29,20 +28,20 @@
                     class="suscribeLink"
                 >
                   <div style="background-color: #8884fc; height: 60px; vertical-align: middle; margin: 0 0 40px 0; display: table; width: 60%; max-width: 250px">
-                    <p style="text-align: center;">Haz click para compartir</p>
+                    <p style="text-align: center;">Haga click para compartir</p>
                   </div>
                 </a>
                 <h3 style="margin-top: 30px;">
-                  <strong>O copia y pega tu link de referidos: <br> {{ env }}eltinto.xyz/?referral_code={{referral_code}}</strong>
+                  <strong>O copie y pegue su link de referidos: <br> {{ env }}eltinto.xyz/?referral_code={{referral_code}}</strong>
                 </h3>
             </td>
         </tr>
         {% if user_tier %}
             <tr>
                 <td>
-                    <h2 style="margin-top: 0">¡Administra los beneficios de tu suscripción!</h2>
+                    <h2 style="margin-top: 0">¡Administre los beneficios de su suscripción!</h2>
                     <p>
-                        Recuerda que siempre puedes administrar los beneficios de tu suscripción
+                        Recuerde que siempre puede administrar los beneficios de su suscripción
                         <a
                             ses:no-track
                             href="https://{{ env }}eltinto.xyz/mi-club-de-cata/{{ uuid }}/"
@@ -55,38 +54,4 @@
             </tr>
         {% endif %}
     </table>
-{% endblock %}
-
-{% block footer %}
-    <div style="background-color: #5044e4; padding: 5px 5%;">
-      <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
-        los derechos reservados.
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
-        ¿No quieres recibir más estos correos?
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
-        Te puedes desuscribir de esta lista
-          <a ses:no-track href="https://www.{{ env }}eltinto.xyz/desuscribirse/personalizar/?user={{uuid}}&user_name={{ name }}"
-            target="_blank"
-            style="color: #FFFFFF !important; text-decoration: underline !important"
-          >
-              aquí
-          </a>.
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
-        quisieras que incluyéramos algo nuevo?
-      </p>
-      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
-        <a
-          ses:no-track href='mailto:info@eltinto.xyz'
-          style='color: #FFFFFF !important; text-decoration: none !important;'
-        >
-          info@eltinto.xyz
-        </a>
-        o responde a este correo y te daremos respuesta antes de que se te enfríe el tintico.
-      </p>
-      <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-    </div>
 {% endblock %}

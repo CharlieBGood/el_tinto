@@ -43,7 +43,11 @@ class Mail:
         return:
         mail_template_data = dict
         """
-        mail_data = {'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user))}
+        mail_data = {
+            'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user)),
+            'mail_version': True,
+            'user_name': user.user_name if user else ''
+        }
 
         return mail_data
 
@@ -333,20 +337,6 @@ class OnboardingMail(Mail):
 
 
 class ChangePreferredDaysMail(Mail):
-
-    def get_mail_template_data(self, user=None):
-        """
-        Get mail template data.
-
-        params:
-        user: User obj
-
-        return:
-        mail_template_data = dict
-        """
-        mail_data = {'html': mark_safe(replace_words_in_sentence(self.mail.html, user=user))}
-
-        return mail_data
 
     def set_template(self):
         """

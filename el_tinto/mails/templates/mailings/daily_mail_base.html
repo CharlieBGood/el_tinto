@@ -61,8 +61,8 @@
         {% if days_reminder %}
             <div style="padding: 0 5%; margin: 0;">
               <p style="margin: 0">
-                  Recuerda que si extrañas nuestro sabor diario en tus mañanas o sientes que
-                  no te despiertas con toda la energía que te da un buen Tinto, siempre puedes personalizar tus días
+                  Recuerde que si extraña nuestro sabor diario en sus mañanas o siente que
+                  no se despierta con toda la energía que te da un buen Tinto, siempre puede personalizar sus días
                 <a ses:no-track href="https://www.{{ env }}eltinto.xyz/personalizar/?email={{ email }}" target="_blank">haciendo click aquí</a>.
               </p>
             </div>
@@ -85,7 +85,7 @@
                   {% endblock %}
                 {% endif %}
               <h3 style="text-align: center; margin-top: 30px;">
-                <strong>¿Te gustó el Tinto de hoy y quieres compartirlo?</strong>
+                <strong>¿Le gustó el Tinto de hoy y quiere compartirlo?</strong>
               </h3>
               <table style="width: 40%; margin: 30px auto 60px auto;">
                 <tbody>
@@ -144,7 +144,7 @@
               </table>
               {% if not mail_version %}
                 <h3 style="text-align: center; margin-top: 30px;">
-                  <strong>También te puedes suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
+                  <strong>También se puede suscribir a El Tinto en menos de un minuto, ¡es gratis!</strong>
                 </h3>
                 <a class="suscribeLink" href="/" style="color: #FFFFFF; text-decoration: none;">
                   <div style="background-color: #5044e4; height: 40px; width: 30%; display: table; margin: 20px auto;">
@@ -152,10 +152,6 @@
                   </div>
                 </a>
               {% endif %}
-            {% if mail_version %}
-                {% block footer %}
-                {% endblock %}
-            {% endif %}
           </td>
         </tr>
       </tbody>

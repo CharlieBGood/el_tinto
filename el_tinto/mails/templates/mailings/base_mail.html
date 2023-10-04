@@ -84,6 +84,50 @@
     <span style="color: transparent; width: 1px; height: 1px; display: none">{{ subject_message }}</span>
     {% block mail %}
     {% endblock %}
+    {% if mail_version %}
+        <table style="width: 100%">
+            <tr>
+                <td>
+                    <div style="background-color: #5044e4; padding: 5px 5%;">
+                      <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+                        <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">
+                            <strong>Pase y charlemos en La Cafetería,</strong> la comunidad de El Tinto,
+                            <a href="https://discord.gg/BT5TDrMd8F" style="color: #FFFFFF !important; text-decoration: underline !important">aquí</a>
+                        </p>
+                        <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0 0 20px 0;">
+                            También puede seguirnos en:
+                            <br>
+                            <br>
+                            <a href="https://twitter.com/ElTinto_" style="padding: 10px">
+                                <img src="https://el-tinto-utils.s3.amazonaws.com/white_twitter.png" style="max-width: 20px">
+                            </a>
+                            <a href="https://www.instagram.com/_eltinto_/" style="padding: 10px">
+                                <img src="https://el-tinto-utils.s3.amazonaws.com/white_instagram.png" style="max-width: 20px">
+                            </a>
+                        </p>
+                        <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                            <strong>¿Tiene alguna sugerencia?</strong>
+                            Responda a este correo.
+                        </p>
+                      <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0;">
+                        <strong>¿No quiere recibir más estos correos?</strong>
+                          Se puedes desuscribir de esta lista
+                          <a ses:no-track href="https://www.{{ env }}eltinto.xyz/desuscribirse/personalizar/?user={{uuid}}&user_name={{ name }}"
+                            target="_blank"
+                            style="color: #FFFFFF !important; text-decoration: underline !important"
+                          >
+                              aquí
+                          </a>.
+                      </p>
+                      <p style="color: #FFFFFF; text-align: center; font-size: 12px;">
+                        Copyright © 2023 El Tinto. Todos los derechos reservados.
+                      </p>
+                      <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    {% endif %}
   </div>
 </body>
 

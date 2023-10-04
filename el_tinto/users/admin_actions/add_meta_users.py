@@ -14,6 +14,7 @@ from el_tinto.utils.utils import UTILITY_MAILS, ONBOARDING_EMAIL_NAME
 class SendMessageForm(forms.Form):
     csv_file = forms.FileField(label='Meta users csv')
 
+
 @admin.action(description='Agregar usuarios de Meta')
 def add_meta_users(_, request, queryset):
     """

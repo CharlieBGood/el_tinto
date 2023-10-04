@@ -9,31 +9,22 @@
               src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagotipo.png"
               style="margin: 0 auto 50px auto; display: block; width: 75%"
             />
-            <div style="background-color: #5044e4; height: 60px; width: 100%; display: table; margin: 20px 0;">
-              <h2 style="color: #FFFFFF; text-align:center; vertical-align: middle; display: table-cell; padding: 0 30px;">
-                Historias importantes para gente ocupada
-              </h2>
-            </div>
+            <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">
             <div style="padding: 0 5%; margin: 10px 0 40px 0;">
                 <p>
-                  {% if name %}
-                  <strong>Hola {{ name }},</strong>
-                  {% else %}
-                  Hola,
-                  {% endif %}
-                  <br>
+                  <strong>Hola {{ user_name }},</strong>
                   <br>
                   <br>
                   {% if display_type == 'str' %}
-                  Acabas de realizar una solicitud para actualizar la frecuencia en la que quieres recibir El Tinto.
-                  Ahora podrás disfrutar de nuestro sabor y mantenerte al día con las historias
+                  Acaba de realizar una solicitud para actualizar la frecuencia en la que quiere recibir El Tinto.
+                  Ahora podrá disfrutar de nuestro sabor y mantenerse al día con las historias
                   más importantes del país <strong>{{ days }}</strong>.
                   <br>
                   <br>
                   <br>
                   {% elif display_type == 'list' %}
-                  Acabas de realizar una solicitud para actualizar la frecuencia en la que quieres recibir El Tinto.
-                  Ahora podrás disfrutar de nuestro sabor y mantenerte al día con las historias
+                  Acaba de realizar una solicitud para actualizar la frecuencia en la que quiere recibir El Tinto.
+                  Ahora podrá disfrutar de nuestro sabor y mantenerse al día con las historias
                   más importantes del país los días:
                   <ul>
                     {% for day in days %}
@@ -43,28 +34,14 @@
                   {% endif %}
                 </p>
                 <p>
-                    Si fuiste tú quién realizó esta solicitud y quieres confirmarla, por favor da click en el siguiente link,
+                    Si fue usted quién realizó esta solicitud y quiere confirmarla, por favor dé click en el siguiente link,
                     el cual estará disponible por las próximas 24 horas.
                 </p>
                 <a ses:no-track href="https://{{ env }}api.eltinto.xyz/users/update_preferred_days/confirm/?key={{ key }}" target="_blank" style="color: #FFFFFF; text-decoration: none;">
                   <div style="border-radius: 12px; background-color: #5044e4; height: 60px; width: 50%; vertical-align: middle; margin: 40px auto 0 auto; display: table;">
-                    <p style="text-align: center;">Actualizar</p>
+                    <p style="text-align: center; color: #FFFFFF;">Actualizar</p>
                   </div>
                 </a>
-            </div>
-            <div style="background-color: #5044e4; padding: 5px 5%;">
-              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0;">Copyright © El Tinto 2022 Todos
-                los derechos reservados.
-              </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 20px 0 0 0;">¿Tienes alguna sugerencia o
-                quisieras que incluyéramos algo nuevo?
-              </p>
-              <p style="color: #FFFFFF; text-align: center; font-size: 12px; margin: 0">Escríbenos a
-                <a ses:no-track href='mailto:info@eltinto.xyz' style='color: #FFFFFF'>info@eltinto.xyz</a>
-                o responde a este correo y te daremos respuesta antes de que se te enfríe el tintico.
-              </p>
-              <hr style="width: 100%; border-top: 1px solid #FFFFFF; margin: 20px 0;">
             </div>
           </td>
         </tr>

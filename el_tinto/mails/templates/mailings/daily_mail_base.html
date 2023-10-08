@@ -39,18 +39,54 @@
         <hr style="width: 100%; border-top: 2px solid #eaeaea; margin-top: 0">
         <tr>
             <table style="margin: 0 auto">
-                <tr>
-                    <td>
-                        <img
-                          src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
-                          class="logo-title"
-                          style="margin: 20px auto 0 auto;"
-                        >
-                        <p class="logo-subtitle">
-                            <span style="color: #fca311">-</span><i> Diario </i><span style="color: #fca311">-</span>
-                        </p>
-                    </td>
-                </tr>
+                {% if not sponsor_image_url %}
+                    <tr>
+                        <td>
+                            <img
+                              src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
+                              class="logo-title"
+                              style="margin: 20px auto 0 auto;"
+                            >
+                            <p class="logo-subtitle">
+                                <span style="color: #fca311">-</span><i> Diario </i><span style="color: #fca311">-</span>
+                            </p>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td>
+                            <img
+                              src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_text_b.png"
+                              class="logo-title"
+                              style="margin: 20px auto 0 auto;"
+                            >
+                            <p class="logo-subtitle" style="margin: 10px auto 0 auto;">
+                                <span style="color: #fca311">-</span><i> Diario </i><span style="color: #fca311">-</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="margin: 0 auto 20px auto">
+                        <td>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <h4 style="text-align: right; margin-right: 10px; font-weight: 700">
+                                                PATROCINADO POR
+                                        </h4>
+                                    </td>
+                                    <td>
+                                        <a href={{ sponsor_web_url }}>
+                                            <img
+                                              src="{{ sponsor_image_url }}"
+                                              style="margin: inherit; max-width: 150px"
+                                            >
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                {% endif %}
                 <tr>
                     <td>
                         <hr style="width:100%;border-top:2px solid #eaeaea;margin: 20px 0">

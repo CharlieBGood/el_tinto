@@ -21,7 +21,6 @@ class Mail(models.Model):
     PROMOTION = 'Promotion'
     WELCOME = 'Welcome'
     MILESTONE = 'Milestone'
-    DAILY_MAIL_NOT_SENT = 'Daily not sent'
     CHANGE_PREFERRED_DAYS = 'Preferred days'
     TASTE_CLUB = 'Taste club'
     SUNDAY = 'Sunday'
@@ -32,7 +31,6 @@ class Mail(models.Model):
         (PROMOTION, 'Promoción'),
         (WELCOME, 'Bienvenida'),
         (MILESTONE, 'Meta de referidos'),
-        (DAILY_MAIL_NOT_SENT, 'No enviado'),
         (CHANGE_PREFERRED_DAYS, 'Cambiar días preferidos'),
         (TASTE_CLUB, 'Club de Cata'),
         (SUNDAY, 'Dominguero')
@@ -76,7 +74,8 @@ class Mail(models.Model):
     dispatch_date = models.DateTimeField(null=True, blank=False)
     programmed = models.BooleanField(default=False, editable=False)
     tinto = models.OneToOneField('tintos.Tinto', on_delete=models.SET_NULL, null=True, related_name='mail')
-
+    sponsor_image_url = models.URLField(default='', blank=True)
+    sponsor_web_url = models.URLField(default='', blank=True)
     tweet = models.CharField(max_length=256, default='', help_text='256 characters max')
     subject_message = models.CharField(max_length=256, default='', blank=True,
                                        help_text='Texto que acompaña al subject')

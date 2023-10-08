@@ -77,7 +77,8 @@ class TestMailClass(TestCase):
 
         daily_mail_template_keys = [
             'html', 'date', 'name', 'social_media_date', 'tweet', 'subject_message', 'referred_users_count',
-            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'days_reminder', 'user_tier'
+            'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'days_reminder', 'user_tier',
+            'sponsor_image_url', 'sponsor_web_url'
         ]
 
         self.assertCountEqual(daily_mail_template_keys, template_data.keys())
@@ -268,7 +269,7 @@ class TestMailClass(TestCase):
         # Test mail template data
         template_data = self.milestone_mail_class.get_mail_template_data(user)
 
-        milestone_mail_template_keys = ['html']
+        milestone_mail_template_keys = ['html', 'user_name', 'mail_version']
 
         self.assertCountEqual(milestone_mail_template_keys, template_data.keys())
 
@@ -288,7 +289,7 @@ class TestMailClass(TestCase):
         # Test mail template data
         template_data = self.onboarding_mail_class.get_mail_template_data(user)
 
-        sunday_mail_template_keys = ['html']
+        sunday_mail_template_keys = ['html', 'user_name', 'mail_version']
 
         self.assertCountEqual(sunday_mail_template_keys, template_data.keys())
 
@@ -311,7 +312,7 @@ class TestMailClass(TestCase):
         # Test mail template data
         template_data = self.change_preferred_days_mail_class.get_mail_template_data(user)
 
-        change_preferred_days_mail_keys = ['html']
+        change_preferred_days_mail_keys = ['html', 'user_name', 'mail_version']
 
         self.assertCountEqual(change_preferred_days_mail_keys, template_data.keys())
 

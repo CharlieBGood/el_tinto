@@ -1,5 +1,6 @@
 import csv
 import io
+import os
 
 from django.contrib import admin, messages
 from django.forms import forms
@@ -50,10 +51,13 @@ def add_meta_users(_, request, queryset):
 
         # Create new user in case it doesn't exist
         except User.DoesNotExist:
+            first_name = line['first_name'] if len(line['first_name']) < 25 else ''
+            last_name = line['last_name'] if len(line['last_name']) < 25 else ''
+
             user = User.objects.create(
                 email=line['email'],
-                first_name=line['first_name'],
-                last_name=line['last_name'],
+                first_name=first_name,
+                last_name=last_name,
                 utm_source=User.FACEBOOK,
                 medium='ads'
             )
@@ -61,8 +65,9 @@ def add_meta_users(_, request, queryset):
             user.referral_code = create_user_referral_code(user)
             user.save()
 
-            onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
-            mail = onboarding_mail_instance.get_mail_class()
-            mail.send_mail(user)
+            if os.getenv('DJANGO_CONFIGURATION') == 'Production':
+                onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
+                mail = onboarding_mail_instance.get_mail_class()
+                mail.send_mail(user)
 
     messages.success(request, 'Users have been added successfully.')

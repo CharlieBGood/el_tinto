@@ -331,7 +331,7 @@ class MyTasteClubView(APIView):
                 'plan_owner': user_tier.parent_tier.user.email if user_tier.parent_tier else None,
                 'will_renew': user_tier.will_renew,
                 'available_beneficiaries_places': available_beneficiaries_places,
-                'dispatch_time': user.dispatch_time,
+                'dispatch_time': user.timezone_aware_dispatch_time,
                 'timezone': user.tzinfo
             }
 
@@ -477,6 +477,7 @@ class MyTasteClubActionsView(APIView):
         user_tier: UserTier obj
         validated_data: dict
         """
+        print(validated_data['dispatch_time'], validated_data['tzinfo'])
         user_tier.user.dispatch_time = validated_data['dispatch_time']
         user_tier.user.tzinfo = validated_data['tzinfo']
         user_tier.user.save()

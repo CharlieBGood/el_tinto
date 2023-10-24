@@ -88,8 +88,8 @@ class Local(Common):
     }
 
     # Stripe products
-    COFFEE_SEED_STRIPE_CODE = 'prod_OZPWtHd1Ni7Ldv'
-    COFFEE_BEEN_STRIPE_CODE = 'prod_OZQYdJJny3qbgc'
+    COFFEE_BEAN_STRIPE_CODE = 'prod_OZPWtHd1Ni7Ldv'
+    GROUND_COFFEE_STRIPE_CODE = 'prod_OZQYdJJny3qbgc'
     TINTO_STRIPE_CODE = 'prod_OZQZS9HxRi5a4n'
     EXPORTATION_COFFEE_STRIPE_CODE = 'prod_OZQaXRbIbt6w80'
 

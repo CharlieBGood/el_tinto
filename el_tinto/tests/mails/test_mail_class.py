@@ -1,6 +1,6 @@
 import os
 import urllib.parse
-from datetime import timedelta, time
+from datetime import timedelta, time, datetime
 
 from django.core import mail
 from django.template import loader
@@ -8,7 +8,7 @@ from django.test import TestCase
 
 from el_tinto.mails.models import Mail
 from el_tinto.tests.mails.factories import DailyMailFactory, SundayMailFactory, SentEmailsFactory
-from el_tinto.tests.users.factories import UserFactory
+from el_tinto.tests.users.factories import UserFactory, UserTierFactory
 from el_tinto.utils.date_time import get_string_date
 from el_tinto.utils.utils import get_env_value, MILESTONES, replace_words_in_sentence, UTILITY_MAILS, \
     ONBOARDING_EMAIL_NAME, CHANGE_PREFERRED_DAYS
@@ -230,13 +230,21 @@ class TestMailClass(TestCase):
         users_with_no_prize = UserFactory.create_batch(size=5, missing_sunday_mails=0)
 
         # Users with prize
-        users_with_prize = UserFactory.create_batch(size=5, missing_sunday_mails=0)
-
-        for user_with_prize in users_with_prize:
-            SentEmailsFactory(user=user_with_prize, mail=self.sunday_mail_prize)
+        UserFactory.create_batch(
+            size=5, missing_sunday_mails=0, sunday_mails_prize_end_date=datetime.now()+timedelta(days=1))
 
         # Users with missing sunday mails
         UserFactory.create_batch(size=5, missing_sunday_mails=1)
+
+        # Users with active tiers
+        UserTierFactory.create_batch(size=5, missing_sunday_mails=4, user__missing_sunday_mails=0)
+
+        # Users with active tier and no missing sunday mails
+        UserTierFactory.create_batch(size=5, missing_sunday_mails=0, user__missing_sunday_mails=0)
+
+        # Users with inactive tier
+        inactive_tier_users = UserTierFactory.create_batch(
+            size=5, missing_sunday_mails=2, user__missing_sunday_mails=0, valid_to=datetime.now() - timedelta(days=1))
 
         # Users with day not selected
         UserFactory.create_batch(size=5, preferred_email_days=[1, 2, 4], missing_sunday_mails=0)
@@ -249,7 +257,7 @@ class TestMailClass(TestCase):
 
         self.assertEqual(
             self.sunday_mail_no_prize_class.get_dispatch_users().count(),
-            len(users_with_no_prize)
+            len(users_with_no_prize + inactive_tier_users)
         )
 
     def test_milestone_mail_properties(self):
@@ -347,10 +355,8 @@ class TestMailClass(TestCase):
     def _create_sunday_mail_users(self):
         users_with_missing_sunday_mails = UserFactory.create_batch(size=5, missing_sunday_mails=1)
 
-        users_with_prize = UserFactory.create_batch(size=5)
-
-        for user_with_prize in users_with_prize:
-            SentEmailsFactory(user=user_with_prize, mail=self.sunday_mail_prize)
+        users_with_prize = UserFactory.create_batch(
+            size=5, sunday_mails_prize_end_date=datetime.now()+timedelta(hours=1))
 
         # Users with specific dispatch time
         dispatch_time = time(9, 0)
@@ -358,14 +364,28 @@ class TestMailClass(TestCase):
             size=5, missing_sunday_mails=1, dispatch_time=dispatch_time
         )
 
+        # Users with active tiers
+        users_with_active_tiers = UserFactory.create_batch(size=5, missing_sunday_mails=0)
+
+        for user in users_with_active_tiers:
+            UserTierFactory(user=user, missing_sunday_mails=1)
+
+        # Users with active tier and no missing sunday mails
+        UserTierFactory.create_batch(size=5, missing_sunday_mails=0, user__missing_sunday_mails=0)
+
+        # Users with inactive tier
+        UserTierFactory.create_batch(
+            size=5, missing_sunday_mails=2, user__missing_sunday_mails=0, valid_to=datetime.now()-timedelta(days=1))
+
         # Users with day not selected
         UserFactory.create_batch(size=5, preferred_email_days=[1, 2, 4])
 
         # Users with no prize
         UserFactory.create_batch(size=5, missing_sunday_mails=0)
+        UserFactory.create_batch(size=5, sunday_mails_prize_end_date=datetime.now()-timedelta(days=1))
 
         # Users who already received mail
-        users_already_receive_mail = UserFactory.create_batch(size=5, missing_sunday_mails=0)
+        users_already_receive_mail = UserFactory.create_batch(size=5, missing_sunday_mails=2)
 
         for user_already_receive_mail in users_already_receive_mail:
             SentEmailsFactory(user=user_already_receive_mail, mail=self.sunday_mail)
@@ -377,4 +397,7 @@ class TestMailClass(TestCase):
             for user in users_with_prize:
                 SentEmailsFactory(user=user, mail=sunday_mail)
 
-        return users_with_missing_sunday_mails + users_with_prize, specific_dispatch_time_users
+        return (
+            users_with_missing_sunday_mails + users_with_prize + specific_dispatch_time_users + users_with_active_tiers,
+            specific_dispatch_time_users
+        )

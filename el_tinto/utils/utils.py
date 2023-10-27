@@ -242,7 +242,7 @@ MOBILE_EMAIL_PROVIDERS = {
 
 MILESTONES = {
     1: {"prize": "stickers", "prize_description": "Stickers de Whatsapp", "pre_prize_string": "acceso a", "mail_id": 1562},
-    3: {"prize": "sunday_email", "prize_description": "El Tinto Dominguero", "pre_prize_string": "acceso a", "mail_id": 1563},
+    3: {"prize": "sunday_email", "prize_description": "El Tinto Dominguero x 6 meses", "pre_prize_string": "acceso a", "mail_id": 1563},
     5: {"prize": "coffee_shop", "prize_description": "La Cafeteria (Comunidad)", "pre_prize_string": "acceso a", "mail_id": 1564},
     10: {"prize": "talks", "prize_description": "Charlas con El Tinto", "pre_prize_string": "acceso a", "mail_id": 1565},
     17: {"prize": "mug", "prize_description": "Mug", "pre_prize_string": "un", "mail_id": 1566},

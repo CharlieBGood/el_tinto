@@ -206,7 +206,9 @@ class SundayMail(Mail):
             # Filter missing sunday emails
             Q(missing_sunday_mails__gt=0) |
             # Filter has prize
-            Q(sentemails__mail_id=MILESTONES[3]['mail_id']),
+            Q(sunday_mails_prize_end_date__gte=datetime.now()) |
+            # Filter tier missing mails
+            Q(tiers__missing_sunday_mails__gt=0, tiers__valid_to__gte=datetime.now()),
             is_active=True,
             dispatch_time=dispatch_time
         ).exclude(sentemails__mail_id=self.mail.id).distinct()
@@ -260,7 +262,11 @@ class SundayNoPrizeMail(Mail):
             # Filter missing sunday emails
             missing_sunday_mails=0,
             is_active=True
-        ).exclude(sentemails__mail_id__in=[self.mail.id, MILESTONES[3]['mail_id']]).distinct()
+        ).exclude(
+            Q(sunday_mails_prize_end_date__gte=datetime.now()) |
+            Q(tiers__valid_to__gte=datetime.now()) |
+            Q(sentemails__mail_id=self.mail.id)
+        ).distinct()
 
     def get_mail_template_data(self, user):
         """

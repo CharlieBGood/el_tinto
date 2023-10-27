@@ -56,6 +56,7 @@ class User(AbstractUser):
 
     dispatch_time = models.TimeField(default=None, null=True, blank=True)
     missing_sunday_mails = models.SmallIntegerField(default=4)
+    sunday_mails_prize_end_date = models.DateTimeField(null=True, blank=True)
     utm_source = models.CharField(choices=UTM_SOURCE_TYPE_CHOICES, default='', blank=True, max_length=25)
     medium = models.CharField(default='', blank=True, max_length=25)
 

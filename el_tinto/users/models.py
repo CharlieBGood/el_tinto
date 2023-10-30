@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
+from django.utils import timezone as django_timezone
 from phonenumber_field.modelfields import PhoneNumberField
 from pytz import timezone
 
@@ -116,14 +117,16 @@ class User(AbstractUser):
     @property
     def has_sunday_mails_prize(self):
         """
-        Check if the user has received the email with the prize of the sunday mails
+        Check if the user has sunday mail based on the date of the respective field.
 
         :return:
         has_sunday_mails_prize: bool
         """
-        from el_tinto.utils.utils import MILESTONES
-
-        return self.sentemails_set.filter(mail_id=MILESTONES[3]['mail_id']).exists()
+        return (
+                self.sunday_mails_prize_end_date >= django_timezone.now()
+                if self.sunday_mails_prize_end_date
+                else False
+        )
 
     @property
     def recency(self):

@@ -78,7 +78,7 @@ class TestMailClass(TestCase):
         daily_mail_template_keys = [
             'html', 'date', 'name', 'social_media_date', 'tweet', 'subject_message', 'referred_users_count',
             'referral_code', 'mail_version', 'env', 'uuid', 'mail_id', 'days_reminder', 'user_tier',
-            'sponsor_image_url', 'sponsor_web_url'
+            'sponsor_image_url', 'sponsor_image_url_width', 'sponsor_web_url'
         ]
 
         self.assertCountEqual(daily_mail_template_keys, template_data.keys())

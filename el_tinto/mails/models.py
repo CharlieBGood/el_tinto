@@ -75,6 +75,7 @@ class Mail(models.Model):
     programmed = models.BooleanField(default=False, editable=False)
     tinto = models.OneToOneField('tintos.Tinto', on_delete=models.SET_NULL, null=True, related_name='mail')
     sponsor_image_url = models.URLField(default='', blank=True)
+    sponsor_image_url_width = models.IntegerField(null=True, blank=True)
     sponsor_web_url = models.URLField(default='', blank=True)
     tweet = models.CharField(max_length=256, default='', help_text='256 characters max')
     subject_message = models.CharField(max_length=256, default='', blank=True,

@@ -78,7 +78,7 @@
                                         <a href={{ sponsor_web_url }}>
                                             <img
                                               src="{{ sponsor_image_url }}"
-                                              style="margin: inherit; max-width: 100px"
+                                              style="margin: inherit; max-width: 100px; width: {% if sponsor_image_url_width %} {{ sponsor_image_url_width }}px {% else %}auto{% endif %}"
                                             >
                                         </a>
                                     </td>

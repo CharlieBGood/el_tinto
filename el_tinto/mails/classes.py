@@ -11,7 +11,7 @@ from django.utils.safestring import mark_safe
 
 from el_tinto.users.models import User
 from el_tinto.utils.date_time import get_string_date
-from el_tinto.utils.utils import replace_words_in_sentence, get_env_value, MILESTONES, \
+from el_tinto.utils.utils import replace_words_in_sentence, get_env_value, \
     TASTE_CLUB_TIER_COFFEE_BEAN_WELCOME_MAIL_ID, TASTE_CLUB_TIER_GROUND_COFFEE_WELCOME_MAIL_ID, \
     TASTE_CLUB_TIER_TINTO_WELCOME_MAIL_ID, TASTE_CLUB_TIER_EXPORTATION_COFFEE_WELCOME_MAIL_ID
 
@@ -107,6 +107,19 @@ class Mail:
         if not test:
             self.mail.recipients.add(user)
 
+        # Discount 1 from missing sunday mails
+        from el_tinto.mails.models import Mail as MailModel
+        if self.mail.type == MailModel.SUNDAY:
+            user_tier = user.tiers.filter(valid_to__gte=datetime.now()).order_by('-valid_to').first()
+
+            if user_tier:
+                user_tier.missing_sunday_mails -= 1
+                user_tier.save()
+
+            else:
+                user.missing_sunday_mails -= 1
+                user.save()
+
     def send_mail_batch(self, users_batch):
         """
         Send mails batch.
@@ -182,6 +195,7 @@ class DailyMail(Mail):
             'days_reminder': True if user and 0 < len(user.preferred_email_days) < 7 else False,
             'user_tier': True if user and user.tiers.filter(valid_to__gte=datetime.today()).exists() else False,
             'sponsor_image_url': self.mail.sponsor_image_url,
+            'sponsor_image_url_width': self.mail.sponsor_image_url_width,
             'sponsor_web_url': self.mail.sponsor_web_url
         }
 

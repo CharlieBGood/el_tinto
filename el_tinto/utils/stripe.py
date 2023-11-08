@@ -6,8 +6,9 @@ import stripe
 from el_tinto.integrations.stripe.models import StripePayment, StripeCustomer
 from el_tinto.mails.models import Mail
 from el_tinto.users.models import User, UserTier
+from el_tinto.utils.users import create_user_referral_code
 from el_tinto.utils.utils import TASTE_CLUB_PRODUCTS, TASTE_CLUB_TIER_UTILS, TASTE_CLUB_OWNER_CANCELATION_MAIL, \
-    TASTE_CLUB_BENEFICIARY_CANCELATION_MAIL
+    TASTE_CLUB_BENEFICIARY_CANCELATION_MAIL, UTILITY_MAILS, ONBOARDING_EMAIL_NAME
 
 stripe.api_key = os.getenv('STRIPE_KEY')
 
@@ -27,6 +28,16 @@ def handle_payment_intent_succeeded(payment_intent):
     subscription = invoice['lines']['data'][0]['subscription']
 
     user = User.objects.filter(email=customer_data['email']).first()
+
+    if not user:
+        user = User.objects.create(email=customer_data['email'])
+        user.referral_code = create_user_referral_code(user)
+        user.save()
+
+        # send onboarding email
+        onboarding_mail_instance = Mail.objects.get(id=UTILITY_MAILS.get(ONBOARDING_EMAIL_NAME))
+        onboarding_mail = onboarding_mail_instance.get_mail_class()
+        onboarding_mail.send_mail(user)
 
     payment = StripePayment.objects.create(
         user=user,

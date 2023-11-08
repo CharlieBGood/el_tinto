@@ -117,15 +117,18 @@ class User(AbstractUser):
     @property
     def has_sunday_mails_prize(self):
         """
-        Check if the user has sunday mail based on the date of the respective field.
+        Check if the user has an active tier, else check if has sunday mail based on the date of the respective field.
 
         :return:
         has_sunday_mails_prize: bool
         """
+        if self.tiers.filter(valid_to__gte=django_timezone.now()).exists():
+            return True
+
         return (
-                self.sunday_mails_prize_end_date >= django_timezone.now()
-                if self.sunday_mails_prize_end_date
-                else False
+            self.sunday_mails_prize_end_date >= django_timezone.now()
+            if self.sunday_mails_prize_end_date
+            else False
         )
 
     @property

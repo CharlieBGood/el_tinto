@@ -22,11 +22,13 @@ JOB_DEFAULTS = {
 
 TIMEZONE = timezone('America/Bogota')
 
+MISFIRE_GRACE_TIME = 60*60*2,  # 60 s * 60 m * 2h
+
 scheduler = BackgroundScheduler(
     jobstores=JOBSTORES,
     executors=EXECUTORS,
     job_defaults=JOB_DEFAULTS,
-    timezone=TIMEZONE,
+    timezone=TIMEZONE
 )
 
 scheduler.start()

@@ -45,6 +45,7 @@ class Production(Common):
 
     LA_CAFETERA_URL = 'https://www.lacafetera.eltinto.xyz'
     WEB_APP_URL = 'https://www.eltinto.xyz'
+    SERVER_URL = 'https://www.api.eltinto.xyz'
 
     # TINY MCE CONFIGURATIONS
     TINYMCE_DEFAULT_CONFIG = {

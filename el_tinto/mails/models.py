@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.db import models
 from django.template import loader
 from django.template.exceptions import TemplateDoesNotExist
@@ -8,6 +9,7 @@ from tinymce.models import HTMLField
 from el_tinto.mails.classes import DailyMail, SundayMail, SundayNoPrizeMail, MilestoneMail, OnboardingMail, \
     ChangePreferredDaysMail, TasteClubMail
 from el_tinto.utils.date_time import get_string_date
+from el_tinto.utils.utils import generate_random_alphanumeric_code
 
 
 class Mail(models.Model):
@@ -193,3 +195,27 @@ class Templates(models.Model):
         verbose_name = "Template"
         verbose_name_plural = "Templates"
         ordering = ['name']
+
+
+class MailLinks(models.Model):
+    final_link = models.TextField()
+    code = models.TextField(blank=True, default='')
+
+    def mail_link(self):
+        """
+        Return link to use on email.
+        """
+        return f"{settings.SERVER_URL}/mails/redirect/{self.code}" + "?user={uuid}"
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = generate_random_alphanumeric_code()
+
+        super(MailLinks, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.final_link
+
+    class Meta:
+        verbose_name = "Links de correos"
+        verbose_name_plural = "Links de correos"

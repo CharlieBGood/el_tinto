@@ -255,6 +255,12 @@ class UserButtonsInteractions(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+class UserLinkInteractions(models.Model):
+    user = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    link = models.ForeignKey('mails.MailLinks', on_delete=models.CASCADE)
+    click_date = models.DateTimeField(null=True, auto_now_add=True)
+
+
 class UserTier(models.Model):
     TIER_COFFEE_BEAN = 1
     TIER_GROUND_COFFEE = 2

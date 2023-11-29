@@ -3,7 +3,7 @@ from el_tinto.mails.admin_actions.cancel_send_daily_mail import cancel_send_dail
 from el_tinto.mails.admin_actions.edit_tinto_in_cms import edit_tinto_in_cms
 from el_tinto.mails.admin_actions.send_daily_mail import send_daily_mail
 from el_tinto.mails.admin_actions.send_daily_mail_try import send_daily_mail_try
-from el_tinto.mails.models import Mail, Templates
+from el_tinto.mails.models import Mail, Templates, MailLinks
 
 
 @admin.register(Mail)
@@ -43,6 +43,23 @@ class TemplatesAdmin(admin.ModelAdmin):
         """
         if request.user.groups.filter(name__in=['Founder']):
             return super(TemplatesAdmin, self).get_model_perms(request)
+        else:
+            return {}
+
+
+@admin.register(MailLinks)
+class MailLinksAdmin(admin.ModelAdmin):
+    """"MailLinks Admin."""
+
+    readonly_fields = 'code',
+    list_display = 'final_link', 'mail_link'
+
+    def get_model_perms(self, request):
+        """
+        Return empty perms dict thus hiding the model from admin index.
+        """
+        if request.user.groups.filter(name__in=['Editor', 'Founder']):
+            return super(MailLinksAdmin, self).get_model_perms(request)
         else:
             return {}
 

@@ -2,6 +2,7 @@ import os
 import re
 
 from django.conf import settings
+from django.utils.crypto import get_random_string
 
 from el_tinto.users.models import UserTier
 
@@ -194,6 +195,23 @@ def get_email_provider_link(email, is_mobile, device_family):
             email_provider_link += 'search/keyword=from%253Aeltinto.xyz'
 
     return email_provider_link
+
+
+def generate_random_alphanumeric_code():
+    """
+    Generate a random unique alphanumeric code.
+
+    :return:
+    link: str
+    """
+    from el_tinto.mails.models import MailLinks
+
+    alphanumeric_code = get_random_string(length=10)
+
+    while MailLinks.objects.filter(code=alphanumeric_code).exists():
+        alphanumeric_code = get_random_string(length=10)
+
+    return alphanumeric_code
 
 
 # Constants

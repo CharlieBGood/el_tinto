@@ -12,6 +12,7 @@ class Local(Common):
 
     LA_CAFETERA_URL = 'http://localhost:3000'
     WEB_APP_URL = 'http://localhost:3000'
+    SERVER_URL = 'http://localhost:8000'
 
     # TINY MCE CONFIGURATIONS
     TINYMCE_DEFAULT_CONFIG = {
